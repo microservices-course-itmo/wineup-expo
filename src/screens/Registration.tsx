@@ -10,7 +10,7 @@ import {
 const styles = StyleSheet.create({
   header: {
     fontSize: 30,
-    fontWeight: 'bold',
+    fontFamily: 'Merriweather_700Bold',
     color: '#C23232',
   },
   label: {
@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
     top: -28,
     fontSize: 16,
     color: '#888888',
+    fontFamily: 'Merriweather_400Regular',
   },
   container: {
     marginTop: 136,
@@ -36,9 +37,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#BCBCBC',
     paddingLeft: 10,
-  },
-  textFocus: {
-    borderColor: 'red',
   },
   buttonStyle: {
     flex: 1,
@@ -95,7 +93,15 @@ const RegistrationScreen: React.FC = () => {
       </View>
 
       <TouchableOpacity onPress={userRegister} style={styles.buttonStyle}>
-        <Text style={{ fontSize: 22, color: '#fff' }}>Зарегистрироваться</Text>
+        <Text
+          style={{
+            fontSize: 20,
+            color: '#fff',
+            fontFamily: 'Merriweather_400Regular',
+          }}
+        >
+          Зарегистрироваться
+        </Text>
       </TouchableOpacity>
     </View>
   )
