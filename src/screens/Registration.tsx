@@ -6,6 +6,75 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native'
+import {
+  useFonts,
+  Merriweather_400Regular,
+  Merriweather_700Bold,
+} from '@expo-google-fonts/merriweather'
+import { AppLoading } from 'expo'
+
+interface LabeledInputProps {
+  inputName: string
+  setInputState: React.Dispatch<React.SetStateAction<string>>
+}
+
+const LabeledInput: React.FC<LabeledInputProps> = (
+  Props: LabeledInputProps
+) => {
+  return (
+    <View style={styles.inputContainer}>
+      <Text style={styles.label}>{Props.inputName}</Text>
+      <TextInput
+        selectionColor='#4E4E4E'
+        style={styles.input}
+        onChangeText={(state) => Props.setInputState(state)}
+      />
+    </View>
+  )
+}
+
+const RegistrationScreen: React.FC = () => {
+  const [userName, setUserName] = useState('')
+  const [userEmail, setUserEmail] = useState('')
+  const [userPassword, setUserPassword] = useState('')
+
+  const [fontsLoaded] = useFonts({
+    Merriweather_400Regular,
+    Merriweather_700Bold,
+  })
+
+  if (!fontsLoaded) {
+    return <AppLoading />
+  }
+
+  const onSubmit = () => {
+    console.log(userName, userEmail, userPassword)
+
+    // validation ? pass : highlight mistakes, return
+    // fetch ? response.ok : response.error, return
+  }
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Регистрация</Text>
+      <LabeledInput inputName='ФИО' setInputState={setUserName} />
+      <LabeledInput inputName='Адрес эл. почты' setInputState={setUserEmail} />
+      <LabeledInput inputName='Пароль' setInputState={setUserPassword} />
+
+      <TouchableOpacity onPress={onSubmit} style={styles.buttonStyle}>
+        <Text
+          style={{
+            fontSize: 20,
+            color: '#fff',
+            fontFamily: 'Merriweather_400Regular',
+          }}
+        >
+          Зарегистрироваться
+        </Text>
+      </TouchableOpacity>
+    </View>
+  )
+}
 
 const styles = StyleSheet.create({
   header: {
@@ -49,62 +118,5 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
 })
-
-const RegistrationScreen: React.FC = () => {
-  const [userName, setUserName] = useState('')
-  const [userEmail, setUserEmail] = useState('')
-  const [userPassword, setUserPassword] = useState('')
-
-  const userRegister = () => {
-    console.log(userName, userEmail, userPassword)
-
-    // validation ? pass : highlight mistakes, return
-    // fetch ? response.ok : response.error, return
-  }
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Регистрация</Text>
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>ФИО</Text>
-        <TextInput
-          selectionColor='#4E4E4E'
-          style={styles.input}
-          onChangeText={(name) => setUserName(name)}
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Адрес эл. почты</Text>
-        <TextInput
-          selectionColor='#4E4E4E'
-          style={styles.input}
-          onChangeText={(email) => setUserEmail(email)}
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Пароль</Text>
-        <TextInput
-          selectionColor='#4E4E4E'
-          style={styles.input}
-          onChangeText={(password) => setUserPassword(password)}
-        />
-      </View>
-
-      <TouchableOpacity onPress={userRegister} style={styles.buttonStyle}>
-        <Text
-          style={{
-            fontSize: 20,
-            color: '#fff',
-            fontFamily: 'Merriweather_400Regular',
-          }}
-        >
-          Зарегистрироваться
-        </Text>
-      </TouchableOpacity>
-    </View>
-  )
-}
 
 export default RegistrationScreen
