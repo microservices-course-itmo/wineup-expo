@@ -1,46 +1,14 @@
-import React, { Component, useState } from 'react'
+import React, { ReactElement, useState } from 'react'
+import { StyleSheet, Text, View, TouchableOpacity, Linking } from 'react-native'
 import {
-  StyleSheet, Text, View, TextInput, TouchableOpacity, Linking
-} from 'react-native'
-import { useFonts, Merriweather_400Regular, Merriweather_700Bold, } from '@expo-google-fonts/merriweather'
+  useFonts,
+  Merriweather_400Regular,
+  Merriweather_700Bold,
+} from '@expo-google-fonts/merriweather'
 import { AppLoading } from 'expo'
-interface LabeledInputProps {
-  inputName: string
-  setInputState: React.Dispatch<React.SetStateAction<string>>
-  secureTextEntry: boolean
-}
+import LabeledInput from '../molecules/LabledInput'
 
-const LabeledInput: React.FC<LabeledInputProps> = (
-  Props: LabeledInputProps
-) => {
-  return (
-    <View style={styles.inputContainer}>
-      <Text style={styles.label}>{Props.inputName}</Text>
-      <TextInput
-        selectionColor='#4E4E4E'
-        style={styles.input}
-        onChangeText={(state) => Props.setInputState(state)}
-      />
-    </View>
-  )
-}
-const LabeledInputPass: React.FC<LabeledInputProps> = (
-  Props: LabeledInputProps
-) => {
-  return (
-    <View style={styles.inputContainer}>
-      <Text style={styles.label}>{Props.inputName}</Text>
-      <TextInput
-        selectionColor='#4E4E4E'
-        style={styles.input}
-        onChangeText={(state) => Props.setInputState(state)}
-        secureTextEntry={true}
-      />
-    </View>
-  )
-}
-
-const SignInScreen: React.FC = () => {
+function SignInScreen(): ReactElement {
   const [userEmail, getUserEmail] = useState('')
   const [userPassword, getUserPassword] = useState('')
 
@@ -60,17 +28,26 @@ const SignInScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Вход</Text>
-      <LabeledInput inputName='Адрес эл. почты' setInputState={getUserEmail} />
-      <LabeledInputPass inputName='Пароль'setInputState={getUserPassword} />
-      <Text style={styles.helper} onPress={() => Linking.openURL('https://vk.com/asuhovitskiy')}>
+      <LabeledInput label='Адрес эл. почты' onChangeText={getUserEmail} />
+      <LabeledInput
+        label='Пароль'
+        onChangeText={getUserPassword}
+        secureTextEntry
+      />
+      <Text
+        style={styles.helper}
+        onPress={() => Linking.openURL('https://vk.com/asuhovitskiy')}
+      >
         Проблемы со входом?
       </Text>
       <TouchableOpacity onPress={onSubmit} style={styles.buttonStyle}>
-        <Text style={styles.btntext}>Войти</Text>
+        <Text style={styles.buttonText}>Войти</Text>
       </TouchableOpacity>
     </View>
   )
 }
+
+export default SignInScreen
 
 const styles = StyleSheet.create({
   header: {
@@ -85,29 +62,10 @@ const styles = StyleSheet.create({
     color: '#4A7DFF',
     fontFamily: 'Merriweather_400Regular',
   },
-  label: {
-    position: 'absolute',
-    top: -28,
-    fontSize: 16,
-    color: '#888888',
-    fontFamily: 'Merriweather_400Regular',
-  },
   container: {
     marginTop: 136,
     flex: 1,
     alignItems: 'center',
-  },
-  inputContainer: {
-    marginTop: 45,
-  },
-  input: {
-    width: 320,
-    height: 56,
-    fontSize: 16,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#BCBCBC',
-    paddingLeft: 10,
   },
   buttonStyle: {
     flex: 1,
@@ -119,10 +77,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#C23232',
     borderRadius: 10,
   },
-  btntext: {
+  buttonText: {
     fontSize: 20,
     color: '#fff',
     fontFamily: 'Merriweather_400Regular',
   },
 })
-export default SignInScreen

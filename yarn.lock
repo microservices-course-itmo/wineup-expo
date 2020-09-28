@@ -1072,6 +1072,11 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@expo-google-fonts/merriweather@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@expo-google-fonts/merriweather/-/merriweather-0.1.0.tgz#55c22d76a59e0f17e10ea24c23ca95636c7ac87c"
+  integrity sha512-HzTl56ih8pWdVbYS4E/XX5W0rtlk221hXwmqg6Ubuf4YxVndyZ+dqW95pRGysq7bSUIQEyXluuMzBWLfraKbhw==
+
 "@expo/configure-splash-screen@0.1.13":
   version "0.1.13"
   resolved "https://registry.yarnpkg.com/@expo/configure-splash-screen/-/configure-splash-screen-0.1.13.tgz#9f974146d716ffc03461e4d2deb7bfb22826e56a"
@@ -3753,6 +3758,14 @@ expo-file-system@~9.0.1:
   integrity sha512-xZKv7g0dhFNMjp49+XiZBnApOUu/WlLzwWaruNbBnSgi/HGnSwbHNyk7zuK1RdQ9NndvXu6uT4uW2i67pIrKig==
   dependencies:
     uuid "^3.4.0"
+
+expo-font@^8.3.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/expo-font/-/expo-font-8.3.0.tgz#f41955d1f1bbb2fe706bf97fc94aa89f7e599a0a"
+  integrity sha512-WK3Oh3JwLjH/y94w1GPhE1Ix59WEJ9hTUKJBuvsM9SYqdN4N0DDb2VKhCH218HPdLURfyZnhMi2KrVycUWIUEQ==
+  dependencies:
+    fbjs "1.0.0"
+    fontfaceobserver "^2.1.0"
 
 expo-font@~8.2.1:
   version "8.2.2"
