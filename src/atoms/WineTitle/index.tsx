@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 
-export interface Wine {
+export interface WineTitleProps {
   name: string
   description: string
   volume: number
