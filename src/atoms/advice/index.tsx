@@ -1,10 +1,12 @@
 import React from 'react'
 import { Text, View, StyleSheet } from 'react-native'
 
-const Advice: React.FunctionComponent<{ ratioAdvice: number }> = (props) => {
-  let ratio = props.ratioAdvice
-  if (props.ratioAdvice > 100) ratio = 100
-  if (props.ratioAdvice < 0) ratio = 0
+const Advice: React.FunctionComponent<{ ratioAdvice: number }> = ({
+  ratioAdvice,
+}) => {
+  let ratio = ratioAdvice
+  if (ratioAdvice > 100) ratio = 100
+  if (ratioAdvice < 0) ratio = 0
 
   return (
     <View style={styles.adviceContainer} testID={'advice-test'}>
