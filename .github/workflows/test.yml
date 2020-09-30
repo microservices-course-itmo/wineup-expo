@@ -5,8 +5,8 @@ on:
     branches: [develop, master]
 
 jobs:
-  lint:
-    name: ESLint
+  test:
+    name: Unit Tests
     runs-on: ubuntu-latest
 
     steps:
