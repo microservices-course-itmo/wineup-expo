@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { ReactElement } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
 
 export interface Wine {
   name: string
@@ -7,35 +8,17 @@ export interface Wine {
   price?: number
 }
 
-const WineExample = {
-  name: 'Canti Merlot',
-  description: 'Австралия, Красное, сухое',
-  volume: 0.75,
-}
+const styles = StyleSheet.create({
+  wineName: { fontSize: 20, fontWeight: 'bold', display: 'flex' },
+})
 
-const getWine = async (): Promise<Wine> => {
-  return new Promise<Wine>((resolve) => {
-    resolve({
-      name: WineExample.name,
-      description: WineExample.description,
-      volume: WineExample.volume,
-    })
-  })
-}
-
-const WineTitle: React.FC<Wine> = () => {
-  const [wine, setWine] = useState<Wine>()
-  useEffect(() => {
-    getWine().then((res) => {
-      setWine(res)
-    })
-  })
+function WineTitle({ name, description, volume }: Wine): ReactElement<Wine> {
   return (
-    <div>
-      <h3 style={{ margin: 0 }}>{wine?.name}</h3>
-      <div>{wine?.description}</div>
-      <div>{wine?.volume}</div>
-    </div>
+    <View>
+      <Text style={styles.wineName}>{name}</Text>
+      <Text>{description}</Text>
+      <Text>{volume}</Text>
+    </View>
   )
 }
 export default WineTitle
