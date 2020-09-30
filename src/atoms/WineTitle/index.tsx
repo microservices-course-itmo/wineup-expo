@@ -14,15 +14,13 @@ const WineExample = {
 }
 
 const getWine = async (): Promise<Wine> => {
-  const promise = new Promise<Wine>((resolve) => {
+  return new Promise<Wine>((resolve) => {
     resolve({
       name: WineExample.name,
       description: WineExample.description,
       volume: WineExample.volume,
     })
   })
-  const result = await promise
-  return result
 }
 
 const WineTitle: React.FC<Wine> = () => {
