@@ -14,7 +14,7 @@ describe('<WineTitle />', () => {
       />
     )
     const volumeElement = getByText(volume.toString())
-   
+
     expect(volumeElement).toBeDefined()
   })
 
@@ -24,7 +24,7 @@ describe('<WineTitle />', () => {
       <WineTitle name='Canti Merlot' description={description} volume={0.75} />
     )
     const descriptionElement = getByText(description)
-    
+
     expect(descriptionElement).toBeDefined()
   })
 
@@ -38,7 +38,7 @@ describe('<WineTitle />', () => {
       />
     )
     const nameElement = getByText(name)
-    
+
     expect(nameElement).toBeDefined()
   })
 })

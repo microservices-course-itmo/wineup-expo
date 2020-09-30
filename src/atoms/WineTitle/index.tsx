@@ -11,7 +11,11 @@ const styles = StyleSheet.create({
   wineName: { fontSize: 20, fontWeight: 'bold', display: 'flex' },
 })
 
-function WineTitle({ name, description, volume }: WineTitleProps): ReactElement<Wine> {
+function WineTitle({
+  name,
+  description,
+  volume,
+}: WineTitleProps): ReactElement<WineTitleProps> {
   return (
     <View>
       <Text style={styles.wineName}>{name}</Text>
