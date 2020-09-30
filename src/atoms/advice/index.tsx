@@ -9,8 +9,11 @@ const Advice: React.FunctionComponent<{ ratioAdvice: number }> = ({
   if (ratioAdvice < 0) ratio = 0
 
   return (
-    <View style={styles.adviceContainer} testID={'advice-test'}>
-      <Text>Подходит Вам на {ratio}%</Text>
+    <View style={styles.adviceContainer} testID='advice-test'>
+      <Text>
+        Подходит Вам на
+        {ratio}%
+      </Text>
     </View>
   )
 }

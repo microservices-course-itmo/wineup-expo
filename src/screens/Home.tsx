@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import Advice from '../atoms/advice'
 
 const HomeScreen: React.FC = () => {
   return (
