@@ -5,8 +5,7 @@ import Advice from '../atoms/advice'
 const HomeScreen: React.FC = () => {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      {/* <Text>Home Screen</Text> */}
-      <Advice ratioAdvice={100} />
+      <Text>Home Screen</Text>
     </View>
   )
 }
