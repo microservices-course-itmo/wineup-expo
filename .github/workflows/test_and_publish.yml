@@ -1,4 +1,4 @@
-name: Unit tests
+name: Unit test code and publish to Expo
 
 on:
   pull_request:
