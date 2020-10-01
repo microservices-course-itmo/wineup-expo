@@ -11,14 +11,10 @@ function rightBordersHandler(value: number): number {
 const Advice: React.FunctionComponent<{ ratioAdvice: number }> = ({
   ratioAdvice,
 }) => {
+  const displayData = `Подходит Вам на ${rightBordersHandler(ratioAdvice)}%`
   return (
     <View style={styles.adviceContainer} testID='advice-test'>
-      <Text>
-        Подходит Вам на
-        {' '}
-        {rightBordersHandler(ratioAdvice)}
-        %
-      </Text>
+      <Text>{displayData}</Text>
     </View>
   )
 }
