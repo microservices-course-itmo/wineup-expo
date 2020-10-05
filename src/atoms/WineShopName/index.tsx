@@ -1,15 +1,52 @@
 import React from 'react'
-import { View, Image, Text } from 'react-native'
-import styles from './style'
-import logo from './src/logo.png'
+import { View, Image, Text, StyleSheet } from 'react-native'
+
+const styles = StyleSheet.create({
+  container: {
+    width: 270,
+    height: 55,
+    backgroundColor: '#492048',
+  },
+  flexedContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  imageContainer: {
+    flex: 2,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  image: {
+    width: 65,
+    height: 40,
+  },
+  textContainer: {
+    flex: 4,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+  },
+  name: {
+    color: '#ffffff',
+    fontWeight: 'bold',
+    fontSize: 26,
+  },
+  description: {
+    color: '#ffffff',
+    fontWeight: 'bold',
+    fontSize: 12,
+  },
+})
 
 interface ComponentProps {
-  image?: string
+  image: string
   name: string
   description: string
 }
 
-const WineShopName = ({ image = logo, name, description }: ComponentProps) => {
+const WineShopName = ({ image, name, description }: ComponentProps) => {
   return (
     <View style={styles.container}>
       <View style={styles.flexedContainer}>
