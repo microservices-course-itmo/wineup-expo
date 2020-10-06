@@ -1,22 +1,79 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import UserTypeSwitcher from './UserTypeSwitcher'
+import React, { useState, ReactElement } from 'react'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import {
+  useFonts,
+  Merriweather_400Regular,
+  Merriweather_700Bold,
+} from '@expo-google-fonts/merriweather'
+import { AppLoading } from 'expo'
+import LabeledInput from '../../molecules/LabledInput'
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})
+function RegistrationScreen(): ReactElement {
+  const [userName, setUserName] = useState('')
+  const [userEmail, setUserEmail] = useState('')
+  const [userPassword, setUserPassword] = useState('')
 
-const SignUpScreen: React.FC = () => {
+  const [fontsLoaded] = useFonts({
+    Merriweather_400Regular,
+    Merriweather_700Bold,
+  })
+
+  if (!fontsLoaded) {
+    return <AppLoading />
+  }
+
+  const onSubmit = () => {
+    console.log(userName, userEmail, userPassword)
+
+    // validation ? pass : highlight mistakes, return
+    // fetch ? response.ok : response.error, return
+  }
+
   return (
     <View style={styles.container}>
-      <UserTypeSwitcher />
-      <Text>Sign up</Text>
+      <Text style={styles.header}>Регистрация</Text>
+      <LabeledInput label='ФИО' onChangeText={setUserName} />
+      <LabeledInput label='Адрес эл. почты' onChangeText={setUserEmail} />
+      <LabeledInput
+        label='Пароль'
+        onChangeText={setUserPassword}
+        secureTextEntry
+      />
+
+      <TouchableOpacity onPress={onSubmit} style={styles.buttonStyle}>
+        <Text style={styles.buttonText}>Зарегистрироваться</Text>
+      </TouchableOpacity>
     </View>
   )
 }
 
-export default SignUpScreen
+const styles = StyleSheet.create({
+  header: {
+    fontSize: 30,
+    fontFamily: 'Merriweather_700Bold',
+    color: '#C23232',
+  },
+  container: {
+    paddingTop: 136,
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
+  buttonStyle: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 60,
+    width: 320,
+    maxHeight: 56,
+    backgroundColor: '#C23232',
+    borderRadius: 10,
+  },
+  buttonText: {
+    fontSize: 20,
+    color: '#fff',
+    fontFamily: 'Merriweather_400Regular',
+  },
+})
+
+export default RegistrationScreen
