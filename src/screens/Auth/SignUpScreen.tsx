@@ -6,7 +6,8 @@ import {
   Merriweather_700Bold,
 } from '@expo-google-fonts/merriweather'
 import { AppLoading } from 'expo'
-import LabeledInput from '../../molecules/LabledInput'
+import LabeledInput from '../../molecules/LabeledInput'
+import { isEmail, isAllowedPassword } from '../../helpers'
 
 function RegistrationScreen(): ReactElement {
   const [userName, setUserName] = useState('')
@@ -23,8 +24,7 @@ function RegistrationScreen(): ReactElement {
   }
 
   const onSubmit = () => {
-    console.log(userName, userEmail, userPassword)
-
+    console.log(userName, isEmail(userEmail), isAllowedPassword(userPassword))
     // validation ? pass : highlight mistakes, return
     // fetch ? response.ok : response.error, return
   }
@@ -32,12 +32,17 @@ function RegistrationScreen(): ReactElement {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Регистрация</Text>
-      <LabeledInput label='ФИО' onChangeText={setUserName} />
-      <LabeledInput label='Адрес эл. почты' onChangeText={setUserEmail} />
+      <LabeledInput label='ФИО' onChangeText={setUserName} value={userName} />
+      <LabeledInput
+        label='Адрес эл. почты'
+        onChangeText={setUserEmail}
+        value={userEmail}
+      />
       <LabeledInput
         label='Пароль'
         onChangeText={setUserPassword}
         secureTextEntry
+        value={userPassword}
       />
 
       <TouchableOpacity onPress={onSubmit} style={styles.buttonStyle}>

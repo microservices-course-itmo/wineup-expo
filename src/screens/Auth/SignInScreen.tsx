@@ -6,7 +6,7 @@ import {
   Merriweather_700Bold,
 } from '@expo-google-fonts/merriweather'
 import { AppLoading } from 'expo'
-import LabeledInput from '../../molecules/LabledInput'
+import LabeledInput from '../../molecules/LabeledInput'
 
 function SignInScreen(): ReactElement {
   const [userEmail, getUserEmail] = useState('')
@@ -28,11 +28,16 @@ function SignInScreen(): ReactElement {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Вход</Text>
-      <LabeledInput label='Адрес эл. почты' onChangeText={getUserEmail} />
+      <LabeledInput
+        label='Адрес эл. почты'
+        onChangeText={getUserEmail}
+        value={userEmail}
+      />
       <LabeledInput
         label='Пароль'
         onChangeText={getUserPassword}
         secureTextEntry
+        value={userPassword}
       />
       <Text
         style={styles.helper}
