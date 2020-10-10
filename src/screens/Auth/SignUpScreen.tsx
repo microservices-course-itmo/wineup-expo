@@ -1,4 +1,4 @@
-import React, { useState, ReactElement } from 'react'
+import React, { useState, ReactElement, useEffect } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import {
   useFonts,
@@ -14,6 +14,23 @@ function RegistrationScreen(): ReactElement {
   const [userEmail, setUserEmail] = useState('')
   const [userPassword, setUserPassword] = useState('')
 
+  const [isDisabledButton, setIsDisabledButton] = useState(false)
+  const buttonOpacity = isDisabledButton ? 1 : 0.4
+  const isValidPassword = isAllowedPassword(userPassword)
+  const isValidEmail = isEmail(userEmail)
+  const errorMessagePassword =
+    'Пароль должен содержать минимум 8 символов, хотя бы 1 букву и 1 цифру'
+  const errorMessageEmail = 'Неккоректный адрес эл. почты'
+
+  useEffect(() => {
+    const noErrors = isValidPassword && isValidEmail
+    if (noErrors) {
+      setIsDisabledButton(true)
+    } else {
+      setIsDisabledButton(false)
+    }
+  }, [userEmail, userPassword, isValidPassword, isValidEmail])
+
   const [fontsLoaded] = useFonts({
     Merriweather_400Regular,
     Merriweather_700Bold,
@@ -24,28 +41,33 @@ function RegistrationScreen(): ReactElement {
   }
 
   const onSubmit = () => {
-    console.log(userName, isEmail(userEmail), isAllowedPassword(userPassword))
-    // validation ? pass : highlight mistakes, return
+    console.log(userName, userEmail, userPassword)
     // fetch ? response.ok : response.error, return
   }
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Регистрация</Text>
-      <LabeledInput label='ФИО' onChangeText={setUserName} value={userName} />
+      <LabeledInput label='ФИО' onChangeText={setUserName} />
       <LabeledInput
         label='Адрес эл. почты'
         onChangeText={setUserEmail}
-        value={userEmail}
+        isValid={isValidEmail}
+        errorMessage={errorMessageEmail}
       />
       <LabeledInput
         label='Пароль'
         onChangeText={setUserPassword}
         secureTextEntry
-        value={userPassword}
+        isValid={isValidPassword}
+        errorMessage={errorMessagePassword}
       />
 
-      <TouchableOpacity onPress={onSubmit} style={styles.buttonStyle}>
+      <TouchableOpacity
+        onPress={onSubmit}
+        style={[styles.buttonStyle, { opacity: buttonOpacity }]}
+        disabled={!isDisabledButton}
+      >
         <Text style={styles.buttonText}>Зарегистрироваться</Text>
       </TouchableOpacity>
     </View>

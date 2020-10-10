@@ -1,32 +1,28 @@
 import React, { ReactElement } from 'react'
 import { StyleSheet, Text, TextInput, View } from 'react-native'
-import { isAllowedPassword, isEmail } from '../helpers'
 
 interface LabeledInputProps {
   label: string
   onChangeText: React.Dispatch<React.SetStateAction<string>>
   secureTextEntry?: boolean
-  value: string
+  isValid?: boolean
 }
 
 function LabeledInput({
   label,
   onChangeText,
   secureTextEntry,
-  value,
+  isValid = true,
 }: LabeledInputProps): ReactElement<LabeledInputProps> {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
       <TextInput
-        value={value}
         selectionColor='#4E4E4E'
-        style={
-          (!isEmail(value) && label === 'Адрес эл. почты') ||
-          (!isAllowedPassword(value) && label === 'Пароль')
-            ? styles.inputFailed
-            : styles.inputSuccess
-        }
+        style={[
+          styles.input,
+          isValid ? styles.inputSuccessColor : styles.inputFailedColor,
+        ]}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
       />
@@ -47,22 +43,18 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 45,
   },
-  inputSuccess: {
+  input: {
     width: 320,
     height: 56,
     fontSize: 16,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#BCBCBC',
     paddingLeft: 10,
   },
-  inputFailed: {
-    width: 320,
-    height: 56,
-    fontSize: 16,
-    borderRadius: 10,
-    borderWidth: 1,
+  inputSuccessColor: {
+    borderColor: '#BCBCBC',
+  },
+  inputFailedColor: {
     borderColor: '#C23232',
-    paddingLeft: 10,
   },
 })
