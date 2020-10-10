@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement, useState, useEffect } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Linking } from 'react-native'
 import {
   useFonts,
@@ -7,10 +7,28 @@ import {
 } from '@expo-google-fonts/merriweather'
 import { AppLoading } from 'expo'
 import LabeledInput from '../../molecules/LabeledInput'
+import { isEmail, isAllowedPassword } from '../../helpers'
 
 function SignInScreen(): ReactElement {
   const [userEmail, getUserEmail] = useState('')
   const [userPassword, getUserPassword] = useState('')
+
+  const [isDisabledButton, setIsDisabledButton] = useState(false)
+  const buttonOpacity = isDisabledButton ? 1 : 0.4
+  const isValidPassword = isAllowedPassword(userPassword)
+  const isValidEmail = isEmail(userEmail)
+  const errorMessagePassword =
+    'Пароль должен содержать минимум 8 символов, хотя бы 1 букву и 1 цифру'
+  const errorMessageEmail = 'Неккоректный адрес эл. почты'
+
+  useEffect(() => {
+    const noErrors = isValidPassword && isValidEmail
+    if (noErrors) {
+      setIsDisabledButton(true)
+    } else {
+      setIsDisabledButton(false)
+    }
+  }, [userEmail, userPassword, isValidPassword, isValidEmail])
 
   const [fontsLoaded] = useFonts({
     Merriweather_400Regular,
@@ -31,13 +49,15 @@ function SignInScreen(): ReactElement {
       <LabeledInput
         label='Адрес эл. почты'
         onChangeText={getUserEmail}
-        value={userEmail}
+        isValid={isValidEmail}
+        errorMessage={errorMessageEmail}
       />
       <LabeledInput
         label='Пароль'
         onChangeText={getUserPassword}
         secureTextEntry
-        value={userPassword}
+        isValid={isValidPassword}
+        errorMessage={errorMessagePassword}
       />
       <Text
         style={styles.helper}
@@ -45,7 +65,11 @@ function SignInScreen(): ReactElement {
       >
         Проблемы со входом?
       </Text>
-      <TouchableOpacity onPress={onSubmit} style={styles.buttonStyle}>
+      <TouchableOpacity
+        onPress={onSubmit}
+        style={[styles.buttonStyle, { opacity: buttonOpacity }]}
+        disabled={!isDisabledButton}
+      >
         <Text style={styles.buttonText}>Войти</Text>
       </TouchableOpacity>
     </View>
@@ -61,8 +85,9 @@ const styles = StyleSheet.create({
     color: '#C23232',
   },
   helper: {
-    paddingTop: 20,
-    textAlign: 'left',
+    paddingTop: 38,
+    paddingLeft: 20,
+    alignSelf: 'flex-start',
     fontSize: 16,
     color: '#4A7DFF',
     fontFamily: 'Merriweather_400Regular',
@@ -77,7 +102,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 60,
+    marginTop: 40,
     width: 320,
     maxHeight: 56,
     backgroundColor: '#C23232',
