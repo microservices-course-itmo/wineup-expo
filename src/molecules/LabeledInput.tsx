@@ -6,6 +6,7 @@ interface LabeledInputProps {
   onChangeText: React.Dispatch<React.SetStateAction<string>>
   secureTextEntry?: boolean
   isValid?: boolean
+  errorMessage?: string
 }
 
 function LabeledInput({
@@ -13,6 +14,7 @@ function LabeledInput({
   onChangeText,
   secureTextEntry,
   isValid = true,
+  errorMessage,
 }: LabeledInputProps): ReactElement<LabeledInputProps> {
   return (
     <View style={styles.container}>
@@ -26,6 +28,9 @@ function LabeledInput({
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
       />
+      <Text style={isValid ? { width: 0, height: 0 } : styles.failedLabel}>
+        {errorMessage}
+      </Text>
     </View>
   )
 }
@@ -38,6 +43,14 @@ const styles = StyleSheet.create({
     top: -28,
     fontSize: 16,
     color: '#888888',
+    fontFamily: 'Merriweather_400Regular',
+  },
+  failedLabel: {
+    position: 'absolute',
+    top: 57,
+    width: 320,
+    fontSize: 13,
+    color: '#C23232',
     fontFamily: 'Merriweather_400Regular',
   },
   container: {
