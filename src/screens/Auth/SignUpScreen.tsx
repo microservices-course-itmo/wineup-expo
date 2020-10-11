@@ -9,13 +9,13 @@ import { AppLoading } from 'expo'
 import LabeledInput from '../../molecules/LabeledInput'
 import { isEmail, isAllowedPassword } from '../../helpers'
 
-function RegistrationScreen(): ReactElement {
+function SignUpScreen(): ReactElement {
   const [userName, setUserName] = useState('')
   const [userEmail, setUserEmail] = useState('')
   const [userPassword, setUserPassword] = useState('')
 
-  const [isDisabledButton, setIsDisabledButton] = useState(false)
-  const buttonOpacity = isDisabledButton ? 1 : 0.4
+  const [isSignUpEnabled, setIsSignUpEnabled] = useState(false)
+  const buttonOpacity = isSignUpEnabled ? 1 : 0.4
   const isValidPassword = isAllowedPassword(userPassword)
   const isValidEmail = isEmail(userEmail)
   const errorMessagePassword =
@@ -23,12 +23,7 @@ function RegistrationScreen(): ReactElement {
   const errorMessageEmail = 'Неккоректный адрес эл. почты'
 
   useEffect(() => {
-    const noErrors = isValidPassword && isValidEmail
-    if (noErrors) {
-      setIsDisabledButton(true)
-    } else {
-      setIsDisabledButton(false)
-    }
+    setIsSignUpEnabled(isValidPassword && isValidEmail)
   }, [userEmail, userPassword, isValidPassword, isValidEmail])
 
   const [fontsLoaded] = useFonts({
@@ -66,7 +61,7 @@ function RegistrationScreen(): ReactElement {
       <TouchableOpacity
         onPress={onSubmit}
         style={[styles.buttonStyle, { opacity: buttonOpacity }]}
-        disabled={!isDisabledButton}
+        disabled={!isSignUpEnabled}
       >
         <Text style={styles.buttonText}>Зарегистрироваться</Text>
       </TouchableOpacity>
@@ -103,4 +98,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default RegistrationScreen
+export default SignUpScreen

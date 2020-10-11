@@ -13,8 +13,8 @@ function SignInScreen(): ReactElement {
   const [userEmail, getUserEmail] = useState('')
   const [userPassword, getUserPassword] = useState('')
 
-  const [isDisabledButton, setIsDisabledButton] = useState(false)
-  const buttonOpacity = isDisabledButton ? 1 : 0.4
+  const [isSignInEnabled, setIsSignInEnabled] = useState(false)
+  const buttonOpacity = isSignInEnabled ? 1 : 0.4
   const isValidPassword = isAllowedPassword(userPassword)
   const isValidEmail = isEmail(userEmail)
   const errorMessagePassword =
@@ -22,12 +22,7 @@ function SignInScreen(): ReactElement {
   const errorMessageEmail = 'Неккоректный адрес эл. почты'
 
   useEffect(() => {
-    const noErrors = isValidPassword && isValidEmail
-    if (noErrors) {
-      setIsDisabledButton(true)
-    } else {
-      setIsDisabledButton(false)
-    }
+    setIsSignInEnabled(isValidPassword && isValidEmail)
   }, [userEmail, userPassword, isValidPassword, isValidEmail])
 
   const [fontsLoaded] = useFonts({
@@ -68,7 +63,7 @@ function SignInScreen(): ReactElement {
       <TouchableOpacity
         onPress={onSubmit}
         style={[styles.buttonStyle, { opacity: buttonOpacity }]}
-        disabled={!isDisabledButton}
+        disabled={!isSignInEnabled}
       >
         <Text style={styles.buttonText}>Войти</Text>
       </TouchableOpacity>
