@@ -4,6 +4,7 @@ import { correctValueHandler } from '../advice/index'
 
 function displayHandler(resultValue: number, discount: number) {
   const corDiscount = correctValueHandler(discount)
+
   if (discount !== 0) {
     return (
       <View style={styles.container}>
@@ -12,6 +13,7 @@ function displayHandler(resultValue: number, discount: number) {
       </View>
     )
   }
+
   return (
     <View style={styles.container}>
       <Text>{resultValue}</Text>
