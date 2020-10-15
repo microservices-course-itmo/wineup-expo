@@ -13,7 +13,7 @@ describe('<WineTitle />', () => {
         volume={volume}
       />
     )
-    const volumeElement = getByText(volume.toString())
+    const volumeElement = getByText(`${volume}л`)
 
     expect(volumeElement).toBeDefined()
   })

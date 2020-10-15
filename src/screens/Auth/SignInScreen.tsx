@@ -6,7 +6,7 @@ import {
   Merriweather_700Bold,
 } from '@expo-google-fonts/merriweather'
 import { AppLoading } from 'expo'
-import LabeledInput from '../../molecules/LabeledInput'
+import Index from '../../molecules/LabeledInput'
 import { isEmail, isAllowedPassword } from '../../helpers'
 
 function SignInScreen(): ReactElement {
@@ -41,13 +41,13 @@ function SignInScreen(): ReactElement {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Вход</Text>
-      <LabeledInput
+      <Index
         label='Адрес эл. почты'
         onChangeText={getUserEmail}
         isValid={isValidEmail}
         errorMessage={errorMessageEmail}
       />
-      <LabeledInput
+      <Index
         label='Пароль'
         onChangeText={getUserPassword}
         secureTextEntry
