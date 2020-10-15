@@ -47,6 +47,7 @@
     "eslint-plugin-react-native": "^3.9.1",
     "husky": "^4.2.5",
     "jest": "^26.4.0",
+    "lint-staged": "^10.4.0",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
     "react-test-renderer": "^16.13.1",
@@ -55,8 +56,14 @@
   "private": true,
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && yarn lint"
+      "pre-commit": "pretty-quick --staged && lint-staged && yarn lint",
+      "pre-push": "CI=true yarn test"
     }
+  },
+  "lint-staged": {
+    "*.ts?(x)": [
+      "eslint --fix"
+    ]
   },
   "jest": {
     "preset": "react-native",
@@ -64,7 +71,19 @@
       "@testing-library/jest-native/extend-expect"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)"
+      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*|@expo-google-fonts/.*)"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
+    },
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "ts",
+      "tsx"
+    ],
+    "moduleDirectories": [
+      "node_modules"
     ]
   }
 }
