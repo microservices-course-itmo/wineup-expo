@@ -6,6 +6,7 @@ import {
   Merriweather_700Bold,
 } from '@expo-google-fonts/merriweather'
 import { AppLoading } from 'expo'
+import PhoneInput from 'react-native-phone-input'
 import LabeledInput from '../../molecules/LabeledInput'
 import { isEmail, isAllowedPassword } from '../../helpers'
 
@@ -44,6 +45,12 @@ function SignUpScreen(): ReactElement {
     <View style={styles.container}>
       <Text style={styles.header}>Регистрация</Text>
       <LabeledInput label='ФИО' onChangeText={setUserName} />
+      {/*<PhoneInput*/}
+      {/*  ref={ref => {*/}
+      {/*    this.phone = ref*/}
+      {/*  }}*/}
+      {/*  initialCountry='ru'*/}
+      {/*  textStyle={styles.phone}/>*/}
       <LabeledInput
         label='Адрес эл. почты'
         onChangeText={setUserEmail}
@@ -70,6 +77,14 @@ function SignUpScreen(): ReactElement {
 }
 
 const styles = StyleSheet.create({
+  phone: {
+    width: 320,
+    height: 56,
+    fontSize: 16,
+    borderRadius: 10,
+    borderWidth: 1,
+    paddingLeft: 10,
+  },
   header: {
     fontSize: 30,
     fontFamily: 'Merriweather_700Bold',

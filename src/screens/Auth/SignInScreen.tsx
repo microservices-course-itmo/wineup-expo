@@ -82,7 +82,8 @@ const styles = StyleSheet.create({
   helper: {
     paddingTop: 38,
     paddingLeft: 20,
-    alignSelf: 'flex-start',
+    // alignSelf: 'flex-start',
+    marginRight: 136,
     fontSize: 16,
     color: '#4A7DFF',
     fontFamily: 'Merriweather_400Regular',

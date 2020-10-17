@@ -28,7 +28,11 @@ function LabeledInput({
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
       />
-      <Text style={isValid ? { width: 0, height: 0 } : styles.failedLabel}>
+      <Text
+        style={
+          isValid ? { width: 0, height: 0, opacity: 0 } : styles.failedLabel
+        }
+      >
         {errorMessage}
       </Text>
     </View>
