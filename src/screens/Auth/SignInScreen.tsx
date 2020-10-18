@@ -7,23 +7,23 @@ import {
 } from '@expo-google-fonts/merriweather'
 import { AppLoading } from 'expo'
 import LabeledInput from '../../molecules/LabeledInput'
-import { isEmail, isAllowedPassword } from '../../helpers'
+import { isPhone, isAllowedPassword } from '../../helpers'
 
 function SignInScreen(): ReactElement {
-  const [userEmail, getUserEmail] = useState('')
+  const [userPhone, getUserPhone] = useState('')
   const [userPassword, getUserPassword] = useState('')
 
   const [isSignInEnabled, setIsSignInEnabled] = useState(false)
   const buttonOpacity = isSignInEnabled ? 1 : 0.4
   const isValidPassword = isAllowedPassword(userPassword)
-  const isValidEmail = isEmail(userEmail)
+  const isValidPhone = isPhone(userPhone)
   const errorMessagePassword =
     'Пароль должен содержать минимум 8 символов, хотя бы 1 букву и 1 цифру'
-  const errorMessageEmail = 'Неккоректный адрес эл. почты'
+  const errorMessagePhone = 'Некорректный номер телефона'
 
   useEffect(() => {
-    setIsSignInEnabled(isValidPassword && isValidEmail)
-  }, [userEmail, userPassword, isValidPassword, isValidEmail])
+    setIsSignInEnabled(isValidPassword && isValidPhone)
+  }, [userPhone, userPassword, isValidPassword, isValidPhone])
 
   const [fontsLoaded] = useFonts({
     Merriweather_400Regular,
@@ -35,17 +35,17 @@ function SignInScreen(): ReactElement {
   }
 
   const onSubmit = () => {
-    console.log(userEmail, userPassword)
+    console.log(userPhone, userPassword)
   }
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Вход</Text>
       <LabeledInput
-        label='Адрес эл. почты'
-        onChangeText={getUserEmail}
-        isValid={isValidEmail}
-        errorMessage={errorMessageEmail}
+        label='Телефон'
+        onChangeText={getUserPhone}
+        isValid={isValidPhone}
+        errorMessage={errorMessagePhone}
       />
       <LabeledInput
         label='Пароль'

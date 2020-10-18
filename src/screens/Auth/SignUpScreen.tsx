@@ -3,54 +3,74 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import {
   useFonts,
   Merriweather_400Regular,
-  Merriweather_700Bold,
+  Merriweather_700Bold
 } from '@expo-google-fonts/merriweather'
 import { AppLoading } from 'expo'
-import PhoneInput from 'react-native-phone-input'
 import LabeledInput from '../../molecules/LabeledInput'
-import { isEmail, isAllowedPassword } from '../../helpers'
+import { isName, isEmail, isAllowedPassword, isPhone } from '../../helpers'
 
 function SignUpScreen(): ReactElement {
   const [userName, setUserName] = useState('')
   const [userEmail, setUserEmail] = useState('')
+  const [userPhone, setUserPhone] = useState('')
   const [userPassword, setUserPassword] = useState('')
 
   const [isSignUpEnabled, setIsSignUpEnabled] = useState(false)
   const buttonOpacity = isSignUpEnabled ? 1 : 0.4
+  const isValidName = isName(userName)
   const isValidPassword = isAllowedPassword(userPassword)
   const isValidEmail = isEmail(userEmail)
+  const isValidPhone = isPhone(userPhone)
+  const errorMessageName = 'Введите Ваше имя'
   const errorMessagePassword =
     'Пароль должен содержать минимум 8 символов, хотя бы 1 букву и 1 цифру'
-  const errorMessageEmail = 'Неккоректный адрес эл. почты'
+  const errorMessageEmail = 'Некорректный адрес эл. почты'
+  const errorMessagePhone = 'Некорректный номер телефона'
 
   useEffect(() => {
-    setIsSignUpEnabled(isValidPassword && isValidEmail)
-  }, [userEmail, userPassword, isValidPassword, isValidEmail])
+    setIsSignUpEnabled(
+      isValidName && isValidPassword && isValidEmail && isValidPhone
+    )
+  }, [
+    userName,
+    userEmail,
+    userPassword,
+    userPhone,
+    isValidName,
+    isValidPassword,
+    isValidEmail,
+    isValidPhone
+  ])
 
   const [fontsLoaded] = useFonts({
     Merriweather_400Regular,
-    Merriweather_700Bold,
+    Merriweather_700Bold
   })
 
   if (!fontsLoaded) {
-    return <AppLoading />
+    return <AppLoading/>
   }
 
   const onSubmit = () => {
-    console.log(userName, userEmail, userPassword)
+    console.log(userName, userPhone, userEmail, userPassword)
     // fetch ? response.ok : response.error, return
   }
 
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Регистрация</Text>
-      <LabeledInput label='ФИО' onChangeText={setUserName} />
-      {/*<PhoneInput*/}
-      {/*  ref={ref => {*/}
-      {/*    this.phone = ref*/}
-      {/*  }}*/}
-      {/*  initialCountry='ru'*/}
-      {/*  textStyle={styles.phone}/>*/}
+      <LabeledInput
+        label='ФИО'
+        onChangeText={setUserName}
+        isValid={isValidName}
+        errorMessage={errorMessageName}
+      />
+      <LabeledInput
+        label='Телефон'
+        onChangeText={setUserPhone}
+        isValid={isValidPhone}
+        errorMessage={errorMessagePhone}
+      />
       <LabeledInput
         label='Адрес эл. почты'
         onChangeText={setUserEmail}
@@ -78,23 +98,25 @@ function SignUpScreen(): ReactElement {
 
 const styles = StyleSheet.create({
   phone: {
+    marginTop: 45,
     width: 320,
     height: 56,
     fontSize: 16,
     borderRadius: 10,
     borderWidth: 1,
     paddingLeft: 10,
+    borderColor: '#BCBCBC'
   },
   header: {
     fontSize: 30,
     fontFamily: 'Merriweather_700Bold',
-    color: '#C23232',
+    color: '#C23232'
   },
   container: {
     paddingTop: 136,
     flex: 1,
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   buttonStyle: {
     flex: 1,
@@ -104,13 +126,13 @@ const styles = StyleSheet.create({
     width: 320,
     maxHeight: 56,
     backgroundColor: '#C23232',
-    borderRadius: 10,
+    borderRadius: 10
   },
   buttonText: {
     fontSize: 20,
     color: '#fff',
-    fontFamily: 'Merriweather_400Regular',
-  },
+    fontFamily: 'Merriweather_400Regular'
+  }
 })
 
 export default SignUpScreen

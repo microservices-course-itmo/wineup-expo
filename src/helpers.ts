@@ -11,6 +11,17 @@ function containsLatinOnly(string: string): boolean {
 }
 
 /** @function
+ * @name isName
+ *
+ * Checks if the name exists and is not an empty string
+ *
+ * @param {string} name - string to check
+ * */
+export function isName(name: string): boolean {
+  return !(!name)
+}
+
+/** @function
  * @name isEmail
  * Returns true if string is a correct email
  *
@@ -25,6 +36,23 @@ export function isEmail(email: string): boolean {
   if (!email) return false
 
   return email.search(emailRegexp) === 0 && containsLatinOnly(email)
+}
+
+/** @function
+ * @name isPhone
+ * Returns true if string is a correct Russian phone number
+ *
+ * A Russian phone number contains 11 digits, the first is either 7 or 8.
+ * If the first digit is 7 it may also contain a '+' sign
+ *
+ * @param {string} phone - string to check
+ * */
+export function isPhone(phone: string): boolean {
+  const phoneRegexp = /\+?[7-8][0-9]{10}/
+
+  if (!phone) return false
+
+  return phone.search(phoneRegexp) === 0
 }
 
 /** @function
