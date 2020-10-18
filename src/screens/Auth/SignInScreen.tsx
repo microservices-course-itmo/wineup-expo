@@ -46,6 +46,8 @@ function SignInScreen(): ReactElement {
         onChangeText={getUserPhone}
         isValid={isValidPhone}
         errorMessage={errorMessagePhone}
+        maxLength={11}
+        keyBoardType='numeric'
       />
       <LabeledInput
         label='Пароль'
@@ -81,8 +83,6 @@ const styles = StyleSheet.create({
   },
   helper: {
     paddingTop: 38,
-    paddingLeft: 20,
-    // alignSelf: 'flex-start',
     marginRight: 136,
     fontSize: 16,
     color: '#4A7DFF',

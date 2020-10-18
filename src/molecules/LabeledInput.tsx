@@ -7,6 +7,8 @@ interface LabeledInputProps {
   secureTextEntry?: boolean
   isValid?: boolean
   errorMessage?: string
+  maxLength?: number
+  keyBoardType?: 'default' | 'numeric' | undefined
 }
 
 function LabeledInput({
@@ -15,6 +17,8 @@ function LabeledInput({
   secureTextEntry,
   isValid = true,
   errorMessage,
+  maxLength,
+  keyBoardType = 'default',
 }: LabeledInputProps): ReactElement<LabeledInputProps> {
   return (
     <View style={styles.container}>
@@ -27,14 +31,12 @@ function LabeledInput({
         ]}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
+        maxLength={maxLength}
+        keyboardType={keyBoardType}
       />
-      <Text
-        style={
-          isValid ? { width: 0, height: 0, opacity: 0 } : styles.failedLabel
-        }
-      >
-        {errorMessage}
-      </Text>
+      {isValid === false && (
+        <Text style={styles.failedLabel}>{errorMessage}</Text>
+      )}
     </View>
   )
 }
