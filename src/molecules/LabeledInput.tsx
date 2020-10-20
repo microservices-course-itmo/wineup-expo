@@ -5,22 +5,32 @@ interface LabeledInputProps {
   label: string
   onChangeText: React.Dispatch<React.SetStateAction<string>>
   secureTextEntry?: boolean
+  isValid?: boolean
+  errorMessage?: string
 }
 
 function LabeledInput({
   label,
   onChangeText,
   secureTextEntry,
+  isValid = true,
+  errorMessage,
 }: LabeledInputProps): ReactElement<LabeledInputProps> {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
       <TextInput
         selectionColor='#4E4E4E'
-        style={styles.input}
+        style={[
+          styles.input,
+          isValid ? styles.inputSuccessColor : styles.inputFailedColor,
+        ]}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
       />
+      <Text style={isValid ? { width: 0, height: 0 } : styles.failedLabel}>
+        {errorMessage}
+      </Text>
     </View>
   )
 }
@@ -35,6 +45,14 @@ const styles = StyleSheet.create({
     color: '#888888',
     fontFamily: 'Merriweather_400Regular',
   },
+  failedLabel: {
+    position: 'absolute',
+    top: 57,
+    width: 320,
+    fontSize: 13,
+    color: '#C23232',
+    fontFamily: 'Merriweather_400Regular',
+  },
   container: {
     marginTop: 45,
   },
@@ -44,7 +62,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#BCBCBC',
     paddingLeft: 10,
+  },
+  inputSuccessColor: {
+    borderColor: '#BCBCBC',
+  },
+  inputFailedColor: {
+    borderColor: '#C23232',
   },
 })

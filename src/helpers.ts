@@ -22,6 +22,8 @@ function containsLatinOnly(string: string): boolean {
 export function isEmail(email: string): boolean {
   const emailRegexp = /([a-zA-Z0-9._-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,})/
 
+  if (!email) return false
+
   return email.search(emailRegexp) === 0 && containsLatinOnly(email)
 }
 
@@ -35,6 +37,8 @@ export function isEmail(email: string): boolean {
  * */
 export function isAllowedPassword(password: string): boolean {
   const passwordRegexp = /(?:.*[^А-Яа-яЁё]*)(?=^.{8,}$)(?=.*[a-z])((?=.*[0-9])|(?=.*[A-Z]))/
+
+  if (!password) return false
 
   return password.search(passwordRegexp) === 0
 }
