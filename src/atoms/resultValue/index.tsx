@@ -3,13 +3,13 @@ import { View, Text, StyleSheet } from 'react-native'
 import { correctValueHandler } from '../advice/index'
 
 function displayHandler(resultValue: number, discount: number) {
-  const corDiscount = correctValueHandler(discount)
+  const correctDiscount = correctValueHandler(discount)
 
   if (discount !== 0) {
     return (
       <View style={styles.container}>
         <Text style={styles.value}>{resultValue}</Text>
-        <Text style={styles.discount}>{` -${corDiscount}%`}</Text>
+        <Text style={styles.discount}>{` -${correctDiscount}%`}</Text>
       </View>
     )
   }
