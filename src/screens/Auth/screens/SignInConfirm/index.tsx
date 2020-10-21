@@ -3,11 +3,11 @@ import { Button, View } from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack'
 
 import { TParamList } from 'screens/Auth/types'
-import { AUTH_ROUTES } from 'libs/constants/routes'
+import { ROUTES } from 'libs/constants/routes/auth'
 
 import styles from './styles'
 
-export type TProps = StackScreenProps<TParamList, AUTH_ROUTES.SIGN_IN_CONFIRM>
+export type TProps = StackScreenProps<TParamList, ROUTES.SIGN_IN_CONFIRM>
 
 const SignInConfirmScreen: React.FC<TProps> = ({ navigation }) => {
   return (
@@ -15,7 +15,7 @@ const SignInConfirmScreen: React.FC<TProps> = ({ navigation }) => {
       <Button title='Go to back' onPress={() => navigation.goBack()} />
       <Button
         title='Go to SignUp'
-        onPress={() => navigation.navigate(AUTH_ROUTES.SIGN_UP)}
+        onPress={() => navigation.navigate(ROUTES.SIGN_UP)}
       />
     </View>
   )

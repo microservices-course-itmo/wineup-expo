@@ -1,9 +1,9 @@
-import { AUTH_ROUTES } from 'libs/constants/routes'
+import { ROUTES } from 'libs/constants/routes/auth'
 
 export type TParamList = {
-  [AUTH_ROUTES.CONFIRM_AGE]: undefined
-  [AUTH_ROUTES.AGE_DENIED]: undefined
-  [AUTH_ROUTES.SIGN_IN]: undefined
-  [AUTH_ROUTES.SIGN_IN_CONFIRM]: undefined
-  [AUTH_ROUTES.SIGN_UP]: undefined
+  [ROUTES.CONFIRM_AGE]: undefined
+  [ROUTES.AGE_DENIED]: undefined
+  [ROUTES.SIGN_IN]: undefined
+  [ROUTES.SIGN_IN_CONFIRM]: undefined
+  [ROUTES.SIGN_UP]: undefined
 }

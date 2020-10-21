@@ -12,11 +12,11 @@ import { isEmail, isAllowedPassword } from 'libs/helpers'
 import LabeledInput from 'components/TextInput'
 
 import { TParamList } from 'screens/Auth/types'
-import { AUTH_ROUTES } from 'libs/constants/routes'
+import { ROUTES } from 'libs/constants/routes/auth'
 
 import styles from './styles'
 
-export type TProps = StackScreenProps<TParamList, AUTH_ROUTES.SIGN_IN>
+export type TProps = StackScreenProps<TParamList, ROUTES.SIGN_IN>
 
 const SignInScreen: React.FC<TProps> = ({ navigation }) => {
   const [userEmail, getUserEmail] = useState('')
@@ -45,7 +45,7 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
 
   const onSubmit = () => {
     console.log(userEmail, userPassword)
-    navigation.push(AUTH_ROUTES.SIGN_IN_CONFIRM)
+    navigation.push(ROUTES.SIGN_IN_CONFIRM)
   }
 
   return (

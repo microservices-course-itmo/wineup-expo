@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import { AUTH_ROUTES } from 'libs/constants/routes'
+import { ROUTES } from 'libs/constants/routes/auth'
 
 import SignUpScreen from './screens/SignUp'
 import SignInScreen from './screens/SignIn'
@@ -14,17 +14,14 @@ const Stack = createStackNavigator()
 const AuthNavigator: React.FC = () => {
   return (
     <Stack.Navigator>
+      <Stack.Screen name={ROUTES.CONFIRM_AGE} component={ConfirmAgeScreen} />
+      <Stack.Screen name={ROUTES.AGE_DENIED} component={AgeDeniedScreen} />
+      <Stack.Screen name={ROUTES.SIGN_IN} component={SignInScreen} />
       <Stack.Screen
-        name={AUTH_ROUTES.CONFIRM_AGE}
-        component={ConfirmAgeScreen}
-      />
-      <Stack.Screen name={AUTH_ROUTES.AGE_DENIED} component={AgeDeniedScreen} />
-      <Stack.Screen name={AUTH_ROUTES.SIGN_IN} component={SignInScreen} />
-      <Stack.Screen
-        name={AUTH_ROUTES.SIGN_IN_CONFIRM}
+        name={ROUTES.SIGN_IN_CONFIRM}
         component={SignInConfirmScreen}
       />
-      <Stack.Screen name={AUTH_ROUTES.SIGN_UP} component={SignUpScreen} />
+      <Stack.Screen name={ROUTES.SIGN_UP} component={SignUpScreen} />
     </Stack.Navigator>
   )
 }

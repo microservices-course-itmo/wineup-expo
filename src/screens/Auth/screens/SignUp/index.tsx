@@ -12,11 +12,11 @@ import { isEmail, isAllowedPassword } from 'libs/helpers'
 import LabeledInput from 'components/TextInput'
 
 import { TParamList } from 'screens/Auth/types'
-import { AUTH_ROUTES } from 'libs/constants/routes'
+import { ROUTES } from 'libs/constants/routes/auth'
 
 import styles from './styles'
 
-export type TProps = StackScreenProps<TParamList, AUTH_ROUTES.SIGN_UP>
+export type TProps = StackScreenProps<TParamList, ROUTES.SIGN_UP>
 
 const SignUpScreen: React.FC<TProps> = () => {
   const [userName, setUserName] = useState('')
