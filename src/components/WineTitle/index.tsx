@@ -9,7 +9,7 @@ export type TProps = {
   volume: number
 }
 
-const WineTitle: React.FC<TProps> = ({ name, description, volume }: TProps) => {
+const WineTitle: React.FC<TProps> = ({ name, description, volume }) => {
   return (
     <View>
       <Text style={styles.wineName}>{name}</Text>

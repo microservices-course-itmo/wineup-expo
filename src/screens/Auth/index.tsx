@@ -1,22 +1,30 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
+import { AUTH_ROUTES } from 'libs/constants/routes'
+
 import SignUpScreen from './screens/SignUp'
 import SignInScreen from './screens/SignIn'
 import ConfirmAgeScreen from './screens/ConfirmAge'
+import AgeDeniedScreen from './screens/AgeDenied'
+import SignInConfirmScreen from './screens/SignInConfirm'
 
 const Stack = createStackNavigator()
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-type TOuterProps = {}
-type TProps = TOuterProps
-
-const AuthNavigator: React.FC<TProps> = () => {
+const AuthNavigator: React.FC = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name='ConfirmAge' component={ConfirmAgeScreen} />
-      <Stack.Screen name='Login' component={SignInScreen} />
-      <Stack.Screen name='Register' component={SignUpScreen} />
+      <Stack.Screen
+        name={AUTH_ROUTES.CONFIRM_AGE}
+        component={ConfirmAgeScreen}
+      />
+      <Stack.Screen name={AUTH_ROUTES.AGE_DENIED} component={AgeDeniedScreen} />
+      <Stack.Screen name={AUTH_ROUTES.SIGN_IN} component={SignInScreen} />
+      <Stack.Screen
+        name={AUTH_ROUTES.SIGN_IN_CONFIRM}
+        component={SignInConfirmScreen}
+      />
+      <Stack.Screen name={AUTH_ROUTES.SIGN_UP} component={SignUpScreen} />
     </Stack.Navigator>
   )
 }

@@ -17,7 +17,7 @@ const TextInput: React.FC<TProps> = ({
   secureTextEntry,
   isValid = true,
   errorMessage,
-}: TProps) => {
+}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>

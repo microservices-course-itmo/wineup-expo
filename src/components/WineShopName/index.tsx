@@ -9,11 +9,7 @@ export type TProps = {
   description: string
 }
 
-const WineShopName: React.FC<TProps> = ({
-  image,
-  name,
-  description,
-}: TProps) => {
+const WineShopName: React.FC<TProps> = ({ image, name, description }) => {
   return (
     <View style={styles.container}>
       <View style={styles.flexedContainer}>
