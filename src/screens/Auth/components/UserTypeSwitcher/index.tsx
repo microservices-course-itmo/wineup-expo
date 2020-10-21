@@ -1,16 +1,7 @@
 import React, { useState } from 'react'
-import { View, Switch, StyleSheet, Text } from 'react-native'
+import { View, Switch, Text } from 'react-native'
 
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    position: 'absolute',
-    top: '15%',
-  },
-})
+import styles from './styles'
 
 const UserTypeSwitcher: React.FC = () => {
   const [isEnabled, setIsEnabled] = useState(false)

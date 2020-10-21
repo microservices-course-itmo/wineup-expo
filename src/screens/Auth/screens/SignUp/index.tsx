@@ -1,15 +1,24 @@
-import React, { useState, ReactElement, useEffect } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { Text, View, TouchableOpacity } from 'react-native'
 import {
   useFonts,
   Merriweather_400Regular,
   Merriweather_700Bold,
 } from '@expo-google-fonts/merriweather'
 import { AppLoading } from 'expo'
-import LabeledInput from '../../molecules/LabeledInput'
-import { isEmail, isAllowedPassword } from '../../helpers'
+import { StackScreenProps } from '@react-navigation/stack'
 
-function SignUpScreen(): ReactElement {
+import { isEmail, isAllowedPassword } from 'libs/helpers'
+import LabeledInput from 'components/TextInput'
+
+import { TParamList } from 'screens/Auth/types'
+
+import styles from './styles'
+
+export type TOuterProps = StackScreenProps<TParamList, 'Register'>
+type TProps = TOuterProps
+
+const SignUpScreen: React.FC<TProps> = () => {
   const [userName, setUserName] = useState('')
   const [userEmail, setUserEmail] = useState('')
   const [userPassword, setUserPassword] = useState('')
@@ -68,34 +77,5 @@ function SignUpScreen(): ReactElement {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  header: {
-    fontSize: 30,
-    fontFamily: 'Merriweather_700Bold',
-    color: '#C23232',
-  },
-  container: {
-    paddingTop: 136,
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  buttonStyle: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 60,
-    width: 320,
-    maxHeight: 56,
-    backgroundColor: '#C23232',
-    borderRadius: 10,
-  },
-  buttonText: {
-    fontSize: 20,
-    color: '#fff',
-    fontFamily: 'Merriweather_400Regular',
-  },
-})
 
 export default SignUpScreen

@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import HomeScreen from './screens/Home'
 import SettingsScreen from './screens/Settings'
-import AuthWrapper from './screens/Auth/AuthWrapper'
+import AuthNavigator from './screens/Auth'
 
 const Tab = createBottomTabNavigator()
 
@@ -18,7 +18,7 @@ const App: React.FC = () => {
           <Tab.Screen name='Settings' component={SettingsScreen} />
         </Tab.Navigator>
       ) : (
-        <AuthWrapper />
+        <AuthNavigator />
       )}
     </NavigationContainer>
   )
