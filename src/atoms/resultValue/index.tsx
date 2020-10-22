@@ -9,7 +9,7 @@ function displayHandler(resultValue: number, discount: number) {
     return (
       <View style={styles.container}>
         <Text style={styles.value}>{resultValue}</Text>
-        <Text style={styles.discount}>{` -${correctDiscount}%`}</Text>
+        <Text style={styles.discount}> -{correctDiscount}%</Text>
       </View>
     )
   }

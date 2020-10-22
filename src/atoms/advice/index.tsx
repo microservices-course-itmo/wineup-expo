@@ -13,11 +13,9 @@ export function correctValueHandler(value: number): number {
 const Advice: React.FunctionComponent<{ ratioAdvice: number }> = ({
   ratioAdvice,
 }) => {
-  const displayData = `Подходит Вам на ${correctValueHandler(ratioAdvice)}%`
-
   return (
     <View style={styles.adviceContainer} testID='advice-test'>
-      <Text>{displayData}</Text>
+      <Text>Подходит Вам на {correctValueHandler(ratioAdvice)}%</Text>
     </View>
   )
 }
