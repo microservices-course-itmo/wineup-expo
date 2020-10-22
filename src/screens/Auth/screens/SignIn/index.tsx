@@ -12,7 +12,7 @@ import { isEmail, isAllowedPassword } from 'libs/helpers'
 import LabeledInput from 'components/TextInput'
 
 import { TParamList } from 'screens/Auth/types'
-import { ROUTES } from 'libs/constants/routes/auth'
+import ROUTES from 'libs/constants/routes/auth'
 
 import styles from './styles'
 

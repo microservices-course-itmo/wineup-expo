@@ -1,7 +1,7 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
 
-import { ROUTES } from 'libs/constants/routes/auth'
+import ROUTES from 'libs/constants/routes/auth'
 
 import SignUpScreen from './screens/SignUp'
 import SignInScreen from './screens/SignIn'

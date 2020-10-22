@@ -1,4 +1,4 @@
-export const ROUTES = {
+const ROUTES = {
   CONFIRM_AGE: 'ConfirmAge',
   AGE_DENIED: 'AgeDenied',
   SIGN_IN: 'SignIn',
@@ -7,3 +7,5 @@ export const ROUTES = {
 } as const
 
 export type TRoutes = keyof typeof ROUTES
+
+export default ROUTES
