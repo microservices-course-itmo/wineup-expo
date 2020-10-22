@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { FontAwesome } from '@expo/vector-icons'
 import { TouchableOpacity, View } from 'react-native'
 
-interface LikeProps {
+export interface LikeProps {
   liked: boolean
 }
 
