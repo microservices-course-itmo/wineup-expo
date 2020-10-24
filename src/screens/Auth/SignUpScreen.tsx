@@ -7,24 +7,25 @@ import {
 } from '@expo-google-fonts/merriweather'
 import { AppLoading } from 'expo'
 import LabeledInput from '../../molecules/LabeledInput'
-import { isEmail, isAllowedPassword } from '../../helpers'
+import { isName } from '../../helpers'
 
 function SignUpScreen(): ReactElement {
   const [userName, setUserName] = useState('')
-  const [userEmail, setUserEmail] = useState('')
-  const [userPassword, setUserPassword] = useState('')
+  const [userDate, setUserDate] = useState('')
+  const [userCity, setUserCity] = useState('')
 
-  const [isSignUpEnabled, setIsSignUpEnabled] = useState(false)
+  const [isSignUpEnabled, setIsSignUpEnabled] = useState<boolean | undefined>(
+    false
+  )
   const buttonOpacity = isSignUpEnabled ? 1 : 0.4
-  const isValidPassword = isAllowedPassword(userPassword)
-  const isValidEmail = isEmail(userEmail)
-  const errorMessagePassword =
-    'Пароль должен содержать минимум 8 символов, хотя бы 1 букву и 1 цифру'
-  const errorMessageEmail = 'Неккоректный адрес эл. почты'
+  const isValidName = isName(userName)
+  const isDateFill = true
+  const isCityFill = true
+  const errorMessageName = '*Формат от 2 до 15 букв, не содержащих символов'
 
   useEffect(() => {
-    setIsSignUpEnabled(isValidPassword && isValidEmail)
-  }, [userEmail, userPassword, isValidPassword, isValidEmail])
+    setIsSignUpEnabled(isValidName && isDateFill && isCityFill)
+  }, [userName, isValidName, userDate, userCity])
 
   const [fontsLoaded] = useFonts({
     Merriweather_400Regular,
@@ -36,34 +37,37 @@ function SignUpScreen(): ReactElement {
   }
 
   const onSubmit = () => {
-    console.log(userName, userEmail, userPassword)
+    console.log(userName, userDate, userCity)
     // fetch ? response.ok : response.error, return
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Регистрация</Text>
-      <LabeledInput label='ФИО' onChangeText={setUserName} />
+      <Text style={styles.header}>Введите данные</Text>
       <LabeledInput
-        label='Адрес эл. почты'
-        onChangeText={setUserEmail}
-        isValid={isValidEmail}
-        errorMessage={errorMessageEmail}
+        value={userName}
+        label='Введите ваше имя'
+        onChangeText={setUserName}
+        isValid={isValidName}
+        errorMessage={errorMessageName}
+        maxLength={15}
       />
       <LabeledInput
-        label='Пароль'
-        onChangeText={setUserPassword}
-        secureTextEntry
-        isValid={isValidPassword}
-        errorMessage={errorMessagePassword}
+        value={userName}
+        label='Введите дату рождения'
+        onChangeText={setUserDate}
       />
-
+      <LabeledInput
+        value={userName}
+        label='Введите ваш город'
+        onChangeText={setUserCity}
+      />
       <TouchableOpacity
         onPress={onSubmit}
         style={[styles.buttonStyle, { opacity: buttonOpacity }]}
         disabled={!isSignUpEnabled}
       >
-        <Text style={styles.buttonText}>Зарегистрироваться</Text>
+        <Text style={styles.buttonText}>Войти</Text>
       </TouchableOpacity>
     </View>
   )

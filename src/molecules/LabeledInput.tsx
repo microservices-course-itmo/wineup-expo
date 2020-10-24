@@ -1,21 +1,33 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useState } from 'react'
 import { StyleSheet, Text, TextInput, View } from 'react-native'
 
 interface LabeledInputProps {
+  value: string
   label: string
   onChangeText: React.Dispatch<React.SetStateAction<string>>
   secureTextEntry?: boolean
   isValid?: boolean
   errorMessage?: string
+  maxLength?: number
 }
 
 function LabeledInput({
+  value,
   label,
   onChangeText,
   secureTextEntry,
   isValid = true,
   errorMessage,
+  maxLength,
 }: LabeledInputProps): ReactElement<LabeledInputProps> {
+  const [isFocused, setIsFocused] = useState(false)
+  const handleFocus = () => {
+    setIsFocused(true)
+  }
+  const handleBlur = () => {
+    setIsFocused(false)
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
@@ -25,12 +37,23 @@ function LabeledInput({
           styles.input,
           isValid ? styles.inputSuccessColor : styles.inputFailedColor,
         ]}
+        value={value}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
+        maxLength={maxLength}
       />
-      <Text style={isValid ? { width: 0, height: 0 } : styles.failedLabel}>
-        {errorMessage}
-      </Text>
+      {isFocused === true && (
+        <Text
+          style={[
+            styles.formatLabel,
+            isValid ? { color: '#A3A3A3' } : { color: '#C23232' },
+          ]}
+        >
+          {errorMessage}
+        </Text>
+      )}
     </View>
   )
 }
@@ -45,12 +68,11 @@ const styles = StyleSheet.create({
     color: '#888888',
     fontFamily: 'Merriweather_400Regular',
   },
-  failedLabel: {
+  formatLabel: {
     position: 'absolute',
     top: 57,
     width: 320,
-    fontSize: 13,
-    color: '#C23232',
+    fontSize: 10,
     fontFamily: 'Merriweather_400Regular',
   },
   container: {
@@ -69,5 +91,6 @@ const styles = StyleSheet.create({
   },
   inputFailedColor: {
     borderColor: '#C23232',
+    color: '#C23232',
   },
 })
