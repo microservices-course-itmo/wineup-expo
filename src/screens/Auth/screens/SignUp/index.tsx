@@ -8,11 +8,11 @@ import {
 import { AppLoading } from 'expo'
 import { StackScreenProps } from '@react-navigation/stack'
 
-import { isEmail, isAllowedPassword } from '@libs/helpers'
-import LabeledInput from '@molecules/TextInput'
+import { isEmail, isAllowedPassword } from '../../../../libs/helpers'
+import LabeledInput from '../../../../molecules/TextInput'
 
-import { TParamList } from '@screens/Auth/types'
-import ROUTES from '@libs/constants/routes/auth'
+import { TParamList } from '../../types'
+import ROUTES from '../../../../libs/constants/routes/auth'
 
 import styles from './styles'
 

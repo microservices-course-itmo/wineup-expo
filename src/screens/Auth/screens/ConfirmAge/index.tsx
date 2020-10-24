@@ -2,8 +2,8 @@ import React from 'react'
 import { Button, View } from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack'
 
-import { TParamList } from '@screens/Auth/types'
-import ROUTES from '@libs/constants/routes/auth'
+import { TParamList } from '../../types'
+import ROUTES from '../../../../libs/constants/routes/auth'
 
 import styles from './styles'
 

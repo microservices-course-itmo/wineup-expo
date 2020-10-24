@@ -8,12 +8,6 @@
     "skipLibCheck": true,
     "resolveJsonModule": true,
     "strict": true,
-    "baseUrl": "src",
-    "paths": {
-      "@molecules": ["molecules"],
-      "@atoms": ["atoms"],
-      "@screens": ["screens"],
-      "@libs": ["libs"]
-    }
+    "baseUrl": "./"
   }
 }
