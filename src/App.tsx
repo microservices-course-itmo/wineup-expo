@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+
 import HomeScreen from './screens/Home'
 import SettingsScreen from './screens/Settings'
 import AuthNavigator from './screens/Auth'

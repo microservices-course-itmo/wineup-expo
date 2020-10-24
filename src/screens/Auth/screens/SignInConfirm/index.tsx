@@ -2,12 +2,12 @@ import React from 'react'
 import { Button, View } from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack'
 
-import { TParamList } from 'screens/Auth/types'
-import ROUTES from 'libs/constants/routes/auth'
+import { TParamList } from '@screens/Auth/types'
+import ROUTES from '@libs/constants/routes/auth'
 
 import styles from './styles'
 
-export type TProps = StackScreenProps<TParamList, ROUTES.SIGN_IN_CONFIRM>
+export type TProps = StackScreenProps<TParamList, typeof ROUTES.SIGN_IN_CONFIRM>
 
 const SignInConfirmScreen: React.FC<TProps> = ({ navigation }) => {
   return (
