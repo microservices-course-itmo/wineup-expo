@@ -7,8 +7,9 @@ import {
 } from '@expo-google-fonts/merriweather'
 import { AppLoading } from 'expo'
 import LabeledInput from '../../molecules/LabeledInput'
-import { isName } from '../../helpers'
+import { isName, City } from '../../helpers'
 import LabeledDatePicker from '../../molecules/LabeledDatePicker'
+import LabeledPicker from '../../molecules/LabeledPicker'
 
 function SignUpScreen(): ReactElement {
   const [userName, setUserName] = useState('')
@@ -18,9 +19,7 @@ function SignUpScreen(): ReactElement {
   maximumDate.setFullYear(maximumDate.getFullYear() - 18)
   const [userDate, setUserDate] = useState(maximumDate)
 
-  const [userCity, setUserCity] = useState('')
-
-  setUserCity('Москва')
+  const [userCity, setUserCity] = useState<City>('Москва')
 
   const [isSignUpEnabled, setIsSignUpEnabled] = useState<boolean | undefined>(
     false
@@ -29,7 +28,7 @@ function SignUpScreen(): ReactElement {
 
   const isValidName = isName(userName)
   const [isDateFilled, setIsDateFilled] = useState(false)
-  const isCityFilled = true
+  const [isCityFilled, setIsCityFilled] = useState(false)
   const errorMessageName = '*Формат от 2 до 15 букв, не содержащих символов'
 
   useEffect(() => {
@@ -69,6 +68,12 @@ function SignUpScreen(): ReactElement {
         hasFilled={isDateFilled}
         onFill={setIsDateFilled}
       />
+      <LabeledPicker
+        label='Введите ваш город'
+        onChange={setUserCity}
+        hasFilled={isCityFilled}
+        onFill={setIsCityFilled}
+      />
       <TouchableOpacity
         onPress={onSubmit}
         style={[styles.buttonStyle, { opacity: buttonOpacity }]}
@@ -82,12 +87,12 @@ function SignUpScreen(): ReactElement {
 
 const styles = StyleSheet.create({
   header: {
-    fontSize: 30,
+    fontSize: 24,
     fontFamily: 'Merriweather_700Bold',
     color: '#C23232',
   },
   container: {
-    paddingTop: 136,
+    paddingTop: 125,
     flex: 1,
     alignItems: 'center',
     backgroundColor: 'white',
@@ -103,18 +108,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 16,
     color: '#fff',
     fontFamily: 'Merriweather_400Regular',
-  },
-  input: {
-    marginTop: 45,
-    width: 320,
-    height: 56,
-    fontSize: 16,
-    borderRadius: 10,
-    borderWidth: 1,
-    paddingLeft: 10,
   },
 })
 

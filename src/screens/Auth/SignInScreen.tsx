@@ -42,12 +42,14 @@ function SignInScreen(): ReactElement {
     <View style={styles.container}>
       <Text style={styles.header}>Вход</Text>
       <LabeledInput
+        value={userEmail}
         label='Адрес эл. почты'
         onChangeText={getUserEmail}
         isValid={isValidEmail}
         errorMessage={errorMessageEmail}
       />
       <LabeledInput
+        value={userPassword}
         label='Пароль'
         onChangeText={getUserPassword}
         secureTextEntry

@@ -35,6 +35,28 @@ const styles = StyleSheet.create({
     borderColor: '#C23232',
     color: '#C23232',
   },
+  dropdownContainer: {
+    width: 320,
+    height: 56,
+  },
+  dropdownStyle: {
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderColor: '#BCBCBC',
+  },
+  dropdownLabel: {
+    textAlign: 'center',
+    fontSize: 16,
+  },
+  dropdownItems: {
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+  },
+  dropdownArrow: {
+    display: 'none',
+  },
 })
 
 export default styles

@@ -3,7 +3,7 @@ import { Text, TouchableOpacity, View } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import styles from './styles'
 
-interface LabeledInputProps {
+interface DatePickerProps {
   value: Date
   label: string
   onChange: React.Dispatch<React.SetStateAction<Date>>
@@ -19,7 +19,7 @@ function LabeledDatePicker({
   maximumDate,
   hasFilled,
   onFill,
-}: LabeledInputProps): ReactElement<LabeledInputProps> {
+}: DatePickerProps): ReactElement<DatePickerProps> {
   const [showPicker, setShowPicker] = useState(false)
   const showDatePicker = () => {
     setShowPicker(true)

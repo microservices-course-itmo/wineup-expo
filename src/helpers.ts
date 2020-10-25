@@ -57,3 +57,5 @@ export function isAllowedPassword(password: string): boolean {
 
   return password.search(passwordRegexp) === 0
 }
+
+export type City = 'Москва' | 'Санкт-Петербург'
