@@ -6,11 +6,11 @@ import {
   Merriweather_700Bold,
 } from '@expo-google-fonts/merriweather'
 import { AppLoading } from 'expo'
-import LabeledInput from '../../molecules/LabeledInput'
 import { isName, City } from '../../helpers'
-import LabeledDatePicker from '../../molecules/LabeledDatePicker'
-import LabeledDropdown from '../../molecules/LabeledDropdown'
-import ConsentCheckBox from '../../molecules/ConsentCheckBox'
+import LabeledInput from '../../molecules/Auth/LabeledInput'
+import LabeledDatePicker from '../../molecules/Auth/LabeledDatePicker'
+import LabeledDropdown from '../../molecules/Auth/LabeledDropdown'
+import ConsentCheckBox from '../../molecules/Auth/ConsentCheckBox'
 
 function SignUpScreen(): ReactElement {
   const [userName, setUserName] = useState('')

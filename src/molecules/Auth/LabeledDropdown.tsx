@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react'
 import { Text, View } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
 import styles from './styles'
-import { City } from '../helpers'
+import { City } from '../../helpers'
 
 interface PickerProps {
   label: string

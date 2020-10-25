@@ -6,7 +6,7 @@ import {
   Merriweather_700Bold,
 } from '@expo-google-fonts/merriweather'
 import { AppLoading } from 'expo'
-import LabeledInput from '../../molecules/LabeledInput'
+import LabeledInput from '../../molecules/Auth/LabeledInput'
 import { isEmail, isAllowedPassword } from '../../helpers'
 
 function SignInScreen(): ReactElement {
