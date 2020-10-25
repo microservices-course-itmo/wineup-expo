@@ -8,24 +8,33 @@ import {
 import { AppLoading } from 'expo'
 import LabeledInput from '../../molecules/LabeledInput'
 import { isName } from '../../helpers'
+import LabeledDatePicker from '../../molecules/LabeledDatePicker'
 
 function SignUpScreen(): ReactElement {
   const [userName, setUserName] = useState('')
-  const [userDate, setUserDate] = useState('')
+
+  const maximumDate = new Date()
+
+  maximumDate.setFullYear(maximumDate.getFullYear() - 18)
+  const [userDate, setUserDate] = useState(maximumDate)
+
   const [userCity, setUserCity] = useState('')
+
+  setUserCity('Москва')
 
   const [isSignUpEnabled, setIsSignUpEnabled] = useState<boolean | undefined>(
     false
   )
   const buttonOpacity = isSignUpEnabled ? 1 : 0.4
+
   const isValidName = isName(userName)
-  const isDateFill = true
-  const isCityFill = true
+  const [isDateFilled, setIsDateFilled] = useState(false)
+  const isCityFilled = true
   const errorMessageName = '*Формат от 2 до 15 букв, не содержащих символов'
 
   useEffect(() => {
-    setIsSignUpEnabled(isValidName && isDateFill && isCityFill)
-  }, [userName, isValidName, userDate, userCity])
+    setIsSignUpEnabled(isValidName && isDateFilled && isCityFilled)
+  }, [userName, userDate, userCity, isValidName, isDateFilled, isCityFilled])
 
   const [fontsLoaded] = useFonts({
     Merriweather_400Regular,
@@ -52,15 +61,13 @@ function SignUpScreen(): ReactElement {
         errorMessage={errorMessageName}
         maxLength={15}
       />
-      <LabeledInput
-        value={userName}
+      <LabeledDatePicker
+        value={userDate}
         label='Введите дату рождения'
-        onChangeText={setUserDate}
-      />
-      <LabeledInput
-        value={userName}
-        label='Введите ваш город'
-        onChangeText={setUserCity}
+        onChange={setUserDate}
+        maximumDate={maximumDate}
+        hasFilled={isDateFilled}
+        onFill={setIsDateFilled}
       />
       <TouchableOpacity
         onPress={onSubmit}
@@ -99,6 +106,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#fff',
     fontFamily: 'Merriweather_400Regular',
+  },
+  input: {
+    marginTop: 45,
+    width: 320,
+    height: 56,
+    fontSize: 16,
+    borderRadius: 10,
+    borderWidth: 1,
+    paddingLeft: 10,
   },
 })
 
