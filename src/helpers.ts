@@ -11,14 +11,30 @@ function containsLatinOnly(string: string): boolean {
 }
 
 /** @function
- * @name isName
+ * @name isCode
  *
- * Checks if the name exists and is not an empty string
+ * Checks if the confirmation code is a six digit number
  *
- * @param {string} name - string to check
+ * @param {string} code - string to check
  * */
-export function isName(name: string): boolean {
-  return !(!name)
+export function isCode(code: string): boolean {
+  if (!code) return true
+
+  return code.length === 6
+}
+
+/** @function
+ * @name isRightCode
+ *
+ * Checks if the confirmation code is the same as the right code from back-end
+ * Right now the right code is 123456
+ *
+ * @param {string} code - string to check
+ */
+export function isRightCode(code: string): boolean {
+  if (code.length < 6) return true
+
+  return code === '123456'
 }
 
 /** @function
@@ -33,7 +49,7 @@ export function isName(name: string): boolean {
 export function isEmail(email: string): boolean {
   const emailRegexp = /([a-zA-Z0-9._-]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,})/
 
-  if (!email) return false
+  if (!email) return true
 
   return email.search(emailRegexp) === 0 && containsLatinOnly(email)
 }
@@ -50,7 +66,7 @@ export function isEmail(email: string): boolean {
 export function isPhone(phone: string): boolean {
   const phoneRegexp = /\+?[7-8][0-9]{10}/
 
-  if (!phone) return false
+  if (!phone) return true
 
   return phone.search(phoneRegexp) === 0
 }
@@ -66,7 +82,7 @@ export function isPhone(phone: string): boolean {
 export function isAllowedPassword(password: string): boolean {
   const passwordRegexp = /(?:.*[^А-Яа-яЁё]*)(?=^.{8,}$)(?=.*[a-z])((?=.*[0-9])|(?=.*[A-Z]))/
 
-  if (!password) return false
+  if (!password) return true
 
   return password.search(passwordRegexp) === 0
 }
