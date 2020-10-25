@@ -11,7 +11,7 @@ interface PickerProps {
   onFill: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function LabeledPicker({
+function LabeledDropdown({
   label,
   onChange,
   hasFilled,
@@ -40,10 +40,10 @@ function LabeledPicker({
         defaultValue='Москва'
         containerStyle={styles.dropdownContainer}
         style={styles.dropdownStyle}
-        labelStyle={[
-          styles.dropdownLabel,
-          hasFilled ? { color: '#000000' } : { color: '#A3A3A3' },
-        ]}
+        labelStyle={styles.dropdownLabel}
+        selectedLabelStyle={
+          hasFilled ? { color: '#000000' } : { color: '#A3A3A3' }
+        }
         dropDownStyle={styles.dropdownItems}
         onChangeItem={(item) => handleChange(item.value)}
       />
@@ -51,4 +51,4 @@ function LabeledPicker({
   )
 }
 
-export default LabeledPicker
+export default LabeledDropdown

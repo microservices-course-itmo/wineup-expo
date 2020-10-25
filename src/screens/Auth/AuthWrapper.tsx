@@ -8,8 +8,8 @@ const Tab = createBottomTabNavigator()
 const AuthWrapper: React.FC = () => {
   return (
     <Tab.Navigator>
-      <Tab.Screen name='Login' component={SignInScreen} />
       <Tab.Screen name='Register' component={SignUpScreen} />
+      <Tab.Screen name='Login' component={SignInScreen} />
     </Tab.Navigator>
   )
 }

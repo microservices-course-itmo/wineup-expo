@@ -9,7 +9,8 @@ import { AppLoading } from 'expo'
 import LabeledInput from '../../molecules/LabeledInput'
 import { isName, City } from '../../helpers'
 import LabeledDatePicker from '../../molecules/LabeledDatePicker'
-import LabeledPicker from '../../molecules/LabeledPicker'
+import LabeledDropdown from '../../molecules/LabeledDropdown'
+import ConsentCheckBox from '../../molecules/ConsentCheckBox'
 
 function SignUpScreen(): ReactElement {
   const [userName, setUserName] = useState('')
@@ -29,11 +30,22 @@ function SignUpScreen(): ReactElement {
   const isValidName = isName(userName)
   const [isDateFilled, setIsDateFilled] = useState(false)
   const [isCityFilled, setIsCityFilled] = useState(false)
+  const [isСonsentGiven, setIsConsentGiven] = useState(false)
   const errorMessageName = '*Формат от 2 до 15 букв, не содержащих символов'
 
   useEffect(() => {
-    setIsSignUpEnabled(isValidName && isDateFilled && isCityFilled)
-  }, [userName, userDate, userCity, isValidName, isDateFilled, isCityFilled])
+    setIsSignUpEnabled(
+      isValidName && isDateFilled && isCityFilled && isСonsentGiven
+    )
+  }, [
+    userName,
+    userDate,
+    userCity,
+    isValidName,
+    isDateFilled,
+    isCityFilled,
+    isСonsentGiven,
+  ])
 
   const [fontsLoaded] = useFonts({
     Merriweather_400Regular,
@@ -68,12 +80,13 @@ function SignUpScreen(): ReactElement {
         hasFilled={isDateFilled}
         onFill={setIsDateFilled}
       />
-      <LabeledPicker
+      <LabeledDropdown
         label='Введите ваш город'
         onChange={setUserCity}
         hasFilled={isCityFilled}
         onFill={setIsCityFilled}
       />
+      <ConsentCheckBox onPress={setIsConsentGiven} hasFilled={isСonsentGiven} />
       <TouchableOpacity
         onPress={onSubmit}
         style={[styles.buttonStyle, { opacity: buttonOpacity }]}
@@ -101,7 +114,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 60,
+    marginTop: 20,
     width: 320,
     maxHeight: 56,
     backgroundColor: '#C23232',

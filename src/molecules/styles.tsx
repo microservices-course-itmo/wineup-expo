@@ -57,6 +57,19 @@ const styles = StyleSheet.create({
   dropdownArrow: {
     display: 'none',
   },
+  checkboxContainer: {
+    marginTop: 16,
+    width: 330,
+    borderWidth: 0,
+    backgroundColor: 'transparent',
+  },
+  checkboxText: {
+    paddingLeft: 5,
+    marginBottom: 3,
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#000000',
+  },
 })
 
 export default styles
