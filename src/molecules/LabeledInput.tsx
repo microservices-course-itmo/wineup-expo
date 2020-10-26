@@ -37,9 +37,7 @@ function LabeledInput({
         maxLength={maxLength}
         keyboardType={keyBoardType}
       />
-      {isValid === false && (
-        <Text style={styles.failedLabel}>{errorMessage}</Text>
-      )}
+      {!isValid && <Text style={styles.failedLabel}>{errorMessage}</Text>}
     </View>
   )
 }

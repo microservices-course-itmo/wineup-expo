@@ -2,7 +2,9 @@ import React, { ReactElement, useState, useEffect } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import Countdown from '../../molecules/Countdown'
 import LabeledInput from '../../molecules/LabeledInput'
-import { isCode, isRightCode } from '../../helpers'
+import { isRightCode } from '../../helpers'
+
+const timeToResend = 60
 
 function ConfirmationScreen(): ReactElement {
   const [userCode, setUserCode] = useState('')
@@ -10,7 +12,6 @@ function ConfirmationScreen(): ReactElement {
   const [isSendingEnabled, setIsSendingEnabled] = useState(false)
   const [isTimerStarted, setIsTimerStarted] = useState(false)
   const [isPenalty, setIsPenalty] = useState(false)
-  const isValidCode = isCode(userCode)
   const [isCodeEnteredOnce, setIsCodeEnteredOnce] = useState(false)
   const enterButtonOpacity = isSendingEnabled && userCode.length > 0 ? 1 : 0.4
   const wrongCodeOpacity = !isCorrectCode && isCodeEnteredOnce ? 1 : 0
@@ -20,14 +21,15 @@ function ConfirmationScreen(): ReactElement {
 
     return 1
   }
-  const timeToResend = 60
 
   const enterCodeHandler = () => {
-    setIsCodeEnteredOnce(true)
-    setIsCorrectCode(isRightCode(userCode))
-    if (!isCorrectCode) {
-      setIsPenalty(true)
-      setIsTimerStarted(true)
+    if (isSendingEnabled) {
+      setIsCodeEnteredOnce(true)
+      setIsCorrectCode(isRightCode(userCode))
+      if (!isCorrectCode) {
+        setIsPenalty(true)
+        setIsTimerStarted(true)
+      }
     }
   }
 
@@ -36,8 +38,8 @@ function ConfirmationScreen(): ReactElement {
   }
 
   useEffect(() => {
-    setIsSendingEnabled(isValidCode)
-  }, [userCode, isValidCode])
+    setIsSendingEnabled(userCode.length === 6)
+  }, [userCode])
 
   return (
     <View style={styles.container}>
@@ -67,13 +69,7 @@ function ConfirmationScreen(): ReactElement {
         <Text style={styles.buttonText}>Отправить код повторно</Text>
       </TouchableOpacity>
 
-      <Text
-        style={[
-          { opacity: wrongCodeOpacity },
-          { textDecorationLine: 'underline' },
-          { marginTop: 20 },
-        ]}
-      >
+      <Text style={[styles.resendCode, { opacity: wrongCodeOpacity }]}>
         <Countdown
           isTimerEnabled={isTimerStarted}
           time={timeToResend}
@@ -88,6 +84,10 @@ function ConfirmationScreen(): ReactElement {
 }
 
 const styles = StyleSheet.create({
+  resendCode: {
+    textDecorationLine: 'underline',
+    marginTop: 20,
+  },
   wrongCode: {
     width: 220,
     height: 45,
