@@ -12,7 +12,6 @@ function AgeBackScreen(): ReactElement {
         младше 18 лет
       </Text>
       <TouchableOpacity style={styles.buttonStyle}>
-        {/* //onPress={useLinking} */}
         <Text>Вернуться назад</Text>
       </TouchableOpacity>
     </View>
