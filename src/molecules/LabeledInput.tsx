@@ -2,7 +2,8 @@ import React, { ReactElement } from 'react'
 import { StyleSheet, Text, TextInput, View } from 'react-native'
 
 interface LabeledInputProps {
-  label: string
+  label?: string
+  placeholder?: string
   onChangeText: React.Dispatch<React.SetStateAction<string>>
   secureTextEntry?: boolean
   isValid?: boolean
@@ -13,6 +14,7 @@ interface LabeledInputProps {
 
 function LabeledInput({
   label,
+  placeholder,
   onChangeText,
   secureTextEntry,
   isValid = true,
@@ -24,6 +26,7 @@ function LabeledInput({
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
       <TextInput
+        placeholder={placeholder}
         selectionColor='#4E4E4E'
         style={[
           styles.input,
