@@ -56,6 +56,7 @@ function PhoneScreen(): ReactElement {
   )
 }
 export default PhoneScreen
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
