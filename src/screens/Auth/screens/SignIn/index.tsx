@@ -9,7 +9,7 @@ import {
 import { AppLoading } from 'expo'
 
 import { isEmail, isAllowedPassword } from '../../../../libs/helpers'
-import LabeledInput from '../../../../molecules/TextInput'
+import LabeledInput from '../../../../molecules/LabeledInput'
 
 import { TParamList } from '../../types'
 import ROUTES from '../../../../libs/constants/routes/auth'

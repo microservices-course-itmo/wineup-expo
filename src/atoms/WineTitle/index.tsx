@@ -14,7 +14,7 @@ const WineTitle: React.FC<TProps> = ({ name, description, volume }) => {
     <View>
       <Text style={styles.wineName}>{name}</Text>
       <Text>{description}</Text>
-      <Text>{volume}</Text>
+      <Text>{volume}л</Text>
     </View>
   )
 }
