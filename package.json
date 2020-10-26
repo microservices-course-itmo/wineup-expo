@@ -54,12 +54,6 @@
     "typescript": "~3.9.5"
   },
   "private": true,
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged && lint-staged && yarn lint",
-      "pre-push": "CI=true yarn test"
-    }
-  },
   "lint-staged": {
     "*.ts?(x)": [
       "eslint --fix"
