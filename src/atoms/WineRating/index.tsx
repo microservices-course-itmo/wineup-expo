@@ -3,24 +3,10 @@ import { StyleSheet, Text, View } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons'
 
 export interface WineRatingProps {
-  rating?: number | 0
+  rating: number
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    width: 120,
-    justifyContent: 'space-between',
-    marginTop: 5,
-  },
-  text: {
-    fontSize: 18,
-  },
-})
-
-export default function ({ rating = 3 }: WineRatingProps) {
+export default function ({ rating }: WineRatingProps) {
   return (
     <View>
       <Text>Оценка экспертов:</Text>
@@ -39,3 +25,17 @@ export default function ({ rating = 3 }: WineRatingProps) {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    width: 120,
+    justifyContent: 'space-between',
+    marginTop: 5,
+  },
+  text: {
+    fontSize: 18,
+  },
+})
