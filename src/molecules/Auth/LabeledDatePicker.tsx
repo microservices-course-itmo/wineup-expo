@@ -35,10 +35,14 @@ function LabeledDatePicker({
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
-      <TouchableOpacity onPress={showDatePicker}>
+      <TouchableOpacity
+        onPress={showDatePicker}
+        style={styles.input}
+        activeOpacity={1}
+      >
         <Text
           style={[
-            styles.input,
+            styles.textAreaStyle,
             hasFilled ? { color: '#000000' } : { color: '#A3A3A3' },
           ]}
         >

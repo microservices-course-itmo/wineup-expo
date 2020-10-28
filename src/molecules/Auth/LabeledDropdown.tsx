@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, Platform } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
 import styles from './styles'
 import { City } from '../../helpers'
@@ -23,7 +23,14 @@ function LabeledDropdown({
   }
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        Platform.OS !== 'android' && {
+          zIndex: 10,
+        },
+      ]}
+    >
       <Text style={styles.label}>{label}</Text>
       <DropDownPicker
         items={[
@@ -40,7 +47,7 @@ function LabeledDropdown({
         defaultValue='Москва'
         containerStyle={styles.dropdownContainer}
         style={styles.dropdownStyle}
-        labelStyle={styles.dropdownLabel}
+        labelStyle={styles.textAreaStyle}
         selectedLabelStyle={
           hasFilled ? { color: '#000000' } : { color: '#A3A3A3' }
         }

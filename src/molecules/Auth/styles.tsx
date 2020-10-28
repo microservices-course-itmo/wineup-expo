@@ -16,20 +16,22 @@ const styles = StyleSheet.create({
     fontFamily: 'Merriweather_400Regular',
   },
   container: {
-    marginTop: 45,
-  },
-  input: {
-    textAlignVertical: 'center',
-    textAlign: 'center',
+    marginTop: 53,
     width: 320,
     height: 56,
-    fontSize: 16,
+  },
+  input: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: 10,
     borderWidth: 1,
     borderColor: '#BCBCBC',
+    color: '#000000',
   },
   inputSuccessColor: {
     borderColor: '#BCBCBC',
+    color: '#000000',
   },
   inputFailedColor: {
     borderColor: '#C23232',
@@ -45,29 +47,31 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     borderColor: '#BCBCBC',
+    zIndex: 10,
   },
-  dropdownLabel: {
+  textAreaStyle: {
     textAlign: 'center',
     fontSize: 16,
   },
   dropdownItems: {
+    backgroundColor: '#fff',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
   dropdownArrow: {
     display: 'none',
   },
-  checkboxContainer: {
-    marginTop: 16,
+  checkBoxContainer: {
+    marginTop: 19,
     width: 330,
     borderWidth: 0,
     backgroundColor: 'transparent',
   },
-  checkboxText: {
+  checkBoxText: {
     paddingLeft: 5,
     marginBottom: 3,
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: 'normal',
     color: '#000000',
   },
 })

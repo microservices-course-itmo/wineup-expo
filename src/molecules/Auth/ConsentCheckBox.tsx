@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { Text } from 'react-native'
+import { Text, TouchableWithoutFeedback, View } from 'react-native'
 import { CheckBox } from 'react-native-elements'
 import styles from './styles'
 
@@ -14,7 +14,7 @@ function ConsentCheckBox({
 }: CheckBoxProps): ReactElement<CheckBoxProps> {
   const checkBoxText = () => {
     return (
-      <Text style={styles.checkboxText}>
+      <Text style={styles.checkBoxText}>
         <Text>Даю согласие на </Text>
         <Text style={{ textDecorationLine: 'underline' }}>
           обработку персональных данных
@@ -24,15 +24,17 @@ function ConsentCheckBox({
   }
 
   return (
-    <CheckBox
-      size={20}
-      center
-      containerStyle={styles.checkboxContainer}
-      title={checkBoxText()}
-      checked={hasFilled}
-      onPress={() => onPress(!hasFilled)}
-      checkedColor='#931332'
-    />
+    <View style={styles.checkBoxContainer}>
+      <CheckBox
+        Component={TouchableWithoutFeedback}
+        size={20}
+        center
+        title={checkBoxText()}
+        checked={hasFilled}
+        onPress={() => onPress(!hasFilled)}
+        checkedColor='#931332'
+      />
+    </View>
   )
 }
 

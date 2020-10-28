@@ -36,6 +36,7 @@ function LabeledInput({
         selectionColor='#4E4E4E'
         style={[
           styles.input,
+          styles.textAreaStyle,
           isValid ? styles.inputSuccessColor : styles.inputFailedColor,
         ]}
         value={value}
