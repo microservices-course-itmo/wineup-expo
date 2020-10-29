@@ -12,7 +12,7 @@ const WineBottlePicture = ({ image }: ComponentProps) => {
     <Container>
       <Placeholder />
       <Ribbon>-20%</Ribbon>
-      <Image source={image} />
+      <Image resizeMethod='scale' resizeMode='contain' source={image} />
     </Container>
   )
 }
@@ -31,5 +31,4 @@ const Container = styled.View`
 const Image = styled.Image`
   width: 250px;
   height: 250px;
-  resizemode: contain;
 `
