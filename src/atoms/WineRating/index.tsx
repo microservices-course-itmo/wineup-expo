@@ -14,7 +14,7 @@ export default function ({ rating }: WineRatingProps) {
         {new Array(5).fill(0).map((star, index) => {
           return (
             <FontAwesome
-              key={star}
+              key={index}
               name={index + 1 > rating ? 'star-o' : 'star'}
               size={24}
               color='black'
