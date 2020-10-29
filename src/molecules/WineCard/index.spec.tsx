@@ -9,7 +9,7 @@ describe('WineCard', () => {
     dryness: 'сухое',
     color: 'Красное',
     volume: 0.75,
-    shop: { name: 'ВИНЛАБ', description: 'Супермаркет напитков' },
+    shop: { name: 'ВИНЛАБ' },
   }
 
   it('should render', () => {
@@ -25,19 +25,14 @@ describe('WineCard', () => {
   it('should contain description', () => {
     const { getByText } = render(<WineCard wine={wine} />)
 
-    getByText([wine.country, wine.color, wine.dryness].join(', '))
-  })
-
-  it('should contain volume', () => {
-    const { getByText } = render(<WineCard wine={wine} />)
-
-    getByText(`${wine.volume}л`)
+    getByText(
+      [wine.country, wine.dryness, wine.color, `${wine.volume} л.`].join(', ')
+    )
   })
 
   it('should contain shop name', () => {
     const { getByText } = render(<WineCard wine={wine} />)
 
     getByText(wine.shop.name!)
-    getByText(wine.shop.description!)
   })
 })
