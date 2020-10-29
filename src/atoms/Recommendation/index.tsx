@@ -10,22 +10,22 @@ export function correctValueHandler(value: number): number {
   return correctVal
 }
 
-const Advice: React.FunctionComponent<{ ratioAdvice: number }> = ({
+const Recommendation: React.FunctionComponent<{ ratioAdvice: number }> = ({
   ratioAdvice,
 }) => {
   return (
     <View style={styles.adviceContainer} testID='advice-test'>
-      <Text>Подходит Вам на {correctValueHandler(ratioAdvice)}%</Text>
+      <Text>Подходит вам на {correctValueHandler(ratioAdvice)}%</Text>
     </View>
   )
 }
 
-export default Advice
+export default Recommendation
 
 const styles = StyleSheet.create({
   adviceContainer: {
     flex: 1,
-    alignItems: 'flex-end',
+    alignItems: 'center',
     justifyContent: 'center',
   },
 })

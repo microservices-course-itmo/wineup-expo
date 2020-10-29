@@ -7,9 +7,9 @@ export default function CatalogScreen() {
     name: 'Canti Merlot',
     country: 'Австралия',
     dryness: 'сухое',
-    color: 'Красное',
+    color: 'красное',
     volume: 0.75,
-    shop: { name: 'ВИНЛАБ', description: 'Супермаркет напитков' },
+    shop: { name: 'Ароматный мир', description: 'Супермаркет напитков' },
   })
 
   return <CatalogView>{wines}</CatalogView>

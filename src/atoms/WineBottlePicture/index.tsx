@@ -1,31 +1,35 @@
 import React from 'react'
-import { View, Image, StyleSheet } from 'react-native'
+import styled from 'styled-components/native'
+import Placeholder from '../Placeholder'
+import Ribbon from '../Ribbon'
 
 interface ComponentProps {
-  image: string
+  image: { uri: string }
 }
 
 const WineBottlePicture = ({ image }: ComponentProps) => {
   return (
-    <View style={styles.imageContainer}>
-      <Image style={styles.image} source={image} />
-    </View>
+    <Container>
+      <Placeholder />
+      <Ribbon>-20%</Ribbon>
+      <Image source={image} />
+    </Container>
   )
 }
 
-const styles = StyleSheet.create({
-  imageContainer: {
-    width: 256,
-    height: 256,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ffffff',
-  },
-  image: {
-    width: 250,
-    height: 250,
-    resizeMode: 'contain',
-  },
-})
-
 export default WineBottlePicture
+
+const Container = styled.View`
+  width: 256px;
+  height: 256px;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  background-color: #ffffff;
+`
+
+const Image = styled.Image`
+  width: 250px;
+  height: 250px;
+  resizemode: contain;
+`
