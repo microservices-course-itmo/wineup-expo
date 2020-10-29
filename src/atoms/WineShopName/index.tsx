@@ -1,24 +1,27 @@
 import React from 'react'
 import { View, Image, Text, StyleSheet } from 'react-native'
 
-interface ComponentProps {
-  image: string
-  name: string
-  description: string
+export interface Shop {
+  image?: string
+  name?: string
+  description?: string
 }
 
-const WineShopName = ({ image, name, description }: ComponentProps) => {
+const WineShopName = ({ image, name, description }: Shop) => {
+  const shop = image ? (
+    <View style={styles.imageContainer}>
+      <Image style={styles.image} source={{ uri: image }} />
+    </View>
+  ) : (
+    <View style={styles.textContainer}>
+      <Text style={styles.name}>{name}</Text>
+      <Text style={styles.description}>{description}</Text>
+    </View>
+  )
+
   return (
     <View style={styles.container}>
-      <View style={styles.flexedContainer}>
-        <View style={styles.imageContainer}>
-          <Image style={styles.image} source={image} />
-        </View>
-        <View style={styles.textContainer}>
-          <Text style={styles.name}>{name}</Text>
-          <Text style={styles.description}>{description}</Text>
-        </View>
-      </View>
+      <View style={styles.flexedContainer}>{shop}</View>
     </View>
   )
 }

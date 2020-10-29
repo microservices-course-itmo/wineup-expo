@@ -1,6 +1,5 @@
 import { render } from '@testing-library/react-native'
 import React from 'react'
-
 import WineTitle from './index'
 
 describe('<WineTitle />', () => {
@@ -13,7 +12,7 @@ describe('<WineTitle />', () => {
         volume={volume}
       />
     )
-    const volumeElement = getByText(volume.toString())
+    const volumeElement = getByText(`${volume}л`)
 
     expect(volumeElement).toBeDefined()
   })
