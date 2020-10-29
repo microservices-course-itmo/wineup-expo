@@ -7,10 +7,6 @@ export interface WineTitleProps {
   volume: number
 }
 
-const styles = StyleSheet.create({
-  wineName: { fontSize: 20, fontWeight: 'bold', display: 'flex' },
-})
-
 function WineTitle({
   name,
   description,
@@ -24,4 +20,9 @@ function WineTitle({
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  wineName: { fontSize: 20, fontWeight: 'bold', display: 'flex' },
+})
+
 export default WineTitle
