@@ -8,6 +8,7 @@ interface ComponentProps {
 const WineBottlePicture = ({ image }: ComponentProps) => {
   return (
     <View style={styles.imageContainer}>
+      {/* @ts-ignore */}
       <Image style={styles.image} source={image} />
     </View>
   )

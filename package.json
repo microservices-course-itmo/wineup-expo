@@ -7,14 +7,16 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest",
-    "lint": "eslint 'src/**/*.{js,ts,tsx}'"
+    "lint": "eslint \"src/**/*.{js,ts,tsx}\""
   },
   "dependencies": {
-    "@expo/vector-icons": "^10.2.1",
     "@expo-google-fonts/merriweather": "^0.1.0",
+    "@expo/vector-icons": "^10.2.1",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.8.0",
     "@react-navigation/native": "^5.7.3",
+    "@react-navigation/stack": "^5.11.0",
+    "babel-plugin-module-resolver": "^4.0.0",
     "expo": "~38.0.8",
     "expo-font": "~8.2.1",
     "expo-status-bar": "^1.0.2",
@@ -68,6 +70,9 @@
   },
   "jest": {
     "preset": "react-native",
+    "setupFiles": [
+      "./node_modules/react-native-gesture-handler/jestSetup.js"
+    ],
     "setupFilesAfterEnv": [
       "@testing-library/jest-native/extend-expect"
     ],
