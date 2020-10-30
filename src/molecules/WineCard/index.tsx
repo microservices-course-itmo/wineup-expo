@@ -55,7 +55,7 @@ const Container = styled.View`
   padding: 30px;
   background-color: #fff;
   border-radius: 15px;
-  box-shadow: 0px 3px 4px rgba(178, 178, 178, 0.1);
+  box-shadow: 0px 3px 4px rgba(178, 178, 178, 0.5);
 `
 
 const TopBar = styled.View`
