@@ -1,4 +1,5 @@
 import React from 'react'
+import { Text } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import SignUpScreen from './SignUpScreen'
 import SignInScreen from './SignInScreen'
@@ -6,9 +7,11 @@ import ROUTES from '../../routes'
 
 const Stack = createStackNavigator()
 
-const ConfirmAgeScreen = 'Экран подтверждения возраста'
-const AgeDeniedScreen = 'Экран подтверждения возраста - доступ запрещен'
-const SignInConfirmScreen = 'Экран подтверждения СМС'
+const ConfirmAgeScreen = () => <Text>Экран подтверждения возраста</Text>
+const AgeDeniedScreen = () => (
+  <Text>Экран подтверждения возраста - доступ запрещен</Text>
+)
+const SignInConfirmScreen = () => <Text>Экран подтверждения СМС</Text>
 
 const AuthWrapper: React.FC = () => {
   return (
