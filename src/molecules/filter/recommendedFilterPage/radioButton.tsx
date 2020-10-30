@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react'
 import { TouchableOpacity, View, StyleSheet } from 'react-native'
 
-interface IRadioButton {
+interface RadioButtonProps {
   checked: boolean
   onPress(): void
 }
@@ -9,10 +9,10 @@ interface IRadioButton {
 const RadioButton = ({
   checked,
   onPress,
-}: IRadioButton): ReactElement<IRadioButton> => {
+}: RadioButtonProps): ReactElement<RadioButtonProps> => {
   return (
     <TouchableOpacity style={styles.circle} onPress={onPress}>
-      {checked ? <View style={styles.checkedCircle} /> : <View />}
+      {checked && <View style={styles.checkedCircle} />}
     </TouchableOpacity>
   )
 }
