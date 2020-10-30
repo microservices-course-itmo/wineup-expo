@@ -5,6 +5,6 @@ import WineRatingComponent from './index'
 
 describe('<WineRatingComponent />', () => {
   it('should render', () => {
-    render(<WineRatingComponent />)
+    render(<WineRatingComponent rating={5} />)
   })
 })
