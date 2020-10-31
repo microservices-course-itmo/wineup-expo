@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FontAwesome } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
 import { TouchableOpacity, View } from 'react-native'
 
 export interface LikeProps {
@@ -15,10 +15,10 @@ const Like = ({ liked }: LikeProps) => {
   return (
     <View>
       <TouchableOpacity onPress={onPress}>
-        <FontAwesome
-          name={isLiked ? 'heart' : 'heart-o'}
-          size={36}
-          color={isLiked ? 'red' : 'black'}
+        <Ionicons
+          name={isLiked ? 'ios-heart' : 'ios-heart-empty'}
+          size={20}
+          color='#931332'
         />
       </TouchableOpacity>
     </View>

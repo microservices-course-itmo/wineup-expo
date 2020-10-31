@@ -1,35 +1,40 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View } from 'react-native'
+import styled from 'styled-components/native'
+import Text from '../Text'
+import { prettifyNumber } from '../../utils/strings'
 
 interface ComponentProps {
   price: number
+  discount?: number
 }
 
-const WineBottlePrice = ({ price }: ComponentProps) => {
+const WineBottlePrice = ({ price, discount = 0 }: ComponentProps) => {
+  const factor = 1 - discount
+
   return (
-    <View style={styles.priceContainer}>
-      <Text style={styles.price}>{price}</Text>
-      <Text style={styles.price}>₽</Text>
+    <View>
+      {discount > 0 && <OldPrice>{prettifyNumber(price)} ₽</OldPrice>}
+      <Price>{prettifyNumber(factor * price)} ₽</Price>
     </View>
   )
 }
 
-const styles = StyleSheet.create({
-  priceContainer: {
-    width: 256,
-    height: 75,
-    backgroundColor: '#e5e5e5',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    overflow: 'hidden',
-  },
-  price: {
-    color: '#000000',
-    fontWeight: 'bold',
-    fontFamily: 'Merriweather_900Black',
-    fontSize: 48,
-  },
-})
-
 export default WineBottlePrice
+
+const Price = styled(Text)`
+  font-size: 23px;
+  text-align: center;
+  font-style: italic;
+  font-weight: 400;
+  font-family: Roboto_400Regular_Italic;
+`
+
+const OldPrice = styled(Text)`
+  font-size: 14px;
+  font-weight: 200;
+  font-family: Roboto_300Light_Italic;
+  text-decoration: line-through;
+
+  transform: translateX(-20px);
+`
