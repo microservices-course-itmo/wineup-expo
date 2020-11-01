@@ -31,6 +31,7 @@
   },
   "rules": {
     "linebreak-style": ["error", "unix"],
+    //    "linebreak-style": ["error", "windows"],
     "react/prop-types": 0,
     "react/require-default-props": 0,
     "@typescript-eslint/no-use-before-define": [
@@ -41,6 +42,8 @@
       }
     ],
     "react/jsx-one-expression-per-line": 0,
+    "react/jsx-props-no-spreading": 0,
+    "react/no-array-index-key": 1,
     "padding-line-between-statements": [
       "error",
       {
