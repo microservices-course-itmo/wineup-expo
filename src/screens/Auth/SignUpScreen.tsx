@@ -1,11 +1,5 @@
 import React, { useState, ReactElement, useEffect } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import {
-  useFonts,
-  Merriweather_400Regular,
-  Merriweather_700Bold,
-} from '@expo-google-fonts/merriweather'
-import { AppLoading } from 'expo'
 import LabeledInput from '../../molecules/LabeledInput'
 import { isEmail, isAllowedPassword } from '../../helpers'
 
@@ -25,15 +19,6 @@ function SignUpScreen(): ReactElement {
   useEffect(() => {
     setIsSignUpEnabled(isValidPassword && isValidEmail)
   }, [userEmail, userPassword, isValidPassword, isValidEmail])
-
-  const [fontsLoaded] = useFonts({
-    Merriweather_400Regular,
-    Merriweather_700Bold,
-  })
-
-  if (!fontsLoaded) {
-    return <AppLoading />
-  }
 
   const onSubmit = () => {
     console.log(userName, userEmail, userPassword)
