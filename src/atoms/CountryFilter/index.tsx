@@ -16,6 +16,7 @@ const CountryFilter = () => {
     israel: false,
     spain: false,
   })
+
   function resetHandler() {
     setFilterValue({
       search: '',
@@ -29,6 +30,7 @@ const CountryFilter = () => {
       spain: false,
     })
   }
+
   return (
     <View style={styles.container}>
       <View style={styles.textContainer}>

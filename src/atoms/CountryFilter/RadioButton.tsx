@@ -3,25 +3,27 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 
 interface RadioButtonProps {
   checked: boolean
-  onPress(): void
+  onPress(value: boolean): void
   label: string
 }
 
 const RadioButton = ({
   checked,
-  onPress,
+  onPress = () => {},
   label = 'Country',
 }: RadioButtonProps): ReactElement<RadioButtonProps> => {
   const [isChecked, setChecked] = useState(checked)
+
   useEffect(() => {
     setChecked(checked)
   }, [checked])
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={[styles.square, isChecked && styles.filled]}
         onPress={() => {
-          onPress && onPress(!isChecked)
+          onPress(!isChecked)
           setChecked(!isChecked)
         }}
       />

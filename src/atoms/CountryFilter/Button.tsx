@@ -1,16 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, ReactElement } from 'react'
 import { Text, TouchableOpacity, StyleSheet } from 'react-native'
 
 interface ButtonProps {
-  onPress(): void
+  onPress?(): void
 }
 
-export default ({ onPress }: ButtonProps): ReactElement<ButtonProps> => {
+export default ({
+  onPress = () => {},
+}: ButtonProps): ReactElement<ButtonProps> => {
   const [pressed, setPressed] = useState(false)
   const pressHandler = () => {
     setPressed(!pressed)
-    onPress && onPress()
+
+    onPress()
   }
+
   return (
     <TouchableOpacity
       onPress={pressHandler}

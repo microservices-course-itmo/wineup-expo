@@ -4,17 +4,19 @@ import searchIcon from './src/loupe.png'
 
 interface InputProps {
   value: string
-  onChange(): void
+  onChange(value: string): void
 }
 
 const Input = ({
   value = '',
-  onChange,
+  onChange = () => {},
 }: InputProps): ReactElement<InputProps> => {
   const [inputValue, setInputValue] = useState(value)
+
   useEffect(() => {
     setInputValue(value)
   }, [value])
+
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
@@ -22,9 +24,9 @@ const Input = ({
       </View>
       <TextInput
         style={styles.input}
-        onChangeText={(value) => {
-          onChange && onChange(value)
-          setInputValue(value)
+        onChangeText={(newValue) => {
+          onChange(newValue)
+          setInputValue(newValue)
         }}
         value={inputValue}
       />
