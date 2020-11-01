@@ -11,6 +11,7 @@ import {
   Roboto_400Regular_Italic,
   Roboto_300Light_Italic,
   Roboto_400Regular,
+  Roboto_500Medium,
 } from '@expo-google-fonts/roboto'
 import {
   PlayfairDisplay_400Regular,
@@ -38,6 +39,7 @@ const App: React.FC = () => {
     Roboto_300Light_Italic,
     Roboto_400Regular_Italic,
     Roboto_400Regular,
+    Roboto_500Medium,
   })
 
   if (!fontsLoaded) {

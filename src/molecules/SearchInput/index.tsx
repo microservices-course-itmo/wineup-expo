@@ -2,8 +2,15 @@ import React from 'react'
 import InsetShadow from 'react-native-inset-shadow'
 import styled from 'styled-components/native'
 import { Ionicons } from '@expo/vector-icons'
+import { StyleProp } from 'react-native'
 
-function SearchInput() {
+interface SearchInputProps {
+  style?: StyleProp<any>[]
+  value: string
+  onChange?: (value: string) => void
+}
+
+function SearchInput({ style = [], onChange, value }: SearchInputProps) {
   return (
     <InsetShadow
       shadowColor='#000000'
@@ -13,14 +20,18 @@ function SearchInput() {
       containerStyle={{
         borderRadius: 50,
         height: 30,
-        marginVertical: 15,
-        marginHorizontal: 10,
         backgroundColor: '#ffffff',
+        ...style[0],
       }}
     >
       <Container>
         <Ionicons name='ios-search' color='#d1d1d1' size={16} />
-        <Input placeholder='Поиск...' placeholderTextColor='#d1d1d1' />
+        <Input
+          value={value}
+          placeholder='Поиск...'
+          placeholderTextColor='#d1d1d1'
+          onChangeText={onChange}
+        />
       </Container>
     </InsetShadow>
   )
