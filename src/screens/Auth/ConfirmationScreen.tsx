@@ -1,12 +1,17 @@
-import React, { ReactElement, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StackScreenProps } from '@react-navigation/stack'
 import Countdown from '../../molecules/Countdown'
 import LabeledInput from '../../molecules/LabeledInput'
 import { isRightCode } from '../../helpers'
+import ROUTES from '../../routes'
+import { TParamList } from '../../routes/type'
+
+export type TProps = StackScreenProps<TParamList, typeof ROUTES.SIGN_IN>
 
 const timeToResend = 60
 
-function ConfirmationScreen(): ReactElement {
+const ConfirmationScreen: React.FC<TProps> = ({ navigation }) => {
   const [userCode, setUserCode] = useState('')
   const [isCorrectCode, setIsCorrectCode] = useState(false)
   const [isSendingEnabled, setIsSendingEnabled] = useState(false)
@@ -29,6 +34,8 @@ function ConfirmationScreen(): ReactElement {
       if (!isCorrectCode) {
         setIsPenalty(true)
         setIsTimerStarted(true)
+      } else {
+        // navigation.navigate('nextStop')
       }
     }
   }
