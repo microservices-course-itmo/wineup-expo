@@ -4,16 +4,21 @@ import FilterButton from './index'
 import FilterSheet from '../../organisms/FilterSheet'
 
 function ColorFilterButton() {
+  const sheetHeight = 330
+
   const renderFilterPage = (onApply: () => void) => {
     return (
-      <FilterSheet title='Цвет' onApply={onApply}>
+      <FilterSheet height={sheetHeight} title='Цвет' onApply={onApply}>
         {['Белое', 'Красное', 'Розовое']}
       </FilterSheet>
     )
   }
 
   return (
-    <StyledFilterButton renderFilterPage={renderFilterPage}>
+    <StyledFilterButton
+      filterPageHeight={sheetHeight}
+      renderFilterPage={renderFilterPage}
+    >
       Цвет
     </StyledFilterButton>
   )

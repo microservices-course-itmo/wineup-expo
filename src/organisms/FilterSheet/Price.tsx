@@ -50,23 +50,23 @@ function PriceFilterSheet(
   }
 
   const onSelect = (index: number) => () => {
-    setSelectedOption(() => {
-      if (index === selectedOption) {
-        setFilters((prevState) => ({
-          ...prevState,
-          from: defaultState.from,
-          to: defaultState.to,
-        }))
+    setSelectedOption(index)
 
-        return undefined
-      }
+    if (index === selectedOption) {
+      setFilters((prevState) => ({
+        ...prevState,
+        from: defaultState.from,
+        to: defaultState.to,
+      }))
 
-      const [from, to] = children[index]
+      return undefined
+    }
 
-      setFilters((prevState) => ({ ...prevState, from, to }))
+    const [from, to] = children[index]
 
-      return index
-    })
+    setFilters((prevState) => ({ ...prevState, from, to }))
+
+    return index
   }
 
   return (
