@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react'
+import React, { useState } from 'react'
 import {
   StyleSheet,
   Text,
@@ -6,13 +6,14 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native'
+import { StackScreenProps } from '@react-navigation/stack'
+import { TParamList } from '../../routes/type'
+import ROUTES from '../../routes'
 
-function PhoneScreen(): ReactElement {
+export type TProps = StackScreenProps<TParamList, typeof ROUTES.SIGN_IN>
+
+const SignInScreen: React.FC<TProps> = ({ navigation }) => {
   const [userPhone, setUserPhone] = useState('')
-
-  const onSubmit = () => {
-    console.log(userPhone)
-  }
 
   return (
     <View style={styles.container}>
@@ -44,7 +45,13 @@ function PhoneScreen(): ReactElement {
           editable
         />
       </View>
-      <TouchableOpacity onPress={onSubmit} style={[styles.buttonStyle]}>
+      <TouchableOpacity
+        style={[styles.buttonStyle]}
+        onPress={() => {
+          navigation.navigate('SignInConfirm')
+          console.log(userPhone)
+        }}
+      >
         <Text>Войти</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.unregUser}>
@@ -55,7 +62,8 @@ function PhoneScreen(): ReactElement {
     </View>
   )
 }
-export default PhoneScreen
+
+export default SignInScreen
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -1,7 +1,12 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StackScreenProps } from '@react-navigation/stack'
+import ROUTES from '../../routes'
+import { TParamList } from '../../routes/type'
 
-function AgeBackScreen(): ReactElement {
+export type TProps = StackScreenProps<TParamList, typeof ROUTES.AGE_DENIED>
+
+const AgeDenied: React.FC<TProps> = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 16, fontStyle: 'italic' }}>
@@ -11,15 +16,17 @@ function AgeBackScreen(): ReactElement {
         К сожалению, наше приложение содержит информацию, не предназначенную для
         младше 18 лет
       </Text>
-      <TouchableOpacity style={styles.buttonStyle}>
-        {/* //onPress={useLinking} */}
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        onPress={() => navigation.goBack()}
+      >
         <Text>Вернуться назад</Text>
       </TouchableOpacity>
     </View>
   )
 }
 
-export default AgeBackScreen
+export default AgeDenied
 
 const styles = StyleSheet.create({
   container: {

@@ -1,9 +1,10 @@
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import SettingsScreen from './screens/Settings'
 import AuthWrapper from './screens/Auth/AuthWrapper'
-import CatalogScreen from './screens/Catalog'
+import AgeDenied from './screens/Auth/AgeDenied'
+import SignInScreen from './screens/Auth/SignIn'
+import AuthNavigator from './screens/Auth'
 
 const Tab = createBottomTabNavigator()
 
@@ -14,8 +15,9 @@ const App: React.FC = () => {
     <NavigationContainer>
       {isAuth ? (
         <Tab.Navigator>
-          <Tab.Screen name='Home' component={CatalogScreen} />
-          <Tab.Screen name='Settings' component={SettingsScreen} />
+          <Tab.Screen name='Home' component={AuthNavigator} />
+          <Tab.Screen name='Settings' component={AgeDenied} />
+          <Tab.Screen name='Seings' component={SignInScreen} />
         </Tab.Navigator>
       ) : (
         <AuthWrapper />
