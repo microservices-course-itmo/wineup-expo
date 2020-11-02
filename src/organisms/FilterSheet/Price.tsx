@@ -101,7 +101,7 @@ function PriceFilterSheet(
               onPress={onSelect(i)}
               textStyle={{
                 fontSize: 11,
-                fontWeight: 400,
+                fontWeight: '400',
                 fontStyle: 'italic',
                 fontFamily: 'Roboto_400Regular_Italic',
               }}
