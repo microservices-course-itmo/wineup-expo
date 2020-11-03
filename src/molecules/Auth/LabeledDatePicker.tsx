@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react'
-import { Text, TouchableOpacity, View } from 'react-native'
+import { Text, TouchableOpacity, View, Platform } from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import styles from './styles'
 
@@ -33,7 +33,14 @@ function LabeledDatePicker({
   }
 
   return (
-    <View style={styles.container}>
+    <View
+      style={[
+        styles.container,
+        Platform.OS !== 'android' && {
+          zIndex: 99,
+        },
+      ]}
+    >
       <Text style={styles.label}>{label}</Text>
       <TouchableOpacity
         onPress={showDatePicker}
