@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import {
@@ -19,7 +19,8 @@ import {
   PlayfairDisplay_700Bold,
 } from '@expo-google-fonts/playfair-display'
 import { AppLoading } from 'expo'
-import { SafeAreaView } from 'react-native'
+import { SafeAreaView, Text } from 'react-native'
+import { CacheProvider } from 'rest-hooks'
 import CatalogScreen from './screens/Catalog'
 import AuthWrapper from './screens/Auth/AuthWrapper'
 import SettingsScreen from './screens/Settings'
@@ -47,18 +48,22 @@ const App: React.FC = () => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <NavigationContainer>
-        {isAuth ? (
-          <Tab.Navigator>
-            <Tab.Screen name='Каталог' component={CatalogScreen} />
-            <Tab.Screen name='Settings' component={SettingsScreen} />
-          </Tab.Navigator>
-        ) : (
-          <AuthWrapper />
-        )}
-      </NavigationContainer>
-    </SafeAreaView>
+    <CacheProvider>
+      <Suspense fallback={<Text>Loading...</Text>}>
+        <SafeAreaView style={{ flex: 1 }}>
+          <NavigationContainer>
+            {isAuth ? (
+              <Tab.Navigator>
+                <Tab.Screen name='Каталог' component={CatalogScreen} />
+                <Tab.Screen name='Settings' component={SettingsScreen} />
+              </Tab.Navigator>
+            ) : (
+              <AuthWrapper />
+            )}
+          </NavigationContainer>
+        </SafeAreaView>
+      </Suspense>
+    </CacheProvider>
   )
 }
 
