@@ -1,10 +1,11 @@
-import React, { useState, ReactElement, useEffect } from 'react'
+import React, { useState, ReactElement, useEffect, useContext } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import { isName, City } from '../../helpers'
 import LabeledInput from '../../molecules/Auth/LabeledInput'
 import LabeledDatePicker from '../../molecules/Auth/LabeledDatePicker'
 import LabeledDropdown from '../../molecules/Auth/LabeledDropdown'
 import ConsentCheckBox from '../../molecules/Auth/ConsentCheckBox'
+import { AuthContext } from './AuthContext'
 
 function SignUpScreen(): ReactElement {
   const [userName, setUserName] = useState('')
@@ -20,6 +21,7 @@ function SignUpScreen(): ReactElement {
     false
   )
   const buttonOpacity = isSignUpEnabled ? 1 : 0.4
+  const isAuth = useContext(AuthContext)
 
   const isValidName = isName(userName)
   const [isDateFilled, setIsDateFilled] = useState(false)
@@ -43,6 +45,7 @@ function SignUpScreen(): ReactElement {
 
   const onSubmit = () => {
     console.log(userName, userDate, userCity)
+    isAuth.setIsAuth(true)
     // fetch ? response.ok : response.error, return
   }
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import {
@@ -22,12 +22,13 @@ import { SafeAreaView } from 'react-native'
 import CatalogScreen from './screens/Catalog'
 import AuthWrapper from './screens/Auth/AuthWrapper'
 import SettingsScreen from './screens/Settings'
+import { AuthProvider } from './screens/Auth/AuthContext'
 
 const Tab = createBottomTabNavigator()
 
-const isAuth = true
-
 const App: React.FC = () => {
+  const [isAuth, setIsAuth] = useState(false)
+
   const [fontsLoaded] = useFonts({
     Merriweather_400Regular,
     Merriweather_700Bold,
@@ -53,7 +54,9 @@ const App: React.FC = () => {
             <Tab.Screen name='Settings' component={SettingsScreen} />
           </Tab.Navigator>
         ) : (
-          <AuthWrapper />
+          <AuthProvider value={{ setIsAuth }}>
+            <AuthWrapper />
+          </AuthProvider>
         )}
       </NavigationContainer>
     </SafeAreaView>
