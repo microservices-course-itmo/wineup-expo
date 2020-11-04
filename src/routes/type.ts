@@ -6,5 +6,5 @@ export type TParamList = {
   [ROUTES.SIGN_IN]: undefined
   [ROUTES.SIGN_IN_CONFIRM]: undefined
   [ROUTES.SIGN_UP]: undefined
-  [ROUTES.SIGN_IN_CONFIRM]: undefined
+  [ROUTES.HOME]: undefined
 }

@@ -4,7 +4,7 @@ const ROUTES = {
   SIGN_IN: 'SignIn',
   SIGN_IN_CONFIRM: 'SignInConfirm',
   SIGN_UP: 'SignUp',
-  SIGN_UP_CONFIRM: 'SignUpConfirm',
+  HOME: 'Home',
 } as const
 
 export type TRoutes = keyof typeof ROUTES

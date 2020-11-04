@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 
 export default Countdown
 
-function Countdown({ isTimerEnabled, time, handleEnd }) {
+function Countdown({ isTimerEnabled, time, handleEnd, style }) {
   const [timer, setTimer] = useState(time)
   const [clockCall, setClockCall] = useState()
 
@@ -25,13 +25,14 @@ function Countdown({ isTimerEnabled, time, handleEnd }) {
   const startTimer = () => {
     setClockCall(
       setInterval(() => {
-      decrementClock()
-    }, 1000))
+        decrementClock()
+      }, 1000)
+    )
   }
 
   return (
     <View>
-      <div>Отправить повторно через {timer}с</div>
+      <Text style={style}>Отправить повторно через {timer} с</Text>
     </View>
   )
 }

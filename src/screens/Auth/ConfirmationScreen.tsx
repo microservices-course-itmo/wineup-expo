@@ -9,16 +9,16 @@ import { TParamList } from '../../routes/type'
 
 export type TProps = StackScreenProps<TParamList, typeof ROUTES.SIGN_IN>
 
-const timeToResend = 60
+const timeToResend = 5
 
 const ConfirmationScreen: React.FC<TProps> = ({ navigation }) => {
   const [userCode, setUserCode] = useState('')
   const [isCorrectCode, setIsCorrectCode] = useState(false)
-  const [isSendingEnabled, setIsSendingEnabled] = useState(false)
+  const [isLongEnough, setIsLongEnough] = useState(false)
   const [isTimerStarted, setIsTimerStarted] = useState(false)
   const [isPenalty, setIsPenalty] = useState(false)
   const [isCodeEnteredOnce, setIsCodeEnteredOnce] = useState(false)
-  const enterButtonOpacity = isSendingEnabled && userCode.length > 0 ? 1 : 0.4
+  const enterButtonOpacity = isLongEnough ? 1 : 0.4
   const wrongCodeOpacity = !isCorrectCode && isCodeEnteredOnce ? 1 : 0
   const resendOpacity = () => {
     if (!isCodeEnteredOnce) return 0
@@ -26,17 +26,25 @@ const ConfirmationScreen: React.FC<TProps> = ({ navigation }) => {
 
     return 1
   }
+  const [isWarningOn, setIsWarningOn] = useState(false)
+  const warningOpacity = () => {
+    if (isWarningOn) return isCodeEnteredOnce ? 1 : 0
+
+    return 0
+  }
+
+  const isUnregistered = false
 
   const enterCodeHandler = () => {
-    if (isSendingEnabled) {
+    setIsCorrectCode(isRightCode(userCode))
+    setIsWarningOn(!isCorrectCode)
+    if (isLongEnough) {
       setIsCodeEnteredOnce(true)
-      setIsCorrectCode(isRightCode(userCode))
       if (!isCorrectCode) {
         setIsPenalty(true)
         setIsTimerStarted(true)
-      } else {
-        // navigation.navigate('nextStop')
-      }
+      } else if (isUnregistered) navigation.navigate('SignUp')
+      else navigation.navigate('Home')
     }
   }
 
@@ -45,12 +53,13 @@ const ConfirmationScreen: React.FC<TProps> = ({ navigation }) => {
   }
 
   useEffect(() => {
-    setIsSendingEnabled(userCode.length === 6)
+    setIsLongEnough(userCode.length === 6)
+    setIsCorrectCode(isRightCode(userCode))
   }, [userCode])
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.wrongCode, { opacity: wrongCodeOpacity }]}>
+      <Text style={[styles.wrongCode, { opacity: warningOpacity() }]}>
         Код введён неверно
       </Text>
       <Text style={styles.header}>Введите код подтверждения</Text>
@@ -63,7 +72,7 @@ const ConfirmationScreen: React.FC<TProps> = ({ navigation }) => {
       <TouchableOpacity
         onPress={enterCodeHandler}
         style={[styles.buttonStyle, { opacity: enterButtonOpacity }]}
-        disabled={!isSendingEnabled}
+        disabled={!isLongEnough}
       >
         <Text style={styles.buttonText}>Войти</Text>
       </TouchableOpacity>
@@ -76,16 +85,15 @@ const ConfirmationScreen: React.FC<TProps> = ({ navigation }) => {
         <Text style={styles.buttonText}>Отправить код повторно</Text>
       </TouchableOpacity>
 
-      <Text style={[styles.resendCode, { opacity: wrongCodeOpacity }]}>
-        <Countdown
-          isTimerEnabled={isTimerStarted}
-          time={timeToResend}
-          handleEnd={() => {
-            setIsPenalty(false)
-            console.log('isPenalty', isPenalty)
-          }}
-        />
-      </Text>
+      <Countdown
+        isTimerEnabled={isTimerStarted}
+        time={timeToResend}
+        handleEnd={() => {
+          setIsPenalty(false)
+          console.log('isPenalty', isPenalty)
+        }}
+        style={[styles.resendCode, { opacity: wrongCodeOpacity }]}
+      />
     </View>
   )
 }
