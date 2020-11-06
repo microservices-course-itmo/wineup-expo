@@ -3,13 +3,15 @@ import { Text } from 'react-native'
 import { createStackNavigator } from '@react-navigation/stack'
 import SignUpScreen from './SignUpScreen'
 import SignInScreen from './SignInScreen'
+import SignInConfirmScreen from './SignInConfirmScreen'
 import ROUTES from '../../routes'
 import AgeScreen from './AgeScreen'
 import AgeBackScreen from './AgeBackScreen'
+import HomeScreen from '../Home'
 
 const Stack = createStackNavigator()
 
-const SignInConfirmScreen = () => <Text>Экран подтверждения СМС</Text>
+// const SignInConfirmScreen = () => <Text>Экран подтверждения СМС</Text>
 
 const AuthWrapper: React.FC = () => {
   return (
@@ -23,6 +25,7 @@ const AuthWrapper: React.FC = () => {
         component={SignInConfirmScreen}
       />
       <Stack.Screen name={ROUTES.SIGN_UP} component={SignUpScreen} />
+      <Stack.Screen name={ROUTES.HOME} component={HomeScreen} />
     </Stack.Navigator>
   )
 }

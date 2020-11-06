@@ -1,9 +1,19 @@
 import React, { ReactElement, useState, useEffect } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Linking } from 'react-native'
+import { StackNavigationProp } from '@react-navigation/stack'
 import LabeledInput from '../../molecules/Auth/LabeledInput'
 import { isEmail, isAllowedPassword } from '../../helpers'
+import ROUTES from '../../routes'
 
-function SignInScreen(): ReactElement {
+type SignInScreenNavigationProps = StackNavigationProp<any, 'SignInScreen'>
+
+interface SignInScreenProps {
+  navigation: SignInScreenNavigationProps
+}
+
+function SignInScreen({
+  navigation,
+}: SignInScreenProps): ReactElement<SignInScreenProps> {
   const [userEmail, getUserEmail] = useState('')
   const [userPassword, getUserPassword] = useState('')
 
@@ -21,6 +31,7 @@ function SignInScreen(): ReactElement {
 
   const onSubmit = () => {
     console.log(userEmail, userPassword)
+    navigation.navigate(ROUTES.SIGN_IN_CONFIRM)
   }
 
   return (

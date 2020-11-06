@@ -1,7 +1,17 @@
 import React, { ReactElement } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import ROUTES from '../../routes'
 
-function AgeScreen(): ReactElement {
+type AgeScreenNavigationProps = StackNavigationProp<any, 'AgeScreen'>
+
+interface AgeScreenProps {
+  navigation: AgeScreenNavigationProps
+}
+
+function AgeScreen({
+  navigation,
+}: AgeScreenProps): ReactElement<AgeScreenProps> {
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 16 }}>Добро пожаловать</Text>
@@ -13,13 +23,13 @@ function AgeScreen(): ReactElement {
       >
         <TouchableOpacity
           style={styles.buttonConfirm}
-          onPress={() => Alert.alert('')}
+          onPress={() => navigation.navigate(ROUTES.SIGN_IN)}
         >
           <Text style={styles.buttonConfirmText}>Да</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.buttonConfirm}
-          onPress={() => Alert.alert('')}
+          onPress={() => navigation.navigate(ROUTES.AGE_DENIED)}
         >
           <Text style={styles.buttonConfirmText}>Нет</Text>
         </TouchableOpacity>
