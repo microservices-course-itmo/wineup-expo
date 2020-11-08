@@ -1,4 +1,5 @@
 import React from 'react'
+import styled from 'styled-components/native'
 import { Wine } from '../molecules/WineCard'
 import CatalogView from '../organisms/CatalogView'
 import SearchInput from '../molecules/SearchInput'
@@ -30,9 +31,13 @@ export default function CatalogScreen() {
 
   return (
     <>
-      <SearchInput />
-      <FiltersBar filters={['Рекомендованное', 'Цена', 'Страна', 'Цвет']} />
+      <StyledSearchInput value='' />
+      <FiltersBar />
       <CatalogView>{wines}</CatalogView>
     </>
   )
 }
+
+const StyledSearchInput = styled(SearchInput)`
+  margin: 15px 10px;
+`

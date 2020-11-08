@@ -2,13 +2,13 @@ import React from 'react'
 import styled from 'styled-components/native'
 import { ScrollView, TouchableWithoutFeedback } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-import FilterButton from '../../molecules/FilterButton'
+import ColorFilterButton from '../../molecules/FilterButton/Color'
+import CountryFilterButton from '../../molecules/FilterButton/Country'
+import RecommendedFilterButton from '../../molecules/FilterButton/Recommended'
+import SugarFilterButton from '../../molecules/FilterButton/Sugar'
+import PriceFilterButton from '../../molecules/FilterButton/Price'
 
-interface FiltersBarProps {
-  filters: string[]
-}
-
-function FiltersBar({ filters }: FiltersBarProps) {
+function FiltersBar() {
   return (
     <Container>
       <TouchableWithoutFeedback>
@@ -19,9 +19,11 @@ function FiltersBar({ filters }: FiltersBarProps) {
       </TouchableWithoutFeedback>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <FiltersContainer>
-          {filters.map((filter) => (
-            <StyledFilterButton key={filter}>{filter}</StyledFilterButton>
-          ))}
+          <CountryFilterButton />
+          <PriceFilterButton />
+          <RecommendedFilterButton />
+          <SugarFilterButton />
+          <ColorFilterButton />
         </FiltersContainer>
       </ScrollView>
     </Container>
@@ -70,8 +72,4 @@ const FiltersContainer = styled.View`
   justify-content: center;
 
   padding-right: 10px;
-`
-
-const StyledFilterButton = styled(FilterButton)`
-  margin-left: 10px;
 `
