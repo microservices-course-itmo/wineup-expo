@@ -24,6 +24,7 @@
     "expo": "~38.0.8",
     "expo-font": "~8.2.1",
     "expo-status-bar": "^1.0.2",
+    "lodash": "^4.17.20",
     "react": "~16.11.0",
     "react-dom": "~16.11.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
@@ -36,6 +37,7 @@
     "react-native-safe-area-context": "~3.0.7",
     "react-native-screens": "~2.9.0",
     "react-native-web": "~0.11.7",
+    "rest-hooks": "^4.5.9",
     "styled-components": "^5.2.0"
   },
   "devDependencies": {
@@ -43,6 +45,7 @@
     "@testing-library/jest-native": "^3.3.0",
     "@testing-library/react-native": "^7.0.2",
     "@types/jest": "^26.0.10",
+    "@types/lodash": "^4.14.164",
     "@types/react": "~16.9.41",
     "@types/react-native": "~0.62.13",
     "@typescript-eslint/eslint-plugin": "^4.0.1",
