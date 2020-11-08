@@ -1,10 +1,12 @@
 import React, { ReactElement } from 'react'
+import { TouchableOpacity } from 'react-native'
 import styled from 'styled-components/native'
 import Text from '../Text'
 import Heading from '../Heading'
 import Rating from '../Rating'
 import WineBottlePrice from '../WineBottlePrice'
 import WineShopName from '../WineShopName'
+import ExtraOptions from '../ExtraOptions'
 
 export interface WineTitleProps {
   name: string
@@ -13,6 +15,7 @@ export interface WineTitleProps {
   color: string
   volume: number
   shop?: string
+  extraOptions?: Array<any>
 }
 
 function WineInfo({
@@ -22,8 +25,11 @@ function WineInfo({
   color,
   volume,
   shop,
+  extraOptions,
 }: WineTitleProps): ReactElement<WineTitleProps> {
   const description = [country, dryness, color, `${volume} л.`].join(', ')
+
+  const [isModalVisible, setModalVisible] = React.useState(false)
 
   return (
     <>
@@ -31,7 +37,14 @@ function WineInfo({
       <Heading>{name}</Heading>
       <Heading>Merlot, 2011 г.</Heading>
       <Description>{description}</Description>
-      <Parameters>Доп. параметры</Parameters>
+      <TouchableOpacity onPress={() => setModalVisible(true)}>
+        <Parameters>Доп. параметры</Parameters>
+      </TouchableOpacity>
+      <ExtraOptions
+        visible={isModalVisible}
+        data={extraOptions}
+        handleClose={() => setModalVisible(false)}
+      />
       <BottomBar>
         <WineBottlePrice price={1500} />
         <WineShopName name={shop} />

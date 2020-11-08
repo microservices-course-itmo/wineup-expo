@@ -27,7 +27,7 @@ import { AuthProvider } from './screens/Auth/AuthContext'
 const Tab = createBottomTabNavigator()
 
 const App: React.FC = () => {
-  const [isAuth, setIsAuth] = useState(false)
+  const [isAuth, setIsAuth] = useState(true)
 
   const [fontsLoaded] = useFonts({
     Merriweather_400Regular,
