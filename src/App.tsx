@@ -19,7 +19,7 @@ import {
   PlayfairDisplay_700Bold,
 } from '@expo-google-fonts/playfair-display'
 import { AppLoading } from 'expo'
-import { SafeAreaView, Text } from 'react-native'
+import { SafeAreaView, StatusBar, Text } from 'react-native'
 import { CacheProvider } from 'rest-hooks'
 import CatalogScreen from './screens/Catalog'
 import AuthWrapper from './screens/Auth/AuthWrapper'
@@ -50,6 +50,7 @@ const App: React.FC = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar hidden />
       <CacheProvider>
         <Suspense fallback={<Text>Loading...</Text>}>
           <NavigationContainer>

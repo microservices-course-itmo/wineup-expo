@@ -1,44 +1,53 @@
-import React from 'react'
+import React, { RefObject, useEffect, useState } from 'react'
 import styled from 'styled-components/native'
-import { Modal, Text, TouchableOpacity } from 'react-native'
+import { Dimensions, Modal, Text, TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 
 export interface ExtraOptionsProps {
   data: Array<any>
   visible: boolean
   handleClose: () => void
+  target: RefObject<Text>
 }
 
-function ExtraOptions({ data, visible, handleClose }: ExtraOptionsProps) {
+function ExtraOptions({
+  data,
+  visible,
+  handleClose,
+  target,
+}: ExtraOptionsProps) {
+  const [position, setPosition] = useState({ bottom: 0 })
+  const onClose = () => {
+    handleClose()
+  }
+
+  useEffect(() => {
+    target.current!.measureInWindow((x, y) => {
+      const { height: windowHeight } = Dimensions.get('window')
+
+      setPosition({ bottom: windowHeight - y })
+    })
+  }, [visible])
+
   return (
-    <Modal animated animationType='slide' visible={visible} transparent>
-      <ModalOverlay
-        onPress={() => handleClose()}
-        style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-      />
-      <Container>
+    <Modal animated animationType='fade' visible={visible} transparent>
+      <ModalOverlay onPress={onClose} />
+      <Container style={position}>
         <ModalTitle>Дополнительные параметры:</ModalTitle>
         <ModalCloseIcon>
-          <TouchableOpacity onPress={() => handleClose()}>
+          <TouchableOpacity onPress={onClose}>
             <Ionicons name='md-close' size={24} color='rgb(157,74,91)' />
           </TouchableOpacity>
         </ModalCloseIcon>
 
         <ModalItemsWrapper>
           {data &&
-            data.map((item, index) =>
-              index % 2 ? (
-                <ModalItem key={index}>
-                  <Text>{item.param}:</Text>
-                  <ModalTextBold>{item.answ}</ModalTextBold>
-                </ModalItem>
-              ) : (
-                <ModalItemGray key={index}>
-                  <Text>{item.param}:</Text>
-                  <ModalTextBold>{item.answ}</ModalTextBold>
-                </ModalItemGray>
-              )
-            )}
+            data.map((item, index) => (
+              <ModalItem key={index} odd={!!(index % 2)}>
+                <Text>{item.param}:</Text>
+                <ModalTextBold>{item.answ}</ModalTextBold>
+              </ModalItem>
+            ))}
         </ModalItemsWrapper>
       </Container>
     </Modal>
@@ -51,27 +60,27 @@ const Container = styled.View`
   padding: 30px 20px;
   background: white;
   width: 90%;
-  margin: auto auto 0;
+  left: 5%;
+  margin-bottom: -20px;
   box-shadow: 0px 3px 4px rgba(178, 178, 178, 0.5);
+  border: 1px solid #b2b2b220;
   border-radius: 12px;
-  position: relative;
+  position: absolute;
 `
 
 const ModalTitle = styled.Text`
   text-align: center;
 `
 
-const ModalItem = styled.View`
+const ModalItem = styled.View<{ odd: boolean }>`
   padding: 15px 20px;
   border-radius: 5px;
   width: 100%;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-`
 
-const ModalItemGray = styled(ModalItem)`
-  background: rgb(238, 238, 238);
+  background-color: ${({ odd }) => (odd ? '#eeeeee' : 'transparent')};
 `
 
 const ModalItemsWrapper = styled.View`

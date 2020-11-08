@@ -1,12 +1,12 @@
-import React, { ReactElement } from 'react'
-import { TouchableOpacity } from 'react-native'
+import React, { ReactElement, useRef } from 'react'
+import { TouchableOpacity, Text as RNText } from 'react-native'
 import styled from 'styled-components/native'
 import Text from '../Text'
 import Heading from '../Heading'
 import Rating from '../Rating'
 import WineBottlePrice from '../WineBottlePrice'
 import WineShopName from '../WineShopName'
-import ExtraOptions from '../ExtraOptions'
+import ExtraOptions from '../../organisms/ExtraOptions'
 
 export interface WineTitleProps {
   name: string
@@ -28,8 +28,16 @@ function WineInfo({
   extraOptions,
 }: WineTitleProps): ReactElement<WineTitleProps> {
   const description = [country, dryness, color, `${volume} л.`].join(', ')
-
+  const optionsRef = useRef<RNText>(null)
   const [isModalVisible, setModalVisible] = React.useState(false)
+
+  const openModal = () => {
+    setModalVisible(true)
+  }
+
+  const closeModal = () => {
+    setModalVisible(false)
+  }
 
   return (
     <>
@@ -37,14 +45,19 @@ function WineInfo({
       <Heading>{name}</Heading>
       <Heading>Merlot, 2011 г.</Heading>
       <Description>{description}</Description>
-      <TouchableOpacity onPress={() => setModalVisible(true)}>
-        <Parameters>Доп. параметры</Parameters>
-      </TouchableOpacity>
-      <ExtraOptions
-        visible={isModalVisible}
-        data={extraOptions}
-        handleClose={() => setModalVisible(false)}
-      />
+      {extraOptions && (
+        <>
+          <TouchableOpacity onPress={openModal}>
+            <Parameters ref={optionsRef}>Доп. параметры</Parameters>
+          </TouchableOpacity>
+          <ExtraOptions
+            target={optionsRef}
+            visible={isModalVisible}
+            data={extraOptions}
+            handleClose={closeModal}
+          />
+        </>
+      )}
       <BottomBar>
         <WineBottlePrice price={1500} />
         <WineShopName name={shop} />
