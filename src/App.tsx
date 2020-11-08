@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Suspense, useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import {
@@ -11,6 +11,7 @@ import {
   Roboto_400Regular_Italic,
   Roboto_300Light_Italic,
   Roboto_400Regular,
+  Roboto_500Medium,
 } from '@expo-google-fonts/roboto'
 import {
   PlayfairDisplay_400Regular,
@@ -18,7 +19,8 @@ import {
   PlayfairDisplay_700Bold,
 } from '@expo-google-fonts/playfair-display'
 import { AppLoading } from 'expo'
-import { SafeAreaView } from 'react-native'
+import { SafeAreaView, Text } from 'react-native'
+import { CacheProvider } from 'rest-hooks'
 import CatalogScreen from './screens/Catalog'
 import AuthWrapper from './screens/Auth/AuthWrapper'
 import SettingsScreen from './screens/Settings'
@@ -39,6 +41,7 @@ const App: React.FC = () => {
     Roboto_300Light_Italic,
     Roboto_400Regular_Italic,
     Roboto_400Regular,
+    Roboto_500Medium,
   })
 
   if (!fontsLoaded) {
@@ -47,18 +50,22 @@ const App: React.FC = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <NavigationContainer>
-        {isAuth ? (
-          <Tab.Navigator>
-            <Tab.Screen name='Каталог' component={CatalogScreen} />
-            <Tab.Screen name='Settings' component={SettingsScreen} />
-          </Tab.Navigator>
-        ) : (
-          <AuthProvider value={{ setIsAuth }}>
-            <AuthWrapper />
-          </AuthProvider>
-        )}
-      </NavigationContainer>
+      <CacheProvider>
+        <Suspense fallback={<Text>Loading...</Text>}>
+          <NavigationContainer>
+            {isAuth ? (
+              <Tab.Navigator>
+                <Tab.Screen name='Каталог' component={CatalogScreen} />
+                <Tab.Screen name='Settings' component={SettingsScreen} />
+              </Tab.Navigator>
+            ) : (
+              <AuthProvider value={{ setIsAuth }}>
+                <AuthWrapper />
+              </AuthProvider>
+            )}
+          </NavigationContainer>
+        </Suspense>
+      </CacheProvider>
     </SafeAreaView>
   )
 }
