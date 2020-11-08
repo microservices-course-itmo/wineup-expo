@@ -11,6 +11,21 @@ function containsLatinOnly(string: string): boolean {
 }
 
 /** @function
+ * @name isName
+ * Returns true if name has length of 2 to 15 chars and contains only cirillic and latin letters
+ * Returns underfined if name string is empty
+ *
+ * @param {string} name - name to check
+ */
+export function isName(name: string): boolean | undefined {
+  const nameRegexp = /^([a-zA-Zа-яА-ЯёЁ]{2,15})$/
+
+  if (name.length === 0) return undefined
+
+  return name.search(nameRegexp) === 0
+}
+
+/** @function
  * @name isEmail
  * Returns true if string is a correct email
  *
@@ -42,3 +57,5 @@ export function isAllowedPassword(password: string): boolean {
 
   return password.search(passwordRegexp) === 0
 }
+
+export type City = 'Москва' | 'Санкт-Петербург'
