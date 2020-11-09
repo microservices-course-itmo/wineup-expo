@@ -17,6 +17,7 @@ import {
   PlayfairDisplay_400Regular_Italic,
   PlayfairDisplay_700Bold,
 } from '@expo-google-fonts/playfair-display'
+import { PTSans_400Regular, PTSans_700Bold } from '@expo-google-fonts/pt-sans'
 import { AppLoading } from 'expo'
 import { SafeAreaView } from 'react-native'
 import CatalogScreen from './screens/Catalog'
@@ -39,6 +40,8 @@ const App: React.FC = () => {
     Roboto_300Light_Italic,
     Roboto_400Regular_Italic,
     Roboto_400Regular,
+    PTSans_400Regular,
+    PTSans_700Bold,
   })
 
   if (!fontsLoaded) {

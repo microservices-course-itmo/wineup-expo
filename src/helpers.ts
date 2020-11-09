@@ -59,3 +59,15 @@ export function isAllowedPassword(password: string): boolean {
 }
 
 export type City = 'Москва' | 'Санкт-Петербург'
+
+/** @function
+ * @name isRightCode
+ *
+ * Checks if the confirmation code is the same as the right code from back-end
+ * Right now the right code is 123456
+ *
+ * @param {string} code - string to check
+ */
+export function isRightCode(code: string): boolean {
+  return code === '123456'
+}

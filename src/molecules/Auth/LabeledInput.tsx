@@ -1,15 +1,18 @@
 import React, { ReactElement, useState } from 'react'
-import { Text, TextInput, View } from 'react-native'
+import { Text, TextInput, View, StyleProp, ViewStyle } from 'react-native'
 import styles from './styles'
 
 interface LabeledInputProps {
   value: string
-  label: string
+  label?: string
   onChangeText: React.Dispatch<React.SetStateAction<string>>
   secureTextEntry?: boolean
   isValid?: boolean
   errorMessage?: string
   maxLength?: number
+  placeholder?: string
+  keyBoardType?: 'default' | 'numeric'
+  containerStyle?: StyleProp<ViewStyle>
 }
 
 function LabeledInput({
@@ -20,6 +23,9 @@ function LabeledInput({
   isValid = true,
   errorMessage,
   maxLength,
+  placeholder,
+  keyBoardType,
+  containerStyle,
 }: LabeledInputProps): ReactElement<LabeledInputProps> {
   const [isFocused, setIsFocused] = useState(false)
   const handleFocus = () => {
@@ -30,10 +36,10 @@ function LabeledInput({
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, containerStyle]}>
       <Text style={styles.label}>{label}</Text>
       <TextInput
-        selectionColor='#4E4E4E'
+        selectionColor='#000'
         style={[
           styles.input,
           styles.textAreaStyle,
@@ -45,12 +51,15 @@ function LabeledInput({
         onFocus={handleFocus}
         onBlur={handleBlur}
         maxLength={maxLength}
+        placeholder={placeholder}
+        placeholderTextColor='#A3A3A3'
+        keyboardType={keyBoardType}
       />
       {isFocused === true && (
         <Text
           style={[
             styles.formatLabel,
-            isValid ? { color: '#A3A3A3' } : { color: '#C23232' },
+            isValid ? { color: '#A3A3A3' } : { color: '#E20338' },
           ]}
         >
           {errorMessage}

@@ -2,6 +2,8 @@ import React, { ReactElement } from 'react'
 import { Text, TouchableWithoutFeedback, View } from 'react-native'
 import { CheckBox } from 'react-native-elements'
 import styles from './styles'
+import UncheckedIcon from './UncheckedIcon'
+import CheckedIcon from './CheckedIcon'
 
 interface CheckBoxProps {
   onPress: React.Dispatch<React.SetStateAction<boolean>>
@@ -32,7 +34,8 @@ function ConsentCheckBox({
         title={checkBoxText()}
         checked={hasFilled}
         onPress={() => onPress(!hasFilled)}
-        checkedColor='#931332'
+        uncheckedIcon={<UncheckedIcon />}
+        checkedIcon={<CheckedIcon />}
       />
     </View>
   )
