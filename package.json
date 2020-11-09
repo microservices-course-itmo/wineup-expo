@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "@expo-google-fonts/merriweather": "^0.1.0",
-    "@react-native-community/datetimepicker": "2.4.0",
     "@expo-google-fonts/playfair-display": "^0.1.0",
     "@expo-google-fonts/roboto": "^0.1.0",
     "@expo/vector-icons": "^10.2.1",
+    "@react-native-community/datetimepicker": "2.4.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.8.0",
     "@react-navigation/native": "^5.7.3",
@@ -69,12 +69,6 @@
     "typescript": "~3.9.5"
   },
   "private": true,
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged && lint-staged && yarn lint",
-      "pre-push": "CI=true yarn test"
-    }
-  },
   "lint-staged": {
     "*.ts?(x)": [
       "eslint --fix"

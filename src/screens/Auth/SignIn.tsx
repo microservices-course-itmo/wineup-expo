@@ -6,8 +6,14 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native'
+import { StackNavigationProp } from '@react-navigation/stack'
 
-function PhoneScreen(): ReactElement {
+type SignInNavigationProps = StackNavigationProp<any, 'SignIn'>
+
+interface SignInProps {
+  navigation: SignInNavigationProps
+}
+function SignIn({ navigation }: SignInProps): ReactElement<SignInProps> {
   const [userPhone, setUserPhone] = useState('')
 
   const onSubmit = () => {
@@ -44,10 +50,21 @@ function PhoneScreen(): ReactElement {
           editable
         />
       </View>
-      <TouchableOpacity onPress={onSubmit} style={[styles.buttonStyle]}>
+      <TouchableOpacity
+        style={[styles.buttonStyle]}
+        onPress={() => {
+          navigation.navigate('SignInConfirm')
+          console.log(userPhone)
+        }}
+      >
         <Text>Войти</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.unregUser}>
+      <TouchableOpacity
+        style={[styles.unregUser]}
+        onPress={() => {
+          navigation.navigate('Catalog')
+        }}
+      >
         <Text style={{ textDecorationLine: 'underline' }}>
           Продолжить без авторизации
         </Text>
@@ -55,7 +72,7 @@ function PhoneScreen(): ReactElement {
     </View>
   )
 }
-export default PhoneScreen
+export default SignIn
 
 const styles = StyleSheet.create({
   container: {
