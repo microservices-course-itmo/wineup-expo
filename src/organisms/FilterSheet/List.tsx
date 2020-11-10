@@ -14,6 +14,7 @@ interface ListFilterSheetProps {
   withSearch?: boolean
   onChange?: (filters: { [key: string]: boolean }) => void
   children: string[]
+  state?: { [key: string]: boolean }
 }
 
 export interface ListFilterSheetRef {
@@ -21,7 +22,13 @@ export interface ListFilterSheetRef {
 }
 
 function ListFilterSheet(
-  { withSearch, type, children, onChange = () => {} }: ListFilterSheetProps,
+  {
+    withSearch,
+    type,
+    children,
+    state,
+    onChange = () => {},
+  }: ListFilterSheetProps,
   ref:
     | ((instance: ListFilterSheetRef | null) => void)
     | MutableRefObject<ListFilterSheetRef | null>
@@ -29,13 +36,19 @@ function ListFilterSheet(
 ) {
   const [options, setOptions] = useState(children)
 
-  const defaultState: { [key: string]: boolean } = {}
+  const defaultState: { [key: string]: boolean } = state || {}
 
-  children.forEach((option) => {
-    defaultState[option] = false
-  })
+  if (state) {
+    children.forEach((option) => {
+      defaultState[option] = state[option]
+    })
+  } else {
+    children.forEach((option) => {
+      defaultState[option] = false
+    })
+  }
 
-  if (type === 'radio') {
+  if (!state && type === 'radio') {
     defaultState[children[0]] = true
   }
   const [filters, setFilters] = useState(defaultState)
@@ -51,11 +64,11 @@ function ListFilterSheet(
 
   const onSelect = (option: string) => () => {
     setFilters((prevState) => {
-      let state: { [key: string]: boolean }
+      let selectState: { [key: string]: boolean }
 
       switch (type) {
         case 'checkbox':
-          state = {
+          selectState = {
             ...prevState,
             [option]: !prevState[option],
           }
@@ -71,18 +84,18 @@ function ListFilterSheet(
 
           newState[option] = true
 
-          state = newState
+          selectState = newState
 
           break
         }
 
         default:
-          state = prevState
+          selectState = prevState
       }
 
-      onChange(state)
+      onChange(selectState)
 
-      return state
+      return selectState
     })
   }
 

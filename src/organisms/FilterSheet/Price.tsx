@@ -11,6 +11,8 @@ import Switch from '../../atoms/Switch'
 
 interface PriceFilterSheetProps {
   children: Array<[number, number]>
+  state: Array<[number, number]>
+  onChange?: (value: Array<[number, number]>) => void
 }
 
 interface PriceFilterSheetRef {
@@ -18,7 +20,7 @@ interface PriceFilterSheetRef {
 }
 
 function PriceFilterSheet(
-  { children }: PriceFilterSheetProps,
+  { children, state, onChange: onChangeState }: PriceFilterSheetProps,
   ref:
     | ((instance: PriceFilterSheetRef | null) => void)
     | MutableRefObject<PriceFilterSheetRef | null>
@@ -30,8 +32,10 @@ function PriceFilterSheet(
     discounts: false,
   }
 
-  const [filters, setFilters] = useState(defaultState)
-  const [selectedOption, setSelectedOption] = useState<number | undefined>()
+  const [filters, setFilters] = useState(state || defaultState)
+  const [selectedOption, setSelectedOption] = useState<number | undefined>(
+    filters.indexButton || -1
+  )
 
   useImperativeHandle(ref, () => ({
     reset: () => {
@@ -43,28 +47,57 @@ function PriceFilterSheet(
   const onChange = (name: string) => (value: string | boolean) => {
     setSelectedOption(undefined)
 
-    setFilters((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }))
+    setFilters((prevState) => {
+      onChangeState({
+        ...prevState,
+        [name]: value,
+      })
+
+      return {
+        ...prevState,
+        [name]: value,
+      }
+    })
   }
 
   const onSelect = (index: number) => () => {
     setSelectedOption(index)
 
     if (index === selectedOption) {
-      setFilters((prevState) => ({
-        ...prevState,
-        from: defaultState.from,
-        to: defaultState.to,
-      }))
+      setFilters((prevState) => {
+        onChangeState({
+          ...prevState,
+          from: defaultState.from,
+          to: defaultState.to,
+          indexButton: index,
+        })
+
+        return {
+          ...prevState,
+          from: defaultState.from,
+          to: defaultState.to,
+        }
+      })
 
       return undefined
     }
 
     const [from, to] = children[index]
 
-    setFilters((prevState) => ({ ...prevState, from, to }))
+    setFilters((prevState) => {
+      onChangeState({
+        ...prevState,
+        from,
+        to,
+        indexButton: index,
+      })
+
+      return {
+        ...prevState,
+        from,
+        to,
+      }
+    })
 
     return index
   }

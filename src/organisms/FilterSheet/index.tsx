@@ -1,17 +1,24 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useContext } from 'react'
 import styled from 'styled-components/native'
 import { Feather } from '@expo/vector-icons'
 import PrimaryButton from '../../atoms/PrimaryButton'
 import ListFilterSheet from './List'
 import PriceFilterSheet from './Price'
+import { Context } from '../FiltersBar/ContextState'
 
 export interface FilterSheetProps {
   title: string
   children: string[] | Array<[number, number]>
   type?: 'checkbox' | 'radio' | 'price'
   withSearch?: boolean
-  onApply?: (filters: { [key: string]: boolean }) => void
+  onApplyProp?: (filters: { [key: string]: boolean }) => void
   height?: number
+}
+
+interface PriceState {
+  from?: number
+  to?: number
+  discounts?: boolean
 }
 
 function FilterSheet({
@@ -19,25 +26,32 @@ function FilterSheet({
   children,
   type = 'checkbox',
   withSearch = false,
-  onApply: onApplyProp = () => {},
+  onApplyProp = () => {},
   height = 300,
 }: FilterSheetProps) {
   const filterPageRef = useRef<{ reset(): void }>(null)
-  const [filters, setFilters] = useState({})
+  const context = useContext(Context)
 
   const onApply = () => {
-    onApplyProp(filters)
+    onApplyProp(context.country)
   }
 
-  const onChange = (value: { [key: string]: boolean }) => {
-    setFilters(value)
-  }
+  const onChange =
+    type === 'price'
+      ? (value: PriceState) => {
+          context.setPrice(value)
+        }
+      : (value: { [key: string]: boolean }) => {
+          context.setCountry(value)
+        }
 
   const onReset = () => {
     filterPageRef.current!.reset()
   }
 
   const Component = type === 'price' ? PriceFilterSheet : ListFilterSheet
+
+  const { price, country } = context
 
   return (
     <Container height={height}>
@@ -50,6 +64,7 @@ function FilterSheet({
         type={type}
         withSearch={withSearch}
         onChange={onChange}
+        state={type === 'price' ? price : country}
       >
         {children as any}
       </Component>

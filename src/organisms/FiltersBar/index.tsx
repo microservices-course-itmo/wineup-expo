@@ -7,26 +7,29 @@ import CountryFilterButton from '../../molecules/FilterButton/Country'
 import RecommendedFilterButton from '../../molecules/FilterButton/Recommended'
 import SugarFilterButton from '../../molecules/FilterButton/Sugar'
 import PriceFilterButton from '../../molecules/FilterButton/Price'
+import { defaultState, Context } from './ContextState'
 
 function FiltersBar() {
   return (
-    <Container>
-      <TouchableWithoutFeedback>
-        <AllFiltersContainer>
-          <AllFiltersText>Все фильтры</AllFiltersText>
-          <StyledIonicons name='ios-arrow-down' color='#333' />
-        </AllFiltersContainer>
-      </TouchableWithoutFeedback>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-        <FiltersContainer>
-          <CountryFilterButton />
-          <PriceFilterButton />
-          <RecommendedFilterButton />
-          <SugarFilterButton />
-          <ColorFilterButton />
-        </FiltersContainer>
-      </ScrollView>
-    </Container>
+    <Context.Provider value={defaultState}>
+      <Container>
+        <TouchableWithoutFeedback>
+          <AllFiltersContainer>
+            <AllFiltersText>Все фильтры</AllFiltersText>
+            <StyledIonicons name='ios-arrow-down' color='#333' />
+          </AllFiltersContainer>
+        </TouchableWithoutFeedback>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <FiltersContainer>
+            <CountryFilterButton />
+            <PriceFilterButton />
+            <RecommendedFilterButton />
+            <SugarFilterButton />
+            <ColorFilterButton />
+          </FiltersContainer>
+        </ScrollView>
+      </Container>
+    </Context.Provider>
   )
 }
 
