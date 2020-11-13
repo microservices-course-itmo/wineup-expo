@@ -1,6 +1,6 @@
 import React, { ReactElement, useState, useEffect } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Linking } from 'react-native'
-import LabeledInput from '../../molecules/LabeledInput'
+import LabeledInput from '../../molecules/Auth/LabeledInput'
 import { isEmail, isAllowedPassword } from '../../helpers'
 
 function SignInScreen(): ReactElement {
@@ -27,12 +27,14 @@ function SignInScreen(): ReactElement {
     <View style={styles.container}>
       <Text style={styles.header}>Вход</Text>
       <LabeledInput
+        value={userEmail}
         label='Адрес эл. почты'
         onChangeText={getUserEmail}
         isValid={isValidEmail}
         errorMessage={errorMessageEmail}
       />
       <LabeledInput
+        value={userPassword}
         label='Пароль'
         onChangeText={getUserPassword}
         secureTextEntry

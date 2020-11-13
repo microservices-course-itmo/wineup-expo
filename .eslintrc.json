@@ -43,6 +43,7 @@
     ],
     "react/jsx-one-expression-per-line": 0,
     "react/jsx-props-no-spreading": 0,
+    "react/static-property-placement": 0,
     "react/no-array-index-key": 1,
     "padding-line-between-statements": [
       "error",

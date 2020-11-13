@@ -1,54 +1,86 @@
-import React, { useState, ReactElement, useEffect } from 'react'
+import React, { useState, ReactElement, useEffect, useContext } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import LabeledInput from '../../molecules/LabeledInput'
-import { isEmail, isAllowedPassword } from '../../helpers'
+import { isName, City } from '../../helpers'
+import LabeledInput from '../../molecules/Auth/LabeledInput'
+import LabeledDatePicker from '../../molecules/Auth/LabeledDatePicker'
+import LabeledDropdown from '../../molecules/Auth/LabeledDropdown'
+import ConsentCheckBox from '../../molecules/Auth/ConsentCheckBox'
+import { AuthContext } from './AuthContext'
 
 function SignUpScreen(): ReactElement {
   const [userName, setUserName] = useState('')
-  const [userEmail, setUserEmail] = useState('')
-  const [userPassword, setUserPassword] = useState('')
 
-  const [isSignUpEnabled, setIsSignUpEnabled] = useState(false)
+  const maximumDate = new Date()
+
+  maximumDate.setFullYear(maximumDate.getFullYear() - 18)
+  const [userDate, setUserDate] = useState(maximumDate)
+
+  const [userCity, setUserCity] = useState<City>('Москва')
+
+  const [isSignUpEnabled, setIsSignUpEnabled] = useState<boolean | undefined>(
+    false
+  )
   const buttonOpacity = isSignUpEnabled ? 1 : 0.4
-  const isValidPassword = isAllowedPassword(userPassword)
-  const isValidEmail = isEmail(userEmail)
-  const errorMessagePassword =
-    'Пароль должен содержать минимум 8 символов, хотя бы 1 букву и 1 цифру'
-  const errorMessageEmail = 'Неккоректный адрес эл. почты'
+  const isAuth = useContext(AuthContext)
+
+  const isValidName = isName(userName)
+  const [isDateFilled, setIsDateFilled] = useState(false)
+  const [isCityFilled, setIsCityFilled] = useState(false)
+  const [isСonsentGiven, setIsConsentGiven] = useState(false)
+  const errorMessageName = '*Формат от 2 до 15 букв, не содержащих символов'
 
   useEffect(() => {
-    setIsSignUpEnabled(isValidPassword && isValidEmail)
-  }, [userEmail, userPassword, isValidPassword, isValidEmail])
+    setIsSignUpEnabled(
+      isValidName && isDateFilled && isCityFilled && isСonsentGiven
+    )
+  }, [
+    userName,
+    userDate,
+    userCity,
+    isValidName,
+    isDateFilled,
+    isCityFilled,
+    isСonsentGiven,
+  ])
 
   const onSubmit = () => {
-    console.log(userName, userEmail, userPassword)
+    console.log(userName, userDate, userCity)
+    isAuth.setIsAuth(true)
     // fetch ? response.ok : response.error, return
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Регистрация</Text>
-      <LabeledInput label='ФИО' onChangeText={setUserName} />
+      <Text style={styles.header}>Введите данные</Text>
       <LabeledInput
-        label='Адрес эл. почты'
-        onChangeText={setUserEmail}
-        isValid={isValidEmail}
-        errorMessage={errorMessageEmail}
+        value={userName}
+        label='Введите ваше имя'
+        onChangeText={setUserName}
+        isValid={isValidName}
+        errorMessage={errorMessageName}
+        maxLength={15}
       />
-      <LabeledInput
-        label='Пароль'
-        onChangeText={setUserPassword}
-        secureTextEntry
-        isValid={isValidPassword}
-        errorMessage={errorMessagePassword}
+      <LabeledDatePicker
+        value={userDate}
+        label='Введите дату рождения'
+        onChange={setUserDate}
+        maximumDate={maximumDate}
+        hasFilled={isDateFilled}
+        onFill={setIsDateFilled}
       />
-
+      <LabeledDropdown
+        label='Введите ваш город'
+        onChange={setUserCity}
+        hasFilled={isCityFilled}
+        onFill={setIsCityFilled}
+      />
+      <ConsentCheckBox onPress={setIsConsentGiven} hasFilled={isСonsentGiven} />
       <TouchableOpacity
         onPress={onSubmit}
         style={[styles.buttonStyle, { opacity: buttonOpacity }]}
         disabled={!isSignUpEnabled}
       >
-        <Text style={styles.buttonText}>Зарегистрироваться</Text>
+        <Text style={styles.buttonText}>Войти</Text>
       </TouchableOpacity>
     </View>
   )
@@ -56,12 +88,12 @@ function SignUpScreen(): ReactElement {
 
 const styles = StyleSheet.create({
   header: {
-    fontSize: 30,
+    fontSize: 24,
     fontFamily: 'Merriweather_700Bold',
     color: '#C23232',
   },
   container: {
-    paddingTop: 136,
+    paddingTop: 125,
     flex: 1,
     alignItems: 'center',
     backgroundColor: 'white',
@@ -70,14 +102,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 60,
+    marginTop: 28,
     width: 320,
     maxHeight: 56,
     backgroundColor: '#C23232',
     borderRadius: 10,
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 16,
     color: '#fff',
     fontFamily: 'Merriweather_400Regular',
   },
