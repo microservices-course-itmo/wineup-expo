@@ -13,6 +13,7 @@ export interface WineTitleProps {
   color: string
   volume: number
   shop?: string
+  year: number
 }
 
 function WineInfo({
@@ -22,6 +23,7 @@ function WineInfo({
   color,
   volume,
   shop,
+  year,
 }: WineTitleProps): ReactElement<WineTitleProps> {
   const description = [country, dryness, color, `${volume} л.`].join(', ')
 
@@ -29,7 +31,7 @@ function WineInfo({
     <>
       <Rating rating={3} />
       <Heading>{name}</Heading>
-      <Heading>Merlot, 2011 г.</Heading>
+      <Heading>Merlot, {year} г.</Heading>
       <Description>{description}</Description>
       <Parameters>Доп. параметры</Parameters>
       <BottomBar>

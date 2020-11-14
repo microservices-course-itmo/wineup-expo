@@ -13,6 +13,7 @@ export interface Wine {
   color: string
   volume: number
   shop: Shop
+  year: number
 }
 
 interface WineCardProps {
@@ -20,7 +21,7 @@ interface WineCardProps {
 }
 
 function WineCard({
-  wine: { name, country, dryness, color, volume, shop },
+  wine: { name, country, dryness, color, volume, shop, year },
 }: WineCardProps) {
   return (
     <Container>
@@ -41,6 +42,7 @@ function WineCard({
         color={color}
         volume={volume}
         shop={shop.name}
+        year={year}
       />
     </Container>
   )
