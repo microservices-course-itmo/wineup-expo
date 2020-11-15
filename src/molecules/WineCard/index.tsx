@@ -60,6 +60,7 @@ const Container = styled.View<{ full?: boolean }>`
     !full
       ? css`
           box-shadow: 0px 3px 4px rgba(178, 178, 178, 0.5);
+          border: 1px solid rgba(178, 178, 178, 0.3);
         `
       : css`
           padding-top: 20px;
