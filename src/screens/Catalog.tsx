@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components/native'
+import { useResource } from 'rest-hooks'
 import { Wine } from '../molecules/WineCard'
 import CatalogView from '../organisms/CatalogView'
 import SearchInput from '../molecules/SearchInput'
 import FiltersBar from '../organisms/FiltersBar'
-import { useResource } from 'rest-hooks'
 import WineCardResource from '../resources/WineCardResource'
 
 export default function CatalogScreen() {
