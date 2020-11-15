@@ -1,43 +1,50 @@
-import React, { useState } from 'react'
+import React, { Suspense, useRef } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import { TouchableOpacity } from 'react-native'
 import styled from 'styled-components/native'
-import WineCard, { Wine } from '../../molecules/WineCard'
+import { useResource } from 'rest-hooks'
+import Carousel from 'react-native-snap-carousel'
+import WineCard from '../../molecules/WineCard'
+import PositionResource from '../../resources/position'
+import WineCardLoader from '../../molecules/WineCard/Loader'
 
-interface CatalogViewProps {
-  children: Wine[]
-}
+function RecommendationBlock() {
+  const positions = useResource(PositionResource.listShape(), {})
+  const carouselRef = useRef<Carousel | null>(null)
 
-function RecommendationBlock({ children }: CatalogViewProps) {
-  const cards = children
-  const [currentCard, setCurrentCard] = useState(0)
+  const renderItem = ({ item }) => (
+    <Suspense fallback={<WineCardLoader />}>
+      <WineCard position={item} />
+    </Suspense>
+  )
 
-  function previousCard() {
-    if (currentCard === 0) {
-      setCurrentCard(children.length - 1)
-    } else {
-      setCurrentCard(currentCard - 1)
-    }
+  const snapToNext = () => {
+    carouselRef.current?.snapToNext()
   }
-  function nextCard() {
-    if (currentCard === children.length - 1) {
-      setCurrentCard(0)
-    } else {
-      setCurrentCard(currentCard + 1)
-    }
+  const snapToPrev = () => {
+    carouselRef.current?.snapToPrev()
   }
 
   return (
     <Block>
       <Title>Мы подобрали для вас{'\n'}схожие вина:</Title>
-      <WineCard wine={cards[currentCard]} />
+      <Carousel
+        ref={carouselRef}
+        data={positions}
+        renderItem={renderItem}
+        sliderWidth={350}
+        itemWidth={350}
+        layout='tinder'
+        loop
+        useScrollView
+      />
       <Buttons>
         <Icon>
           <Ionicons
             name='ios-arrow-dropleft-circle'
             size={70}
             color='#931332'
-            onPress={previousCard}
+            onPress={snapToPrev}
           />
         </Icon>
         <TouchableOpacity>
@@ -45,7 +52,7 @@ function RecommendationBlock({ children }: CatalogViewProps) {
             name='ios-arrow-dropright-circle'
             size={70}
             color='#931332'
-            onPress={nextCard}
+            onPress={snapToNext}
           />
         </TouchableOpacity>
       </Buttons>
