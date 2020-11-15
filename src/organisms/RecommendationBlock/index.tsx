@@ -82,7 +82,10 @@ const Container = styled.View`
   justify-content: center;
 `
 const Buttons = styled.View`
+  width: 130px;
   flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 `
 const Title = styled.Text`
   font-family: PlayfairDisplay_700Bold;
@@ -90,6 +93,4 @@ const Title = styled.Text`
   font-size: 20px;
   text-align: center;
 `
-const Icon = styled.TouchableOpacity`
-  margin-right: 30px;
-`
+const Icon = styled.TouchableOpacity``
