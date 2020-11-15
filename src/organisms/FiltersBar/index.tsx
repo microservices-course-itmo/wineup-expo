@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import styled from 'styled-components/native'
-import { ScrollView, Text, TouchableWithoutFeedback } from 'react-native'
+import { ScrollView, TouchableWithoutFeedback } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import ColorFilterButton from '../../molecules/FilterButton/Color'
 import CountryFilterButton from '../../molecules/FilterButton/Country'
@@ -8,11 +8,12 @@ import RecommendedFilterButton from '../../molecules/FilterButton/Recommended'
 import SugarFilterButton from '../../molecules/FilterButton/Sugar'
 import PriceFilterButton from '../../molecules/FilterButton/Price'
 import { FiltersProvider } from './FiltersContext'
+import FiltersBarLoader from './Loader'
 
 function FiltersBar() {
   return (
     <FiltersProvider>
-      <Suspense fallback={<Text>Loading...</Text>}>
+      <Suspense fallback={<FiltersBarLoader />}>
         <Container>
           <TouchableWithoutFeedback>
             <AllFiltersContainer>
