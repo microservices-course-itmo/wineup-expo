@@ -17,7 +17,7 @@ import ProducerResource from '../../resources/producer'
 import BrandResource from '../../resources/brand'
 
 // eslint-disable-next-line no-shadow
-enum WineSugar {
+export enum WineSugar {
   DRY = 'сухое',
   SWEET = 'сладкое',
   SEMI_SWEET = 'полусладкое',
@@ -25,7 +25,7 @@ enum WineSugar {
 }
 
 // eslint-disable-next-line no-shadow
-enum WineColor {
+export enum WineColor {
   RED = 'красное',
   ROSE = 'розовое',
   WHITE = 'белое',
@@ -40,13 +40,15 @@ function WineInfo({
   wine,
   position,
 }: WineInfoProps): ReactElement<WineInfoProps> {
-  const [region, shop, grape, producer, brand] = useResource(
-    [RegionResource.detailShape(), { id: wine.regionId }],
-    [ShopResource.detailShape(), { id: position.shopId }],
-    [GrapeResource.detailShape(), { id: wine.grapeId }],
-    [ProducerResource.detailShape(), { id: wine.producerId }],
-    [BrandResource.detailShape(), { id: wine.brandId }]
-  )
+  const region = useResource(RegionResource.detailShape(), {
+    id: wine.regionId,
+  })
+  const shop = useResource(ShopResource.detailShape(), { id: position.shopId })
+  const grape = useResource(GrapeResource.detailShape(), { id: wine.grapeId })
+  const producer = useResource(ProducerResource.detailShape(), {
+    id: wine.producerId,
+  })
+  const brand = useResource(BrandResource.detailShape(), { id: wine.brandId })
   const description = [
     region.country,
     WineSugar[wine.sugar as keyof typeof WineSugar],
