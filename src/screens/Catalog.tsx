@@ -13,6 +13,20 @@ export default function CatalogScreen() {
     color: 'красное',
     volume: 0.75,
     shop: { name: 'Ароматный мир', description: 'Супермаркет напитков' },
+    extraOptions: [
+      {
+        param: 'Виноград',
+        answ: 'Изабелла',
+      },
+      {
+        param: 'Градус',
+        answ: '13°C',
+      },
+      {
+        param: 'Производитель',
+        answ: 'ООО Вина Абхазии',
+      },
+    ],
   })
 
   return (
