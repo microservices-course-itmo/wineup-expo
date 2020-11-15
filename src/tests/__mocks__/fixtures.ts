@@ -90,6 +90,6 @@ export const fixtures = [
   {
     request: PositionResource.listShape(),
     params: {},
-    result: [positionMock],
+    result: [positionMock, positionMock],
   },
 ]
