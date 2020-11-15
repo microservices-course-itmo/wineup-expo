@@ -5,13 +5,14 @@ import Ribbon from '../Ribbon'
 
 interface ComponentProps {
   image: { uri: string }
+  discount: number
 }
 
-const WineBottlePicture = ({ image }: ComponentProps) => {
+const WineBottlePicture = ({ image, discount = 0 }: ComponentProps) => {
   return (
     <Container>
       <Placeholder />
-      <Ribbon>-20%</Ribbon>
+      {discount > 0 && <Ribbon>-{discount * 100} %</Ribbon>}
       <Image resizeMethod='scale' resizeMode='contain' source={image} />
     </Container>
   )

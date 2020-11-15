@@ -1,16 +1,16 @@
 import React from 'react'
 import { ScrollView } from 'react-native'
-import WineCard, { Wine } from '../../molecules/WineCard'
+import { useResource } from 'rest-hooks'
+import WineCard from '../../molecules/WineCard'
+import PositionResource from '../../resources/position'
 
-interface CatalogViewProps {
-  children: Wine[]
-}
+function CatalogView() {
+  const positions = useResource(PositionResource.listShape(), {})
 
-function CatalogView({ children }: CatalogViewProps) {
   return (
     <ScrollView>
-      {children.map((wine, index) => (
-        <WineCard key={index} wine={wine} />
+      {positions.map((position) => (
+        <WineCard key={position.pk()} position={position} />
       ))}
     </ScrollView>
   )

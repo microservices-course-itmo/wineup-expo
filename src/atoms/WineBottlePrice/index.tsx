@@ -14,8 +14,10 @@ const WineBottlePrice = ({ price, discount = 0 }: ComponentProps) => {
 
   return (
     <View>
-      {discount > 0 && <OldPrice>{prettifyNumber(price)} ₽</OldPrice>}
-      <Price>{prettifyNumber(factor * price)} ₽</Price>
+      {discount > 0 && (
+        <OldPrice>{prettifyNumber(price.toFixed(2))} ₽</OldPrice>
+      )}
+      <Price>{prettifyNumber((factor * price).toFixed(2))} ₽</Price>
     </View>
   )
 }

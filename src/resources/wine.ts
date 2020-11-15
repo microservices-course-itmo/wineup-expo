@@ -2,32 +2,34 @@ import { Method, Resource } from 'rest-hooks'
 import camelCase from 'lodash/camelCase'
 import snakeCase from 'lodash/snakeCase'
 import { deeplyApplyKeyTransform } from './utils'
-import WineResource from './wine'
-import ShopResource from './shop'
+import ProducerResource from './producer'
+import BrandResource from './brand'
+import RegionResource from './region'
+import GrapeResource from './grape'
 
-export default class PositionResource extends Resource {
-  readonly winePositionId?: string = undefined
-
+export default class WineResource extends Resource {
   readonly wineId: string = ''
 
-  readonly shopId: string = ''
+  readonly name: string = ''
 
-  readonly price: number = 0
+  readonly producerId: string = ''
 
-  readonly actualPrice: number = 0
+  readonly brandId: string = ''
 
-  readonly linkToWine: string = ''
+  readonly regionId: string = ''
 
-  readonly volume: number = 0
+  readonly grapeId: string = ''
 
-  readonly description: string = ''
+  readonly color: string = ''
 
-  readonly gastronomy: string = ''
+  readonly sugar: string = ''
 
-  readonly image: string = ''
+  readonly avg: number = 0
+
+  readonly year: number = 0
 
   pk(): string | undefined {
-    return this.winePositionId
+    return this.wineId
   }
 
   static async fetch(
@@ -48,7 +50,14 @@ export default class PositionResource extends Resource {
     return deeplyApplyKeyTransform(jsonResponse, camelCase)
   }
 
-  static urlRoot = 'http://77.234.215.138:48080/catalog-service/position/'
+  static urlRoot = 'http://77.234.215.138:48080/catalog-service/wine/'
+
+  static schema = {
+    producerId: ProducerResource.asSchema(),
+    brandId: BrandResource.asSchema(),
+    regionId: RegionResource.asSchema(),
+    grapeId: GrapeResource.asSchema(),
+  }
 
   static fetchOptionsPlugin(options: RequestInit) {
     return {
@@ -58,10 +67,5 @@ export default class PositionResource extends Resource {
         accessToken: '123',
       },
     }
-  }
-
-  static schema = {
-    wineId: WineResource.asSchema(),
-    shopId: ShopResource.asSchema(),
   }
 }

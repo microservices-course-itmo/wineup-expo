@@ -1,48 +1,41 @@
 import { render } from '@testing-library/react-native'
-import React from 'react'
-import WineInfo from './index'
+import React, { Suspense } from 'react'
+import { MockProvider } from '@rest-hooks/test'
+import WineInfo, { WineColor, WineSugar } from './index'
+import {
+  fixtures,
+  positionMock,
+  wineMock,
+} from '../../tests/__mocks__/fixtures'
 
 describe('<WineInfo />', () => {
-  it('should render', () => {
-    render(
-      <WineInfo
-        name='Canti Merlot'
-        country='Австралия'
-        dryness='сухое'
-        volume={0.75}
-        color='красное'
-      />
+  const renderComponent = () => {
+    return render(
+      <Suspense fallback='Loading'>
+        <MockProvider results={fixtures}>
+          <WineInfo wine={wineMock} position={positionMock} />
+        </MockProvider>
+      </Suspense>
     )
+  }
+
+  it('should render', () => {
+    renderComponent()
   })
 
   it('should render correct description', () => {
-    const description = 'Австралия, сухое, красное, 0.75 л.'
-    const { getByText } = render(
-      <WineInfo
-        name='Canti Merlot'
-        country='Австралия'
-        dryness='сухое'
-        volume={0.75}
-        color='красное'
-      />
-    )
+    const description = `${fixtures[0].result.country}, ${
+      WineSugar[wineMock.sugar]
+    }, ${WineColor[wineMock.color]}, ${positionMock.volume} л.`
+    const { getByText } = renderComponent()
     const descriptionElement = getByText(description)
 
     expect(descriptionElement).toBeDefined()
   })
 
   it('should render correct name', () => {
-    const name = 'Canti Merlot'
-    const { getByText } = render(
-      <WineInfo
-        name={name}
-        country='Австралия'
-        dryness='сухое'
-        volume={0.75}
-        color='красное'
-      />
-    )
-    const nameElement = getByText(name)
+    const { getByText } = renderComponent()
+    const nameElement = getByText(wineMock.name)
 
     expect(nameElement).toBeDefined()
   })
