@@ -1,24 +1,19 @@
-import React, { useRef, useContext } from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components/native'
 import { Feather } from '@expo/vector-icons'
 import PrimaryButton from '../../atoms/PrimaryButton'
 import ListFilterSheet from './List'
 import PriceFilterSheet from './Price'
-import { Context } from '../FiltersBar/ContextState'
+import { FiltersState, useFilters } from '../FiltersBar/FiltersContext'
 
 export interface FilterSheetProps {
   title: string
   children: string[] | Array<[number, number]>
   type?: 'checkbox' | 'radio' | 'price'
   withSearch?: boolean
-  onApplyProp?: (filters: { [key: string]: boolean }) => void
+  onApply: () => void
   height?: number
-}
-
-interface PriceState {
-  from?: number
-  to?: number
-  discounts?: boolean
+  filter: keyof FiltersState
 }
 
 function FilterSheet({
@@ -26,32 +21,25 @@ function FilterSheet({
   children,
   type = 'checkbox',
   withSearch = false,
-  onApplyProp = () => {},
+  onApply: onApplyProp = () => {},
   height = 300,
+  filter,
 }: FilterSheetProps) {
   const filterPageRef = useRef<{ reset(): void }>(null)
-  const context = useContext(Context)
+  const { apply } = useFilters()
 
   const onApply = () => {
-    onApplyProp(context.country)
+    const state = filterPageRef.current?.getState()
+
+    apply(filter, state)
+    onApplyProp()
   }
 
-  const onChange =
-    type === 'price'
-      ? (value: PriceState) => {
-          context.setPrice(value)
-        }
-      : (value: { [key: string]: boolean }) => {
-          context.setCountry(value)
-        }
-
   const onReset = () => {
-    filterPageRef.current!.reset()
+    filterPageRef.current?.reset()
   }
 
   const Component = type === 'price' ? PriceFilterSheet : ListFilterSheet
-
-  const { price, country } = context
 
   return (
     <Container height={height}>
@@ -60,11 +48,10 @@ function FilterSheet({
         <ResetLabel>Сбросить</ResetLabel>
       </Reset>
       <Component
+        filter={filter}
         ref={filterPageRef}
         type={type}
         withSearch={withSearch}
-        onChange={onChange}
-        state={type === 'price' ? price : country}
       >
         {children as any}
       </Component>

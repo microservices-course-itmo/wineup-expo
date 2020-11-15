@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components/native'
 import FilterButton from './index'
 import FilterSheet from '../../organisms/FilterSheet'
+import { WineSugar } from '../../atoms/WineInfo'
 
 function SugarFilterButton() {
   const sheetHeight = 350
@@ -12,8 +13,13 @@ function SugarFilterButton() {
         height={sheetHeight}
         title='Содержание сахара'
         onApply={onApply}
+        filter='sugar'
       >
-        {['Сухое', 'Полусухое', 'Сладкое', 'Полусладкое']}
+        {/* eslint-disable-next-line @typescript-eslint/ban-types */}
+        {Object.entries(WineSugar as object).map(([value, label]) => ({
+          value,
+          label: label.charAt(0).toUpperCase() + label.slice(1),
+        }))}
       </FilterSheet>
     )
   }

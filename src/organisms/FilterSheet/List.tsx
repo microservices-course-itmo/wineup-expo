@@ -8,102 +8,86 @@ import styled from 'styled-components/native'
 import SearchInput from '../../molecules/SearchInput'
 import LabeledCheckbox from '../../molecules/LabeledCheckbox'
 import LabeledRadioButton from '../../molecules/LabeledRadioButton'
+import { FiltersState, useFilters } from '../FiltersBar/FiltersContext'
+
+export interface ListFilterOption {
+  value: string
+  label: string
+}
 
 interface ListFilterSheetProps {
   type?: 'checkbox' | 'radio' | 'price'
   withSearch?: boolean
-  onChange?: (filters: { [key: string]: boolean }) => void
-  children: string[]
-  state?: { [key: string]: boolean }
+  children: ListFilterOption[]
+  filter: keyof FiltersState
 }
 
 export interface ListFilterSheetRef {
   reset(): void
+  getState(): FiltersState[keyof FiltersState]
 }
 
 function ListFilterSheet(
-  {
-    withSearch,
-    type,
-    children,
-    state,
-    onChange = () => {},
-  }: ListFilterSheetProps,
+  { withSearch, type, children, filter }: ListFilterSheetProps,
   ref:
     | ((instance: ListFilterSheetRef | null) => void)
     | MutableRefObject<ListFilterSheetRef | null>
     | null
 ) {
   const [options, setOptions] = useState(children)
+  const { filters } = useFilters()
 
-  const defaultState: { [key: string]: boolean } = state || {}
+  type FilterType<T extends typeof type> = T extends 'radio' ? string : string[]
 
-  if (state) {
-    children.forEach((option) => {
-      defaultState[option] = state[option]
-    })
-  } else {
-    children.forEach((option) => {
-      defaultState[option] = false
-    })
-  }
-
-  if (!state && type === 'radio') {
-    defaultState[children[0]] = true
-  }
-  const [filters, setFilters] = useState(defaultState)
+  const [checkedFilters, setCheckedFilters] = useState<FilterType<typeof type>>(
+    filters[filter] as FilterType<typeof type>
+  )
   const [searchQuery, setSearchQuery] = useState('')
 
-  useImperativeHandle(ref, () => ({
-    reset: () => {
-      setFilters(defaultState)
-      onChange(defaultState)
-      onSearch('')
-    },
-  }))
+  useImperativeHandle(
+    ref,
+    () => ({
+      reset: () => {
+        setCheckedFilters(type === 'checkbox' ? [] : options[0].value)
+        onSearch('')
+      },
+      getState: (): FiltersState[typeof filter] => {
+        return checkedFilters
+      },
+    }),
+    [checkedFilters]
+  )
 
-  const onSelect = (option: string) => () => {
-    setFilters((prevState) => {
-      let selectState: { [key: string]: boolean }
-
+  const onSelect = (option: ListFilterOption) => () => {
+    setCheckedFilters((prevState) => {
       switch (type) {
-        case 'checkbox':
-          selectState = {
-            ...prevState,
-            [option]: !prevState[option],
-          }
-          break
+        case 'checkbox': {
+          const index = prevState.indexOf(option.value)
+          const newState = [...prevState]
 
-        case 'radio': {
-          const newState = { ...prevState }
-
-          // eslint-disable-next-line no-restricted-syntax,guard-for-in
-          for (const key in newState) {
-            newState[key] = false
+          if (index !== -1) {
+            newState.splice(index, 1)
+          } else {
+            newState.push(option.value)
           }
 
-          newState[option] = true
-
-          selectState = newState
-
-          break
+          return newState
         }
 
+        case 'radio':
+          return option.value
+
         default:
-          selectState = prevState
+          return prevState
       }
-
-      onChange(selectState)
-
-      return selectState
     })
   }
 
   const onSearch = (value: string) => {
     setSearchQuery(() => {
       setOptions(
-        children.filter((option) =>
-          option.toLowerCase().includes(value.toLowerCase())
+        children.filter(({ label }) =>
+          label.toLowerCase().includes(value.toLowerCase())
         )
       )
 
@@ -125,10 +109,14 @@ function ListFilterSheet(
       >
         {options.map((option) => (
           <Component
-            key={option}
+            key={option.value}
             onPress={onSelect(option)}
-            checked={filters[option]}
-            label={option}
+            checked={
+              type === 'checkbox'
+                ? checkedFilters.includes(option.value)
+                : checkedFilters === option.value
+            }
+            label={option.label}
           />
         ))}
       </Options>

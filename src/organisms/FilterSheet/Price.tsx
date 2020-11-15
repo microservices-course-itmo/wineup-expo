@@ -1,6 +1,7 @@
 import React, {
   forwardRef,
   MutableRefObject,
+  useEffect,
   useImperativeHandle,
   useState,
 } from 'react'
@@ -8,19 +9,20 @@ import styled from 'styled-components/native'
 import PriceInput from '../../molecules/PriceInput'
 import RoundedButton from '../../atoms/RoundedButton'
 import Switch from '../../atoms/Switch'
+import { FiltersState, useFilters } from '../FiltersBar/FiltersContext'
 
 interface PriceFilterSheetProps {
   children: Array<[number, number]>
-  state: Array<[number, number]>
-  onChange?: (value: Array<[number, number]>) => void
+  filter: 'price'
 }
 
 interface PriceFilterSheetRef {
   reset(): void
+  getState(): FiltersState['price']
 }
 
 function PriceFilterSheet(
-  { children, state, onChange: onChangeState }: PriceFilterSheetProps,
+  { children, filter }: PriceFilterSheetProps,
   ref:
     | ((instance: PriceFilterSheetRef | null) => void)
     | MutableRefObject<PriceFilterSheetRef | null>
@@ -32,27 +34,38 @@ function PriceFilterSheet(
     discounts: false,
   }
 
-  const [filters, setFilters] = useState(state || defaultState)
-  const [selectedOption, setSelectedOption] = useState<number | undefined>(
-    filters.indexButton || -1
+  const { filters } = useFilters()
+  const [state, setState] = useState(filters[filter])
+  const [selectedOption, setSelectedOption] = useState<number | undefined>()
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      reset: () => {
+        setState(defaultState)
+        setSelectedOption(undefined)
+      },
+      getState(): FiltersState['price'] {
+        return state
+      },
+    }),
+    [state]
   )
 
-  useImperativeHandle(ref, () => ({
-    reset: () => {
-      setFilters(defaultState)
-      setSelectedOption(undefined)
-    },
-  }))
+  useEffect(() => {
+    const index = children.findIndex(
+      ([from, to]) => from === state.from && to === state.to
+    )
+
+    if (index > -1) {
+      setSelectedOption(index)
+    }
+  }, [])
 
   const onChange = (name: string) => (value: string | boolean) => {
     setSelectedOption(undefined)
 
-    setFilters((prevState) => {
-      onChangeState({
-        ...prevState,
-        [name]: value,
-      })
-
+    setState((prevState) => {
       return {
         ...prevState,
         [name]: value,
@@ -61,17 +74,8 @@ function PriceFilterSheet(
   }
 
   const onSelect = (index: number) => () => {
-    setSelectedOption(index)
-
     if (index === selectedOption) {
-      setFilters((prevState) => {
-        onChangeState({
-          ...prevState,
-          from: defaultState.from,
-          to: defaultState.to,
-          indexButton: index,
-        })
-
+      setState((prevState) => {
         return {
           ...prevState,
           from: defaultState.from,
@@ -79,19 +83,14 @@ function PriceFilterSheet(
         }
       })
 
-      return undefined
+      setSelectedOption(undefined)
+
+      return
     }
 
     const [from, to] = children[index]
 
-    setFilters((prevState) => {
-      onChangeState({
-        ...prevState,
-        from,
-        to,
-        indexButton: index,
-      })
-
+    setState((prevState) => {
       return {
         ...prevState,
         from,
@@ -99,7 +98,7 @@ function PriceFilterSheet(
       }
     })
 
-    return index
+    setSelectedOption(index)
   }
 
   return (
@@ -107,12 +106,12 @@ function PriceFilterSheet(
       <InputsContainer>
         <PriceInput
           label='От'
-          value={filters.from.toString()}
+          value={state.from.toString()}
           onChange={onChange('from')}
         />
         <PriceInput
           label='До'
-          value={filters.to.toString()}
+          value={state.to.toString()}
           onChange={onChange('to')}
         />
       </InputsContainer>
@@ -146,7 +145,7 @@ function PriceFilterSheet(
       </Options>
       <Discounts>
         <DiscountsLabel>Товары со скидкой</DiscountsLabel>
-        <Switch checked={filters.discounts} onChange={onChange('discounts')} />
+        <Switch checked={state.discounts} onChange={onChange('discounts')} />
       </Discounts>
     </>
   )

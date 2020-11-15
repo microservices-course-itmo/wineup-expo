@@ -1,35 +1,37 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import styled from 'styled-components/native'
-import { ScrollView, TouchableWithoutFeedback } from 'react-native'
+import { ScrollView, Text, TouchableWithoutFeedback } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
 import ColorFilterButton from '../../molecules/FilterButton/Color'
 import CountryFilterButton from '../../molecules/FilterButton/Country'
 import RecommendedFilterButton from '../../molecules/FilterButton/Recommended'
 import SugarFilterButton from '../../molecules/FilterButton/Sugar'
 import PriceFilterButton from '../../molecules/FilterButton/Price'
-import { defaultState, Context } from './ContextState'
+import { FiltersProvider } from './FiltersContext'
 
 function FiltersBar() {
   return (
-    <Context.Provider value={defaultState}>
-      <Container>
-        <TouchableWithoutFeedback>
-          <AllFiltersContainer>
-            <AllFiltersText>Все фильтры</AllFiltersText>
-            <StyledIonicons name='ios-arrow-down' color='#333' />
-          </AllFiltersContainer>
-        </TouchableWithoutFeedback>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          <FiltersContainer>
-            <CountryFilterButton />
-            <PriceFilterButton />
-            <RecommendedFilterButton />
-            <SugarFilterButton />
-            <ColorFilterButton />
-          </FiltersContainer>
-        </ScrollView>
-      </Container>
-    </Context.Provider>
+    <FiltersProvider>
+      <Suspense fallback={<Text>Loading...</Text>}>
+        <Container>
+          <TouchableWithoutFeedback>
+            <AllFiltersContainer>
+              <AllFiltersText>Все фильтры</AllFiltersText>
+              <StyledIonicons name='ios-arrow-down' color='#333' />
+            </AllFiltersContainer>
+          </TouchableWithoutFeedback>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <FiltersContainer>
+              <CountryFilterButton />
+              <PriceFilterButton />
+              <RecommendedFilterButton />
+              <SugarFilterButton />
+              <ColorFilterButton />
+            </FiltersContainer>
+          </ScrollView>
+        </Container>
+      </Suspense>
+    </FiltersProvider>
   )
 }
 

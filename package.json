@@ -19,6 +19,7 @@
     "@react-navigation/bottom-tabs": "^5.8.0",
     "@react-navigation/native": "^5.7.3",
     "@react-navigation/stack": "^5.11.0",
+    "@rest-hooks/test": "^1.0.18",
     "@types/styled-components": "^5.1.4",
     "babel-plugin-module-resolver": "^4.0.0",
     "expo": "~38.0.8",
@@ -40,12 +41,12 @@
     "react-native-snap-carousel": "^3.9.1",
     "react-native-svg": "^12.1.0",
     "react-native-web": "~0.11.7",
+    "redux": "^4.0.5",
     "rest-hooks": "^4.5.9",
     "styled-components": "^5.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
-    "@rest-hooks/test": "^1.0.18",
     "@testing-library/jest-native": "^3.3.0",
     "@testing-library/react-native": "^7.0.2",
     "@types/jest": "^26.0.10",
