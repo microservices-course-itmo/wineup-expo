@@ -1,5 +1,5 @@
-import React, { Suspense } from 'react'
-import { ScrollView, Text } from 'react-native'
+import React from 'react'
+import { ScrollView } from 'react-native'
 import { useResource } from 'rest-hooks'
 import WineCard from '../../molecules/WineCard'
 import PositionResource from '../../resources/position'
@@ -9,10 +9,8 @@ function CatalogView() {
 
   return (
     <ScrollView>
-      {positions.map((position, index) => (
-        <Suspense key={index} fallback={<Text>Loading...</Text>}>
-          <WineCard position={position} />
-        </Suspense>
+      {positions.map((position) => (
+        <WineCard key={position.pk()} position={position} />
       ))}
     </ScrollView>
   )

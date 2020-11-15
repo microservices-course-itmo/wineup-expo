@@ -26,6 +26,7 @@
     "expo-status-bar": "^1.0.2",
     "lodash": "^4.17.20",
     "react": "~16.11.0",
+    "react-content-loader": "^5.1.4",
     "react-dom": "~16.11.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
     "react-native-dropdown-picker": "^3.7.0",
@@ -36,6 +37,7 @@
     "react-native-reanimated": "~1.9.0",
     "react-native-safe-area-context": "~3.0.7",
     "react-native-screens": "~2.9.0",
+    "react-native-svg": "^12.1.0",
     "react-native-web": "~0.11.7",
     "rest-hooks": "^4.5.9",
     "styled-components": "^5.2.0"
