@@ -1,20 +1,38 @@
 import React, { Suspense, useRef } from 'react'
 import { Ionicons } from '@expo/vector-icons'
-import { TouchableOpacity } from 'react-native'
+import { StyleProp, TouchableOpacity } from 'react-native'
 import styled from 'styled-components/native'
 import { useResource } from 'rest-hooks'
 import Carousel from 'react-native-snap-carousel'
+import { useNavigation } from '@react-navigation/native'
 import WineCard from '../../molecules/WineCard'
 import PositionResource from '../../resources/position'
 import WineCardLoader from '../../molecules/WineCard/Loader'
+import ROUTES from '../../routes'
 
-function RecommendationBlock() {
+interface RecommendationBlockProps {
+  style: StyleProp<any>
+}
+
+function RecommendationBlock({ style }: RecommendationBlockProps) {
   const positions = useResource(PositionResource.listShape(), {})
   const carouselRef = useRef<Carousel | null>(null)
+  const navigation = useNavigation()
+
+  const navigate = (
+    winePositionId: PositionResource['winePositionId']
+  ) => () => {
+    navigation.push(ROUTES.WINE_PAGE, { winePositionId })
+  }
 
   const renderItem = ({ item }) => (
     <Suspense fallback={<WineCardLoader />}>
-      <WineCard position={item} />
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={navigate(item.winePositionId)}
+      >
+        <WineCard position={item} />
+      </TouchableOpacity>
     </Suspense>
   )
 
@@ -26,7 +44,7 @@ function RecommendationBlock() {
   }
 
   return (
-    <Block>
+    <Container style={style}>
       <Title>Мы подобрали для вас{'\n'}схожие вина:</Title>
       <Carousel
         ref={carouselRef}
@@ -39,29 +57,27 @@ function RecommendationBlock() {
         useScrollView
       />
       <Buttons>
-        <Icon>
+        <Icon onPress={snapToPrev}>
           <Ionicons
             name='ios-arrow-dropleft-circle'
             size={70}
             color='#931332'
-            onPress={snapToPrev}
           />
         </Icon>
-        <TouchableOpacity>
+        <Icon onPress={snapToNext}>
           <Ionicons
             name='ios-arrow-dropright-circle'
             size={70}
             color='#931332'
-            onPress={snapToNext}
           />
-        </TouchableOpacity>
+        </Icon>
       </Buttons>
-    </Block>
+    </Container>
   )
 }
 export default RecommendationBlock
 
-const Block = styled.View`
+const Container = styled.View`
   align-items: center;
   justify-content: center;
 `

@@ -5,6 +5,7 @@ import styled from 'styled-components/native'
 import PositionResource from '../resources/position'
 import WineCard from '../molecules/WineCard'
 import WineDescription from '../organisms/WineDescription'
+import RecommendationBlock from '../organisms/RecommendationBlock'
 
 function WineScreen() {
   const {
@@ -17,6 +18,7 @@ function WineScreen() {
       <Container>
         <WineCard position={position} full />
         <StyledWineDescription />
+        <StyledRecommendationBlock />
       </Container>
     </ScrollView>
   )
@@ -35,5 +37,8 @@ const Container = styled.View`
   padding-bottom: 30px;
 `
 const StyledWineDescription = styled(WineDescription)`
+  margin-top: 70px;
+`
+const StyledRecommendationBlock = styled(RecommendationBlock)`
   margin-top: 70px;
 `
