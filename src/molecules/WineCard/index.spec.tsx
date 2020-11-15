@@ -1,38 +1,50 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { render } from '@testing-library/react-native'
-import WineCard, { Wine } from './index'
+import { MockProvider } from '@rest-hooks/test'
+import WineCard from './index'
+import {
+  fixtures,
+  positionMock,
+  wineMock,
+} from '../../tests/__mocks__/fixtures'
+import { WineColor, WineSugar } from '../../atoms/WineInfo'
 
 describe('WineCard', () => {
-  const wine: Wine = {
-    name: 'Canti Merlot',
-    country: 'Австралия',
-    dryness: 'сухое',
-    color: 'Красное',
-    volume: 0.75,
-    shop: { name: 'ВИНЛАБ' },
-  }
+  const renderComponent = () =>
+    render(
+      <Suspense fallback='Loading'>
+        <MockProvider results={fixtures}>
+          <WineCard position={positionMock} />
+        </MockProvider>
+      </Suspense>
+    )
 
   it('should render', () => {
-    render(<WineCard wine={wine} />)
+    renderComponent()
   })
 
   it('should contain name', () => {
-    const { getByText } = render(<WineCard wine={wine} />)
+    const { getByText } = renderComponent()
 
-    getByText(wine.name)
+    getByText(wineMock.name)
   })
 
   it('should contain description', () => {
-    const { getByText } = render(<WineCard wine={wine} />)
+    const { getByText } = renderComponent()
 
     getByText(
-      [wine.country, wine.dryness, wine.color, `${wine.volume} л.`].join(', ')
+      [
+        fixtures[0].result.country,
+        WineSugar[wineMock.sugar],
+        WineColor[wineMock.color],
+        `${positionMock.volume} л.`,
+      ].join(', ')
     )
   })
 
   it('should contain shop name', () => {
-    const { getByText } = render(<WineCard wine={wine} />)
+    const { getByText } = renderComponent()
 
-    getByText(wine.shop.name!)
+    getByText(fixtures[1].result.site)
   })
 })
