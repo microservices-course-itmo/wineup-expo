@@ -12,6 +12,7 @@ function PriceFilterButton() {
         type='price'
         height={sheetHeight}
         title='Цена'
+        filter='price'
         onApply={onApply}
       >
         {[

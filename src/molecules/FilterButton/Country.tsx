@@ -1,10 +1,13 @@
 import React from 'react'
 import styled from 'styled-components/native'
+import { useResource } from 'rest-hooks'
 import FilterButton from './index'
 import FilterSheet from '../../organisms/FilterSheet'
+import RegionResource from '../../resources/region'
 
 function CountryFilterButton() {
   const sheetHeight = 570
+  const regions: RegionResource[] = useResource(RegionResource.listShape(), {})
 
   const renderFilterPage = (onApply: () => void) => {
     return (
@@ -13,21 +16,9 @@ function CountryFilterButton() {
         title='Страна'
         withSearch
         height={sheetHeight}
+        filter='country'
       >
-        {[
-          'Австралия',
-          'Австрия',
-          'Германия',
-          'Испания',
-          'Италия',
-          'Новая Зеландия',
-          'Португалия',
-          'Франция',
-          'США',
-          'Чили',
-          'Россия',
-          'Грузия',
-        ]}
+        {regions.map((region) => ({ label: region.country, value: region.id }))}
       </FilterSheet>
     )
   }

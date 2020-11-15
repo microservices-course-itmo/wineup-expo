@@ -1,6 +1,7 @@
 import React, {
   forwardRef,
   MutableRefObject,
+  useEffect,
   useImperativeHandle,
   useState,
 } from 'react'
@@ -8,17 +9,20 @@ import styled from 'styled-components/native'
 import PriceInput from '../../molecules/PriceInput'
 import RoundedButton from '../../atoms/RoundedButton'
 import Switch from '../../atoms/Switch'
+import { FiltersState, useFilters } from '../FiltersBar/FiltersContext'
 
 interface PriceFilterSheetProps {
   children: Array<[number, number]>
+  filter: 'price'
 }
 
 interface PriceFilterSheetRef {
   reset(): void
+  getState(): FiltersState['price']
 }
 
 function PriceFilterSheet(
-  { children }: PriceFilterSheetProps,
+  { children, filter }: PriceFilterSheetProps,
   ref:
     | ((instance: PriceFilterSheetRef | null) => void)
     | MutableRefObject<PriceFilterSheetRef | null>
@@ -30,43 +34,71 @@ function PriceFilterSheet(
     discounts: false,
   }
 
-  const [filters, setFilters] = useState(defaultState)
+  const { filters } = useFilters()
+  const [state, setState] = useState(filters[filter])
   const [selectedOption, setSelectedOption] = useState<number | undefined>()
 
-  useImperativeHandle(ref, () => ({
-    reset: () => {
-      setFilters(defaultState)
-      setSelectedOption(undefined)
-    },
-  }))
+  useImperativeHandle(
+    ref,
+    () => ({
+      reset: () => {
+        setState(defaultState)
+        setSelectedOption(undefined)
+      },
+      getState(): FiltersState['price'] {
+        return state
+      },
+    }),
+    [state]
+  )
+
+  useEffect(() => {
+    const index = children.findIndex(
+      ([from, to]) => from === state.from && to === state.to
+    )
+
+    if (index > -1) {
+      setSelectedOption(index)
+    }
+  }, [])
 
   const onChange = (name: string) => (value: string | boolean) => {
     setSelectedOption(undefined)
 
-    setFilters((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }))
+    setState((prevState) => {
+      return {
+        ...prevState,
+        [name]: value,
+      }
+    })
   }
 
   const onSelect = (index: number) => () => {
-    setSelectedOption(index)
-
     if (index === selectedOption) {
-      setFilters((prevState) => ({
-        ...prevState,
-        from: defaultState.from,
-        to: defaultState.to,
-      }))
+      setState((prevState) => {
+        return {
+          ...prevState,
+          from: defaultState.from,
+          to: defaultState.to,
+        }
+      })
 
-      return undefined
+      setSelectedOption(undefined)
+
+      return
     }
 
     const [from, to] = children[index]
 
-    setFilters((prevState) => ({ ...prevState, from, to }))
+    setState((prevState) => {
+      return {
+        ...prevState,
+        from,
+        to,
+      }
+    })
 
-    return index
+    setSelectedOption(index)
   }
 
   return (
@@ -74,12 +106,12 @@ function PriceFilterSheet(
       <InputsContainer>
         <PriceInput
           label='От'
-          value={filters.from.toString()}
+          value={state.from.toString()}
           onChange={onChange('from')}
         />
         <PriceInput
           label='До'
-          value={filters.to.toString()}
+          value={state.to.toString()}
           onChange={onChange('to')}
         />
       </InputsContainer>
@@ -113,7 +145,7 @@ function PriceFilterSheet(
       </Options>
       <Discounts>
         <DiscountsLabel>Товары со скидкой</DiscountsLabel>
-        <Switch checked={filters.discounts} onChange={onChange('discounts')} />
+        <Switch checked={state.discounts} onChange={onChange('discounts')} />
       </Discounts>
     </>
   )
