@@ -1,28 +1,20 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { render } from '@testing-library/react-native'
+import { MockProvider } from '@rest-hooks/test'
 import CatalogView from './index'
-import { Wine } from '../../molecules/WineCard'
+import { fixtures } from '../../tests/__mocks__/fixtures'
 
 describe('CatalogView', () => {
-  const wines: Wine[] = new Array(10).fill({
-    name: 'Canti Merlot',
-    country: 'Австралия',
-    dryness: 'сухое',
-    color: 'Красное',
-    volume: 0.75,
-    shop: { name: 'ВИНЛАБ', description: 'Супермаркет напитков' },
-  })
+  const renderComponent = () =>
+    render(
+      <Suspense fallback='Loading'>
+        <MockProvider results={fixtures}>
+          <CatalogView />
+        </MockProvider>
+      </Suspense>
+    )
 
   it('should render', () => {
-    render(<CatalogView>{wines}</CatalogView>)
-  })
-
-  it('should render passed items', () => {
-    const { toJSON } = render(<CatalogView>{wines}</CatalogView>)
-    const scrollView = toJSON()
-
-    const container = scrollView.children[0]
-
-    expect(container.children.length).toEqual(wines.length)
+    renderComponent()
   })
 })
