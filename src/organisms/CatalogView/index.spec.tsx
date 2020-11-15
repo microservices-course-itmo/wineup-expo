@@ -3,18 +3,23 @@ import { render } from '@testing-library/react-native'
 import { MockProvider } from '@rest-hooks/test'
 import CatalogView from './index'
 import { fixtures } from '../../tests/__mocks__/fixtures'
+import MockedNavigator from '../../tests/__mocks__/MockedNavigator'
 
 describe('CatalogView', () => {
-  const renderComponent = () =>
-    render(
-      <Suspense fallback='Loading'>
-        <MockProvider results={fixtures}>
-          <CatalogView />
-        </MockProvider>
-      </Suspense>
-    )
+  const Component = () => (
+    <Suspense fallback='Loading'>
+      <MockProvider results={fixtures}>
+        <CatalogView />
+      </MockProvider>
+    </Suspense>
+  )
 
   it('should render', () => {
-    renderComponent()
+    render(
+      <MockedNavigator
+        component={Component}
+        data={{ winePositionId: 'wine_position1' }}
+      />
+    )
   })
 })
