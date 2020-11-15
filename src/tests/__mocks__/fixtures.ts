@@ -90,6 +90,35 @@ export const fixtures = [
   {
     request: PositionResource.listShape(),
     params: {},
-    result: [positionMock, positionMock],
+    result: [
+      positionMock,
+      { ...positionMock, winePositionId: 'wine_position2' },
+    ],
+  },
+  {
+    request: RegionResource.listShape(),
+    params: {},
+    result: [
+      {
+        id: 'region1',
+        name: 'region',
+        country: 'Russia',
+      },
+      {
+        id: 'region2',
+        name: 'region',
+        country: 'Italy',
+      },
+      {
+        id: 'region3',
+        name: 'region',
+        country: 'Spain',
+      },
+      {
+        id: 'region4',
+        name: 'region',
+        country: 'USA',
+      },
+    ],
   },
 ]
