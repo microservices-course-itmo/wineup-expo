@@ -1,16 +1,29 @@
-import React from 'react'
-import { ScrollView } from 'react-native'
-import WineCard, { Wine } from '../../molecules/WineCard'
+import React, { Suspense } from 'react'
+import { ScrollView, Text, TouchableOpacity } from 'react-native'
+import { useResource } from 'rest-hooks'
+import { useNavigation } from '@react-navigation/native'
+import WineCard from '../../molecules/WineCard'
+import PositionResource from '../../resources/position'
+import ROUTES from '../../routes'
 
-interface CatalogViewProps {
-  children: Wine[]
-}
+function CatalogView() {
+  const positions = useResource(PositionResource.listShape(), {})
+  const navigation = useNavigation()
 
-function CatalogView({ children }: CatalogViewProps) {
+  const navigate = (
+    winePositionId: PositionResource['winePositionId']
+  ) => () => {
+    navigation.navigate(ROUTES.WINE_PAGE, { winePositionId })
+  }
+
   return (
     <ScrollView>
-      {children.map((wine, index) => (
-        <WineCard key={index} wine={wine} />
+      {positions.map((position, index) => (
+        <Suspense key={index} fallback={<Text>Loading...</Text>}>
+          <TouchableOpacity onPress={navigate(position.winePositionId)}>
+            <WineCard position={position} />
+          </TouchableOpacity>
+        </Suspense>
       ))}
     </ScrollView>
   )

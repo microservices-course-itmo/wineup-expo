@@ -2,32 +2,14 @@ import { Method, Resource } from 'rest-hooks'
 import camelCase from 'lodash/camelCase'
 import snakeCase from 'lodash/snakeCase'
 import { deeplyApplyKeyTransform } from './utils'
-import WineResource from './wine'
-import ShopResource from './shop'
 
-export default class PositionResource extends Resource {
-  readonly winePositionId?: string = undefined
+export default class ShopResource extends Resource {
+  readonly id: string = ''
 
-  readonly wineId: string = ''
-
-  readonly shopId: string = ''
-
-  readonly price: number = 0
-
-  readonly actualPrice: number = 0
-
-  readonly linkToWine: string = ''
-
-  readonly volume: number = 0
-
-  readonly description: string = ''
-
-  readonly gastronomy: string = ''
-
-  readonly image: string = ''
+  readonly site: string = ''
 
   pk(): string | undefined {
-    return this.winePositionId
+    return this.id
   }
 
   static async fetch(
@@ -48,7 +30,7 @@ export default class PositionResource extends Resource {
     return deeplyApplyKeyTransform(jsonResponse, camelCase)
   }
 
-  static urlRoot = 'http://77.234.215.138:48080/catalog-service/position/'
+  static urlRoot = 'http://77.234.215.138:48080/catalog-service/shop/'
 
   static fetchOptionsPlugin(options: RequestInit) {
     return {
@@ -58,10 +40,5 @@ export default class PositionResource extends Resource {
         accessToken: '123',
       },
     }
-  }
-
-  static schema = {
-    wineId: WineResource.asSchema(),
-    shopId: ShopResource.asSchema(),
   }
 }

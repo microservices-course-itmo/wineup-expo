@@ -1,6 +1,5 @@
-import React, { Suspense, useState } from 'react'
+import React, { useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import {
   useFonts,
   Merriweather_400Regular,
@@ -19,14 +18,11 @@ import {
   PlayfairDisplay_700Bold,
 } from '@expo-google-fonts/playfair-display'
 import { AppLoading } from 'expo'
-import { SafeAreaView, StatusBar, Text } from 'react-native'
+import { SafeAreaView, StatusBar } from 'react-native'
 import { CacheProvider } from 'rest-hooks'
-import CatalogScreen from './screens/Catalog'
 import AuthWrapper from './screens/Auth/AuthWrapper'
-import SettingsScreen from './screens/Settings'
 import { AuthProvider } from './screens/Auth/AuthContext'
-
-const Tab = createBottomTabNavigator()
+import MainRouter from './screens/Router'
 
 const App: React.FC = () => {
   const [isAuth, setIsAuth] = useState(true)
@@ -52,20 +48,15 @@ const App: React.FC = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar hidden />
       <CacheProvider>
-        <Suspense fallback={<Text>Loading...</Text>}>
-          <NavigationContainer>
-            {isAuth ? (
-              <Tab.Navigator>
-                <Tab.Screen name='Каталог' component={CatalogScreen} />
-                <Tab.Screen name='Settings' component={SettingsScreen} />
-              </Tab.Navigator>
-            ) : (
-              <AuthProvider value={{ setIsAuth }}>
-                <AuthWrapper />
-              </AuthProvider>
-            )}
-          </NavigationContainer>
-        </Suspense>
+        <NavigationContainer>
+          {isAuth ? (
+            <MainRouter />
+          ) : (
+            <AuthProvider value={{ setIsAuth }}>
+              <AuthWrapper />
+            </AuthProvider>
+          )}
+        </NavigationContainer>
       </CacheProvider>
     </SafeAreaView>
   )
