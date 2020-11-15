@@ -19,7 +19,7 @@ import BrandResource from '../../resources/brand'
 import PrimaryButton from '../PrimaryButton'
 
 // eslint-disable-next-line no-shadow
-enum WineSugar {
+export enum WineSugar {
   DRY = 'сухое',
   SWEET = 'сладкое',
   SEMI_SWEET = 'полусладкое',
@@ -27,7 +27,7 @@ enum WineSugar {
 }
 
 // eslint-disable-next-line no-shadow
-enum WineColor {
+export enum WineColor {
   RED = 'красное',
   ROSE = 'розовое',
   WHITE = 'белое',

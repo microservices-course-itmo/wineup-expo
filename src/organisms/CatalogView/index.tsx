@@ -1,5 +1,5 @@
-import React, { Suspense } from 'react'
-import { ScrollView, Text, TouchableOpacity } from 'react-native'
+import React from 'react'
+import { ScrollView, TouchableOpacity } from 'react-native'
 import { useResource } from 'rest-hooks'
 import { useNavigation } from '@react-navigation/native'
 import WineCard from '../../molecules/WineCard'
@@ -18,12 +18,13 @@ function CatalogView() {
 
   return (
     <ScrollView>
-      {positions.map((position, index) => (
-        <Suspense key={index} fallback={<Text>Loading...</Text>}>
-          <TouchableOpacity onPress={navigate(position.winePositionId)}>
-            <WineCard position={position} />
-          </TouchableOpacity>
-        </Suspense>
+      {positions.map((position) => (
+        <TouchableOpacity
+          key={position.pk()}
+          onPress={navigate(position.winePositionId)}
+        >
+          <WineCard position={position} />
+        </TouchableOpacity>
       ))}
     </ScrollView>
   )
