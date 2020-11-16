@@ -11,6 +11,7 @@ import {
   Roboto_400Regular_Italic,
   Roboto_300Light_Italic,
   Roboto_400Regular,
+  Roboto_500Medium,
 } from '@expo-google-fonts/roboto'
 import {
   PlayfairDisplay_400Regular,
@@ -19,16 +20,19 @@ import {
 } from '@expo-google-fonts/playfair-display'
 import { PTSans_400Regular, PTSans_700Bold } from '@expo-google-fonts/pt-sans'
 import { AppLoading } from 'expo'
-import { SafeAreaView } from 'react-native'
+import { SafeAreaView, StatusBar } from 'react-native'
+import { CacheProvider } from 'rest-hooks'
+import { MockProvider } from '@rest-hooks/test'
 import CatalogScreen from './screens/Catalog'
 import AuthWrapper from './screens/Auth/AuthWrapper'
 import SettingsScreen from './screens/Settings'
 import { AuthProvider } from './screens/Auth/AuthContext'
+import { fixtures } from './tests/__mocks__/fixtures'
 
 const Tab = createBottomTabNavigator()
 
 const App: React.FC = () => {
-  const [isAuth, setIsAuth] = useState(false)
+  const [isAuth, setIsAuth] = useState(true)
 
   const [fontsLoaded] = useFonts({
     Merriweather_400Regular,
@@ -40,6 +44,7 @@ const App: React.FC = () => {
     Roboto_300Light_Italic,
     Roboto_400Regular_Italic,
     Roboto_400Regular,
+    Roboto_500Medium,
     PTSans_400Regular,
     PTSans_700Bold,
   })
@@ -50,18 +55,23 @@ const App: React.FC = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <NavigationContainer>
-        {isAuth ? (
-          <Tab.Navigator>
-            <Tab.Screen name='Каталог' component={CatalogScreen} />
-            <Tab.Screen name='Settings' component={SettingsScreen} />
-          </Tab.Navigator>
-        ) : (
-          <AuthProvider value={{ setIsAuth }}>
-            <AuthWrapper />
-          </AuthProvider>
-        )}
-      </NavigationContainer>
+      <StatusBar hidden />
+      <CacheProvider>
+        <MockProvider results={fixtures}>
+          <NavigationContainer>
+            {isAuth ? (
+              <Tab.Navigator>
+                <Tab.Screen name='Каталог' component={CatalogScreen} />
+                <Tab.Screen name='Settings' component={SettingsScreen} />
+              </Tab.Navigator>
+            ) : (
+              <AuthProvider value={{ setIsAuth }}>
+                <AuthWrapper />
+              </AuthProvider>
+            )}
+          </NavigationContainer>
+        </MockProvider>
+      </CacheProvider>
     </SafeAreaView>
   )
 }
