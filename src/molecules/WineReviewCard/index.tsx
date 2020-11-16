@@ -7,9 +7,10 @@ import Rating from '../../atoms/Rating'
 export interface WineReviewCardProps {
   text: string
   username: string
+  date: string
 }
 
-function WineReviewCard({ text, username }: WineReviewCardProps) {
+function WineReviewCard({ text, username, date }: WineReviewCardProps) {
   const [reviewText, setReviewText] = React.useState('')
   const [isCanShow, setIsCanShow] = React.useState(false)
 
@@ -47,7 +48,7 @@ function WineReviewCard({ text, username }: WineReviewCardProps) {
           <Ionicons name='ios-arrow-down' size={12} color='black' />
         </ShowMore>
       )}
-      <Date>24 апреля 2016 г.</Date>
+      <Date>{date}</Date>
     </Card>
   )
 }
