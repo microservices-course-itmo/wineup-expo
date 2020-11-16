@@ -8,6 +8,7 @@ export interface WineReviewCardProps {
   text: string
   username: string
   date: string
+  rating: number
 }
 
 function WineReviewCard({ text, username, date }: WineReviewCardProps) {
@@ -15,17 +16,13 @@ function WineReviewCard({ text, username, date }: WineReviewCardProps) {
   const [isCanShow, setIsCanShow] = React.useState(false)
 
   React.useEffect(() => {
-    const textArray = text.split(' ')
-
-    if (textArray.length > 20) {
+    if (text.length > 20) {
       setIsCanShow(true)
-      textArray.length = 20
-
-      setReviewText(textArray.join(' '))
+      setReviewText(text.slice(0, 20))
     } else {
       setReviewText(text)
     }
-  }, [])
+  }, [text])
 
   const handleShowMoreText = () => {
     setIsCanShow(false)
@@ -43,7 +40,7 @@ function WineReviewCard({ text, username, date }: WineReviewCardProps) {
         {isCanShow ? '...' : '"'}
       </ReviewText>
       {isCanShow && (
-        <ShowMore onPress={() => handleShowMoreText()}>
+        <ShowMore onPress={handleShowMoreText}>
           <ShowMoreText>Открыть полностью</ShowMoreText>
           <Ionicons name='ios-arrow-down' size={12} color='black' />
         </ShowMore>

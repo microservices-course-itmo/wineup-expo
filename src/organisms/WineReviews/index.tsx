@@ -3,10 +3,12 @@ import styled from 'styled-components/native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import PrimaryButton from '../../atoms/PrimaryButton'
-import WineReviewCard from '../../molecules/WineReviewCard'
+import WineReviewCard, {
+  WineReviewCardProps,
+} from '../../molecules/WineReviewCard'
 
 export interface WineReviewsProps {
-  cards: Array<any>
+  cards: Array<WineReviewCardProps>
   onShowMore?: () => void
 }
 
