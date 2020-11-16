@@ -13,12 +13,13 @@ const AgeConfirm: React.FC<TProps> = ({ navigation }) => {
   return (
     <View style={[styles.container, { marginBottom: 120 }]}>
       <Image source={welcomeHandShake} />
-      <Text style={styles.welcomeMessage}>Добро пожаловать!</Text>
+      <Text style={styles.welcomeMessage}> Добро пожаловать!</Text>
       <Text style={[styles.header, { fontSize: 22, marginTop: 36 }]}>
         Вам уже исполнилось 18 лет?
       </Text>
       <View style={{ flexDirection: 'row', marginTop: 47 }}>
         <TouchableOpacity
+          activeOpacity={0.8}
           style={styles.buttonAgeConfirm}
           onPress={() => {
             navigation.push(ROUTES.SIGN_IN)
@@ -28,6 +29,7 @@ const AgeConfirm: React.FC<TProps> = ({ navigation }) => {
           <Text style={styles.buttonConfirmText}>Да</Text>
         </TouchableOpacity>
         <TouchableOpacity
+          activeOpacity={0.8}
           style={styles.buttonAgeConfirm}
           onPress={() => {
             navigation.push(ROUTES.AGE_DENIED)

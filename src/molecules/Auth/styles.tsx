@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 5,
     width: 320,
-    fontSize: 8,
+    fontSize: 10,
     fontFamily: 'PTSans_400Regular',
   },
   container: {
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     flex: 1,
     minHeight: 57,
     maxHeight: 57,
-    minWidth: 217,
+    minWidth: 268,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 5,
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
     color: '#E20338',
   },
   dropdownContainer: {
-    width: 217,
+    width: 268,
     minHeight: 57,
   },
   dropdownStyle: {
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   },
   textAreaStyle: {
     textAlign: 'center',
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: 'PTSans_400Regular',
     fontWeight: 'normal',
   },

@@ -27,7 +27,8 @@ const AgeDenied: React.FC<TProps> = ({ navigation }) => {
         {'\n'} для лиц младше 18 лет
       </Text>
       <TouchableOpacity
-        style={[styles.buttonStyle, { marginTop: 52 }]}
+        activeOpacity={0.8}
+        style={[styles.buttonStyle, { marginTop: 52, width: 217 }]}
         onPress={() => navigation.goBack()}
       >
         <Text style={styles.buttonText}>Вернуться назад</Text>

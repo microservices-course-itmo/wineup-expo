@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    width: 217,
+    width: 268,
     maxHeight: 57,
     minHeight: 57,
     backgroundColor: '#931332',
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 16,
     color: '#fff',
-    fontFamily: 'PTSans_400Regular',
+    fontFamily: 'PTSans_700Bold',
   },
   buttonAgeConfirm: {
     width: 97,
@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -80,
     flex: 1,
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     width: 220,
@@ -82,6 +83,7 @@ const styles = StyleSheet.create({
     color: '#E20338',
     fontSize: 16,
     fontFamily: 'PTSans_400Regular',
+    marginLeft: 9,
   },
   unregUser: {
     flex: 1,
@@ -90,6 +92,19 @@ const styles = StyleSheet.create({
     marginTop: 30,
     width: 316,
     maxHeight: 35,
+  },
+  goBackButton: {
+    position: 'absolute',
+    top: 56,
+    left: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  goBackButtonText: {
+    fontSize: 14,
+    color: '#fff',
+    fontFamily: 'PTSans_400Regular',
+    marginLeft: 6,
   },
 })
 

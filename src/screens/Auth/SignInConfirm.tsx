@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ReactElement, useContext } from 'react'
-import { Text, View, TouchableOpacity } from 'react-native'
+import { Text, View, TouchableOpacity, Image } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import Countdown from '../../molecules/Countdown'
 import LabeledInput from '../../molecules/Auth/LabeledInput'
@@ -7,6 +7,8 @@ import { isRightCode } from '../../helpers'
 import ROUTES from '../../routes'
 import { AuthContext } from './AuthContext'
 import styles from './styles'
+import GoBackArrowIcon from '../../molecules/Auth/GoBackArrowIcon'
+import confirmButtonCross from '../../../assets/confirmButtonCross.png'
 
 type SignInConfirmScreenNavigationProps = StackNavigationProp<
   any,
@@ -69,14 +71,25 @@ function SignInConfirm({
 
   return (
     <View style={[styles.container, { marginBottom: 10 }]}>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={navigation.goBack}
+        style={styles.goBackButton}
+      >
+        <GoBackArrowIcon />
+        <Text style={styles.goBackButtonText}>Вернуться назад</Text>
+      </TouchableOpacity>
+
       <View style={{ alignItems: 'center' }}>
         <View
           style={[styles.wrongCodeContainer, { opacity: warningOpacity() }]}
         >
+          <Image source={confirmButtonCross} />
           <Text style={styles.wrongCode}>
             Код введён <Text style={{ fontWeight: 'bold' }}>неверно</Text>
           </Text>
         </View>
+
         <Text style={styles.header}>Введите код подтверждения</Text>
         <LabeledInput
           value={userCode}
@@ -87,6 +100,7 @@ function SignInConfirm({
           containerStyle={{ marginTop: 37 }}
         />
         <TouchableOpacity
+          activeOpacity={0.8}
           onPress={enterCodeHandler}
           style={[
             styles.buttonStyle,
@@ -98,6 +112,7 @@ function SignInConfirm({
         </TouchableOpacity>
 
         <TouchableOpacity
+          activeOpacity={0.8}
           onPress={resendCode}
           style={[
             styles.buttonStyle,
