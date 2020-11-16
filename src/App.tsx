@@ -21,10 +21,12 @@ import {
 import { AppLoading } from 'expo'
 import { SafeAreaView, StatusBar } from 'react-native'
 import { CacheProvider } from 'rest-hooks'
+import { MockProvider } from '@rest-hooks/test'
 import CatalogScreen from './screens/Catalog'
 import AuthWrapper from './screens/Auth/AuthWrapper'
 import SettingsScreen from './screens/Settings'
 import { AuthProvider } from './screens/Auth/AuthContext'
+import { fixtures } from './tests/__mocks__/fixtures'
 
 const Tab = createBottomTabNavigator()
 
@@ -52,18 +54,20 @@ const App: React.FC = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar hidden />
       <CacheProvider>
-        <NavigationContainer>
-          {isAuth ? (
-            <Tab.Navigator>
-              <Tab.Screen name='Каталог' component={CatalogScreen} />
-              <Tab.Screen name='Settings' component={SettingsScreen} />
-            </Tab.Navigator>
-          ) : (
-            <AuthProvider value={{ setIsAuth }}>
-              <AuthWrapper />
-            </AuthProvider>
-          )}
-        </NavigationContainer>
+        <MockProvider results={fixtures}>
+          <NavigationContainer>
+            {isAuth ? (
+              <Tab.Navigator>
+                <Tab.Screen name='Каталог' component={CatalogScreen} />
+                <Tab.Screen name='Settings' component={SettingsScreen} />
+              </Tab.Navigator>
+            ) : (
+              <AuthProvider value={{ setIsAuth }}>
+                <AuthWrapper />
+              </AuthProvider>
+            )}
+          </NavigationContainer>
+        </MockProvider>
       </CacheProvider>
     </SafeAreaView>
   )

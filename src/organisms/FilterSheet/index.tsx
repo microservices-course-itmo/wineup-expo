@@ -1,17 +1,19 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components/native'
 import { Feather } from '@expo/vector-icons'
 import PrimaryButton from '../../atoms/PrimaryButton'
 import ListFilterSheet from './List'
 import PriceFilterSheet from './Price'
+import { FiltersState, useFilters } from '../FiltersBar/FiltersContext'
 
 export interface FilterSheetProps {
   title: string
   children: string[] | Array<[number, number]>
   type?: 'checkbox' | 'radio' | 'price'
   withSearch?: boolean
-  onApply?: (filters: { [key: string]: boolean }) => void
+  onApply: () => void
   height?: number
+  filter: keyof FiltersState
 }
 
 function FilterSheet({
@@ -21,20 +23,20 @@ function FilterSheet({
   withSearch = false,
   onApply: onApplyProp = () => {},
   height = 300,
+  filter,
 }: FilterSheetProps) {
   const filterPageRef = useRef<{ reset(): void }>(null)
-  const [filters, setFilters] = useState({})
+  const { apply } = useFilters()
 
   const onApply = () => {
-    onApplyProp(filters)
-  }
+    const state = filterPageRef.current?.getState()
 
-  const onChange = (value: { [key: string]: boolean }) => {
-    setFilters(value)
+    apply(filter, state)
+    onApplyProp()
   }
 
   const onReset = () => {
-    filterPageRef.current!.reset()
+    filterPageRef.current?.reset()
   }
 
   const Component = type === 'price' ? PriceFilterSheet : ListFilterSheet
@@ -46,10 +48,10 @@ function FilterSheet({
         <ResetLabel>Сбросить</ResetLabel>
       </Reset>
       <Component
+        filter={filter}
         ref={filterPageRef}
         type={type}
         withSearch={withSearch}
-        onChange={onChange}
       >
         {children as any}
       </Component>
