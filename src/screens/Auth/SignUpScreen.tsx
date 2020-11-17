@@ -1,11 +1,12 @@
 import React, { useState, ReactElement, useEffect, useContext } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { Text, View, TouchableOpacity } from 'react-native'
 import { isName, City } from '../../helpers'
 import LabeledInput from '../../molecules/Auth/LabeledInput'
 import LabeledDatePicker from '../../molecules/Auth/LabeledDatePicker'
 import LabeledDropdown from '../../molecules/Auth/LabeledDropdown'
 import ConsentCheckBox from '../../molecules/Auth/ConsentCheckBox'
 import { AuthContext } from './AuthContext'
+import styles from './styles'
 
 function SignUpScreen(): ReactElement {
   const [userName, setUserName] = useState('')
@@ -20,7 +21,7 @@ function SignUpScreen(): ReactElement {
   const [isSignUpEnabled, setIsSignUpEnabled] = useState<boolean | undefined>(
     false
   )
-  const buttonOpacity = isSignUpEnabled ? 1 : 0.4
+  const buttonOpacity = isSignUpEnabled ? 1 : 0.5
   const isAuth = useContext(AuthContext)
 
   const isValidName = isName(userName)
@@ -50,7 +51,7 @@ function SignUpScreen(): ReactElement {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { marginTop: 106 }]}>
       <Text style={styles.header}>Введите данные</Text>
       <LabeledInput
         value={userName}
@@ -77,7 +78,7 @@ function SignUpScreen(): ReactElement {
       <ConsentCheckBox onPress={setIsConsentGiven} hasFilled={isСonsentGiven} />
       <TouchableOpacity
         onPress={onSubmit}
-        style={[styles.buttonStyle, { opacity: buttonOpacity }]}
+        style={[styles.buttonStyle, { opacity: buttonOpacity, marginTop: 35 }]}
         disabled={!isSignUpEnabled}
       >
         <Text style={styles.buttonText}>Войти</Text>
@@ -85,34 +86,5 @@ function SignUpScreen(): ReactElement {
     </View>
   )
 }
-
-const styles = StyleSheet.create({
-  header: {
-    fontSize: 24,
-    fontFamily: 'Merriweather_700Bold',
-    color: '#C23232',
-  },
-  container: {
-    paddingTop: 125,
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  buttonStyle: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 28,
-    width: 320,
-    maxHeight: 56,
-    backgroundColor: '#C23232',
-    borderRadius: 10,
-  },
-  buttonText: {
-    fontSize: 16,
-    color: '#fff',
-    fontFamily: 'Merriweather_400Regular',
-  },
-})
 
 export default SignUpScreen

@@ -1,98 +1,61 @@
-import React, { ReactElement, useState, useEffect } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, Linking } from 'react-native'
-import LabeledInput from '../../molecules/Auth/LabeledInput'
-import { isEmail, isAllowedPassword } from '../../helpers'
+import React, { useState } from 'react'
+import { Text, View, TouchableOpacity, TextInput, Image } from 'react-native'
+import { StackScreenProps } from '@react-navigation/stack'
+import ROUTES from '../../routes'
+import styles from './styles'
+import inputStyle from '../../molecules/Auth/styles'
+import phoneEnterIcon from '../../../assets/phoneEnterIcon.png'
 
-function SignInScreen(): ReactElement {
-  const [userEmail, getUserEmail] = useState('')
-  const [userPassword, getUserPassword] = useState('')
+export type TProps = StackScreenProps<any, typeof ROUTES.SIGN_IN>
 
-  const [isSignInEnabled, setIsSignInEnabled] = useState(false)
-  const buttonOpacity = isSignInEnabled ? 1 : 0.4
-  const isValidPassword = isAllowedPassword(userPassword)
-  const isValidEmail = isEmail(userEmail)
-  const errorMessagePassword =
-    'Пароль должен содержать минимум 8 символов, хотя бы 1 букву и 1 цифру'
-  const errorMessageEmail = 'Неккоректный адрес эл. почты'
-
-  useEffect(() => {
-    setIsSignInEnabled(isValidPassword && isValidEmail)
-  }, [userEmail, userPassword, isValidPassword, isValidEmail])
-
-  const onSubmit = () => {
-    console.log(userEmail, userPassword)
-  }
+const SignInScreen: React.FC<TProps> = ({ navigation }) => {
+  const [userPhone, setUserPhone] = useState('')
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Вход</Text>
-      <LabeledInput
-        value={userEmail}
-        label='Адрес эл. почты'
-        onChangeText={getUserEmail}
-        isValid={isValidEmail}
-        errorMessage={errorMessageEmail}
-      />
-      <LabeledInput
-        value={userPassword}
-        label='Пароль'
-        onChangeText={getUserPassword}
-        secureTextEntry
-        isValid={isValidPassword}
-        errorMessage={errorMessagePassword}
-      />
-      <Text
-        style={styles.helper}
-        onPress={() => Linking.openURL('https://vk.com/asuhovitskiy')}
-      >
-        Проблемы со входом?
+      <Text style={[styles.header, { textAlign: 'center' }]}>
+        Введите номер телефона для авторизации
       </Text>
+      <View
+        style={{
+          backgroundColor: '#FFFFFF',
+          width: 268,
+          height: 57,
+          marginTop: 30,
+          borderRadius: 10,
+        }}
+      >
+        <TextInput
+          style={[inputStyle.input, inputStyle.textAreaStyle]}
+          keyboardType='number-pad'
+          maxLength={12}
+          onChangeText={setUserPhone}
+          placeholder='+7 (9XX) XXX XX XX'
+          textAlignVertical='center'
+          textContentType='telephoneNumber'
+          editable
+          selectionColor='#000'
+        />
+        <Image
+          source={phoneEnterIcon}
+          style={{ position: 'absolute', top: 17, left: 30 }}
+        />
+      </View>
       <TouchableOpacity
-        onPress={onSubmit}
-        style={[styles.buttonStyle, { opacity: buttonOpacity }]}
-        disabled={!isSignInEnabled}
+        activeOpacity={0.8}
+        style={[styles.buttonStyle, { marginTop: 23 }]}
+        onPress={() => {
+          navigation.navigate(ROUTES.SIGN_IN_CONFIRM)
+          console.log(userPhone)
+        }}
       >
         <Text style={styles.buttonText}>Войти</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.unregUser}>
+        <Text style={styles.resendCode}>Продолжить без авторизации</Text>
       </TouchableOpacity>
     </View>
   )
 }
 
 export default SignInScreen
-
-const styles = StyleSheet.create({
-  header: {
-    fontSize: 30,
-    fontFamily: 'Merriweather_700Bold',
-    color: '#C23232',
-  },
-  helper: {
-    paddingTop: 38,
-    paddingLeft: 20,
-    alignSelf: 'flex-start',
-    fontSize: 16,
-    color: '#4A7DFF',
-    fontFamily: 'Merriweather_400Regular',
-  },
-  container: {
-    paddingTop: 136,
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  buttonStyle: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 40,
-    width: 320,
-    maxHeight: 56,
-    backgroundColor: '#C23232',
-    borderRadius: 10,
-  },
-  buttonText: {
-    fontSize: 20,
-    color: '#fff',
-    fontFamily: 'Merriweather_400Regular',
-  },
-})
