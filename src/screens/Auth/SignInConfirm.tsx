@@ -1,9 +1,10 @@
 import React, { useState, useEffect, ReactElement, useContext } from 'react'
 import { Text, View, TouchableOpacity, Image } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { RouteProp } from '@react-navigation/native'
+import * as firebase from 'firebase'
 import Countdown from '../../molecules/Countdown'
 import LabeledInput from '../../molecules/Auth/LabeledInput'
-import { isRightCode } from '../../helpers'
 import ROUTES from '../../routes'
 import { AuthContext } from './AuthContext'
 import styles from './styles'
@@ -17,13 +18,19 @@ type SignInConfirmScreenNavigationProps = StackNavigationProp<
 
 interface SignInConfirmProps {
   navigation: SignInConfirmScreenNavigationProps
+  route: RouteProp<
+    { params: { userPhone: string; verificationId: string } },
+    'params'
+  >
 }
 
 const timeToResend = 4
 
 function SignInConfirm({
   navigation,
+  route,
 }: SignInConfirmProps): ReactElement<SignInConfirmProps> {
+  const [jwtToken, setJwtToken] = useState('')
   const [userCode, setUserCode] = useState('')
   const [isCorrectCode, setIsCorrectCode] = useState(false)
   const [isLongEnough, setIsLongEnough] = useState(false)
@@ -47,12 +54,35 @@ function SignInConfirm({
   const isAuth = useContext(AuthContext)
   const isUnregistered = true
 
+  async function signInWithPhoneNumber() {
+    try {
+      const credential = firebase.auth.PhoneAuthProvider.credential(
+        route.params.verificationId,
+        userCode
+      )
+
+      await firebase.auth().signInWithCredential(credential)
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          user.getIdToken().then(function (idToken) {
+            setJwtToken(idToken)
+          })
+        }
+      })
+      setIsCorrectCode(true)
+    } catch (err) {
+      setIsCorrectCode(false)
+      console.log(err)
+    }
+  }
+
   const enterCodeHandler = () => {
-    setIsCorrectCode(isRightCode(userCode))
-    setIsWarningOn(!isWarningOn)
+    signInWithPhoneNumber()
+    console.log(jwtToken)
     if (isLongEnough) {
       setIsCodeEnteredOnce(true)
       if (!isCorrectCode) {
+        setIsWarningOn(!isWarningOn)
         setIsPenalty(true)
         setIsTimerStarted(true)
       } else if (isUnregistered) navigation.navigate(ROUTES.SIGN_UP)
@@ -66,7 +96,6 @@ function SignInConfirm({
 
   useEffect(() => {
     setIsLongEnough(userCode.length === 6)
-    setIsCorrectCode(isRightCode(userCode))
   }, [userCode])
 
   return (

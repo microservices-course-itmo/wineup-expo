@@ -23,16 +23,22 @@ import { AppLoading } from 'expo'
 import { SafeAreaView, StatusBar } from 'react-native'
 import { CacheProvider } from 'rest-hooks'
 import { MockProvider } from '@rest-hooks/test'
+import * as firebase from 'firebase'
 import CatalogScreen from './screens/Catalog'
 import AuthWrapper from './screens/Auth/AuthWrapper'
 import SettingsScreen from './screens/Settings'
 import { AuthProvider } from './screens/Auth/AuthContext'
 import { fixtures } from './tests/__mocks__/fixtures'
+import firebaseConfig from '../firebaseconfig'
 
 const Tab = createBottomTabNavigator()
 
 const App: React.FC = () => {
-  const [isAuth, setIsAuth] = useState(true)
+  const [isAuth, setIsAuth] = useState(false)
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig)
+  }
 
   const [fontsLoaded] = useFonts({
     Merriweather_400Regular,
