@@ -18,10 +18,7 @@ type SignInConfirmScreenNavigationProps = StackNavigationProp<
 
 interface SignInConfirmProps {
   navigation: SignInConfirmScreenNavigationProps
-  route: RouteProp<
-    { params: { userPhone: string; verificationId: string } },
-    'params'
-  >
+  route: RouteProp<{ params: { verificationId: string } }, 'params'>
 }
 
 const timeToResend = 4
@@ -30,9 +27,8 @@ function SignInConfirm({
   navigation,
   route,
 }: SignInConfirmProps): ReactElement<SignInConfirmProps> {
-  const [jwtToken, setJwtToken] = useState('')
+  let isCorrectCode = false
   const [userCode, setUserCode] = useState('')
-  const [isCorrectCode, setIsCorrectCode] = useState(false)
   const [isLongEnough, setIsLongEnough] = useState(false)
   const [isTimerStarted, setIsTimerStarted] = useState(false)
   const [isPenalty, setIsPenalty] = useState(false)
@@ -61,33 +57,59 @@ function SignInConfirm({
         userCode
       )
 
-      await firebase.auth().signInWithCredential(credential)
-      firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-          user.getIdToken().then(function (idToken) {
-            setJwtToken(idToken)
-          })
-        }
-      })
-      setIsCorrectCode(true)
+      const userCredential = await firebase
+        .auth()
+        .signInWithCredential(credential)
+
+      if (userCredential.user) {
+        isCorrectCode = true
+        const jwtToken = await userCredential.user.getIdToken()
+
+        return jwtToken
+      }
+
+      return null
     } catch (err) {
-      setIsCorrectCode(false)
+      isCorrectCode = false
       console.log(err)
+
+      return null
     }
   }
 
+  // const signInWithJwtToken = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       'http://77.234.215.138:48080/user-service/login/',
+  //       {
+  //         method: 'POST',
+  //         body: JSON.stringify({
+  //           accessToken: jwtToken
+  //         })
+  //       }
+  //     )
+  //     const json = await response.json()
+  //     console.log('json:', json)
+
+  //     return json
+  //   } catch (error) {
+  //     console.error(error)
+  //   }
+  // }
+
   const enterCodeHandler = () => {
-    signInWithPhoneNumber()
-    console.log(jwtToken)
-    if (isLongEnough) {
-      setIsCodeEnteredOnce(true)
-      if (!isCorrectCode) {
-        setIsWarningOn(!isWarningOn)
-        setIsPenalty(true)
-        setIsTimerStarted(true)
-      } else if (isUnregistered) navigation.navigate(ROUTES.SIGN_UP)
-      else isAuth.setIsAuth(true)
-    }
+    signInWithPhoneNumber().then((jwtToken) => {
+      console.log(jwtToken)
+      if (isLongEnough) {
+        setIsCodeEnteredOnce(true)
+        if (!isCorrectCode) {
+          setIsWarningOn(true)
+          setIsPenalty(true)
+          setIsTimerStarted(true)
+        } else if (isUnregistered) navigation.navigate(ROUTES.SIGN_UP)
+        else isAuth.setIsAuth(true)
+      }
+    })
   }
 
   const resendCode = () => {

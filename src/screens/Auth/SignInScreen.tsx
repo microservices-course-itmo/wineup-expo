@@ -30,14 +30,14 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
   }
 
   function handlePress() {
-    setUserPhone('+71234567890')
     verifyPhoneNumber(userPhone)
   }
 
   return (
     <View style={styles.container}>
       <FirebaseRecaptchaVerifierModal
-        style={{}}
+        cancelLabel='ОТМЕНА'
+        style={{ marginTop: '10%' }}
         ref={recaptchaVerifier}
         firebaseConfig={firebaseConfig}
       />
@@ -55,7 +55,7 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
       >
         <TextInput
           style={[inputStyle.input, inputStyle.textAreaStyle]}
-          keyboardType='number-pad'
+          keyboardType='phone-pad'
           maxLength={12}
           onChangeText={setUserPhone}
           placeholder='+7 (9XX) XXX XX XX'
