@@ -11,12 +11,12 @@ import WineCardLoader from '../../molecules/WineCard/Loader'
 import ROUTES from '../../routes'
 
 interface RecommendationBlockProps {
-  style: StyleProp<any>
+  style?: StyleProp<any>
 }
 
 function RecommendationBlock({ style }: RecommendationBlockProps) {
   const positions = useResource(PositionResource.listShape(), {})
-  const carouselRef = useRef<Carousel | null>(null)
+  const carouselRef = useRef<Carousel<any> | null>(null)
   const navigation = useNavigation()
 
   const navigate = (

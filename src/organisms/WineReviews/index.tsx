@@ -11,7 +11,7 @@ import WineReviewCard, {
 export interface WineReviewsProps {
   cards: Array<WineReviewCardProps>
   onShowMore?: () => void
-  style: StyleProp<any>
+  style?: StyleProp<any>
 }
 
 function WineReviews({ cards, onShowMore, style }: WineReviewsProps) {

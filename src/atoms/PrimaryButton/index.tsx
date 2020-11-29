@@ -4,7 +4,7 @@ import { StyleProp } from 'react-native'
 
 interface PrimaryButtonProps {
   onPress?: () => void
-  style: StyleProp<any>
+  style?: StyleProp<any>
 }
 
 function PrimaryButton({

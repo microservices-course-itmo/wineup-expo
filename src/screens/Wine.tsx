@@ -1,7 +1,8 @@
 import React from 'react'
 import { useCache } from 'rest-hooks'
-import { useRoute } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 import styled from 'styled-components/native'
+import { Ionicons } from '@expo/vector-icons'
 import PositionResource from '../resources/position'
 import WineCard from '../molecules/WineCard'
 import WineDescription from '../organisms/WineDescription'
@@ -14,10 +15,14 @@ function WineScreen() {
     params: { winePositionId },
   } = useRoute()
   const position = useCache(PositionResource.detailShape(), { winePositionId })
+  const { goBack } = useNavigation()
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <Container>
+        <BackButton onPress={goBack}>
+          <Ionicons name='ios-arrow-back' size={24} color='black' />
+        </BackButton>
         <WineCard position={position} full />
         <StyledWineDescription />
         <StyledWineReviews cards={reviews} />
@@ -45,6 +50,13 @@ const reviews: WineReviewCardProps[] = [
     rating: 3,
   },
 ]
+
+const BackButton = styled.TouchableOpacity`
+  position: absolute;
+  top: 27px;
+  left: 30px;
+  z-index: 1;
+`
 
 const ScrollView = styled.ScrollView`
   background-color: #fff;

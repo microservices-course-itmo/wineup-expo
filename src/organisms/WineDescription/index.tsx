@@ -8,7 +8,7 @@ import bottle from './bottle.png'
 import fork from './fork.png'
 
 interface WineDescriptionProps {
-  style: StyleProp<any>
+  style?: StyleProp<any>
 }
 
 function WineDescription({ style }: WineDescriptionProps) {
