@@ -11,14 +11,16 @@ export interface WineReviewCardProps {
   rating: number
 }
 
+const CLAMP_LIMIT = 200
+
 function WineReviewCard({ text, username, date }: WineReviewCardProps) {
   const [reviewText, setReviewText] = React.useState('')
   const [isCanShow, setIsCanShow] = React.useState(false)
 
   React.useEffect(() => {
-    if (text.length > 20) {
+    if (text.length > CLAMP_LIMIT) {
       setIsCanShow(true)
-      setReviewText(text.slice(0, 20))
+      setReviewText(text.slice(0, CLAMP_LIMIT))
     } else {
       setReviewText(text)
     }
@@ -67,11 +69,16 @@ const CardHead = styled.View`
 `
 
 const UserName = styled.Text`
+  font-family: PlayfairDisplay_700Bold;
+  font-weight: 700;
   font-size: 16px;
 `
 
 const ReviewText = styled.Text`
+  font-family: Roboto_300Light_Italic;
+  font-weight: 300;
   font-size: 12px;
+  color: #333333;
 `
 
 const ShowMore = styled.TouchableOpacity`
@@ -87,11 +94,14 @@ const ShowMoreText = styled.Text`
   font-size: 10px;
   margin-right: 5px;
   margin-bottom: 3px;
+  color: #333333;
 `
 
 const Date = styled.Text`
+  font-family: Roboto_400Regular;
   font-size: 10px;
   opacity: 0.5;
   text-align: right;
   margin-top: 10px;
+  color: #717171;
 `

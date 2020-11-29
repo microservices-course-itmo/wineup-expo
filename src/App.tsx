@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import {
   useFonts,
   Merriweather_400Regular,
@@ -23,13 +22,10 @@ import { AppLoading } from 'expo'
 import { SafeAreaView, StatusBar } from 'react-native'
 import { CacheProvider } from 'rest-hooks'
 import { MockProvider } from '@rest-hooks/test'
-import CatalogScreen from './screens/Catalog'
 import AuthWrapper from './screens/Auth/AuthWrapper'
-import SettingsScreen from './screens/Settings'
 import { AuthProvider } from './screens/Auth/AuthContext'
+import MainRouter from './screens/Router'
 import { fixtures } from './tests/__mocks__/fixtures'
-
-const Tab = createBottomTabNavigator()
 
 const App: React.FC = () => {
   const [isAuth, setIsAuth] = useState(true)
@@ -60,10 +56,7 @@ const App: React.FC = () => {
         <MockProvider results={fixtures}>
           <NavigationContainer>
             {isAuth ? (
-              <Tab.Navigator>
-                <Tab.Screen name='Каталог' component={CatalogScreen} />
-                <Tab.Screen name='Settings' component={SettingsScreen} />
-              </Tab.Navigator>
+              <MainRouter />
             ) : (
               <AuthProvider value={{ setIsAuth }}>
                 <AuthWrapper />
