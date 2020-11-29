@@ -1,9 +1,9 @@
 import { ScrollView } from 'react-native'
 import React, { Suspense } from 'react'
 import styled from 'styled-components/native'
-import CatalogView from '../organisms/CatalogView'
 import WineCardLoader from '../molecules/WineCard/Loader'
 import SearchInput from '../molecules/SearchInput'
+import FavouritesPlaceholder from '../molecules/FavoritesPlaceholder'
 
 export default function FavouritesScreen() {
   const loader = (
@@ -17,7 +17,7 @@ export default function FavouritesScreen() {
   return (
     <Suspense fallback={loader}>
       <StyledSearchInput value='' />
-      <CatalogView />
+      <FavouritesPlaceholder />
     </Suspense>
   )
 }
