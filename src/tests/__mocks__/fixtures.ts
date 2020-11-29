@@ -5,6 +5,7 @@ import ProducerResource from '../../resources/producer'
 import BrandResource from '../../resources/brand'
 import WineResource from '../../resources/wine'
 import PositionResource from '../../resources/position'
+import CatalogResource from '../../resources/CatalogResource'
 
 export const positionMock = {
   winePositionId: 'wine_position1',
@@ -30,6 +31,33 @@ export const wineMock = {
   color: 'RED',
   sugar: 'DRY',
   year: 2018,
+}
+
+const wine1CatMock = {
+  avg: 14,
+  brand: {id:'1', name: 'brand1'},
+  color: 'RED',
+  grape: {id:'1', name: 'grape1'},
+  name: 'Sweet Pays D`Herault',
+  producer: {id:'1', name:'producer1'},
+  region: {country:'France',id:'1', name:'Languedoc-Roussillon'
+  },
+  sugar:'SEMI-DRY',
+  wine_id:'1',
+  year: 2014
+}
+
+const wine2CatMock = {
+  avg: 12,
+  brand: {id:'2', name: 'brand2'},
+  color: 'WHITE',
+  grape: {id:'2', name: 'grape2'},
+  name: 'Tenute del Neccio Chianti',
+  producer: {id:'2', name:'producer2'},
+  region: {country:'Italy', id:'2', name:'Toskana'},
+  sugar:'SWEET',
+  wine_id:'2',
+  year: 2016
 }
 
 export const fixtures = [
@@ -121,4 +149,10 @@ export const fixtures = [
       },
     ],
   },
+  {
+    request: CatalogResource.listShape(),
+    params: {},
+    result:[ wine1CatMock, wine2CatMock ]
+  },
+
 ]
