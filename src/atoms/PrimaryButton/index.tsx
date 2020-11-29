@@ -57,6 +57,7 @@ const Shadow = styled.View`
   width: 95%;
   height: 35px;
   bottom: -5px;
+  left: 2.5%;
 
   background: #680e24;
   box-shadow: 0px 4px 4px rgba(104, 14, 36, 0.25);
