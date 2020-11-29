@@ -12,6 +12,8 @@ import { WineReviewCardProps } from '../molecules/WineReviewCard'
 
 function WineScreen() {
   const {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     params: { winePositionId },
   } = useRoute()
   const position = useCache(PositionResource.detailShape(), { winePositionId })
@@ -23,7 +25,7 @@ function WineScreen() {
         <BackButton onPress={goBack}>
           <Ionicons name='ios-arrow-back' size={24} color='black' />
         </BackButton>
-        <WineCard position={position} full />
+        <WineCard position={position!} full />
         <StyledWineDescription />
         <StyledWineReviews cards={reviews} />
         <StyledRecommendationBlock />
