@@ -30,7 +30,7 @@ export default class WineCardResource extends Resource {
       ...options,
       headers: {
         ...options.headers,
-        accessToken: 123,
+        accessToken: '123',
       },
     }
   }
