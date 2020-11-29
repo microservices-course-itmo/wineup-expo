@@ -1,20 +1,13 @@
 import React, { ReactElement, useRef } from 'react'
 import { TouchableOpacity, Text as RNText } from 'react-native'
 import styled from 'styled-components/native'
-import { useResource } from 'rest-hooks'
 import Text from '../Text'
 import Heading from '../Heading'
 import Rating from '../Rating'
 import WineBottlePrice from '../WineBottlePrice'
 import WineShopName from '../WineShopName'
 import ExtraOptions from '../../organisms/ExtraOptions'
-import WineResource from '../../resources/wine'
-import PositionResource from '../../resources/position'
-import RegionResource from '../../resources/region'
-import ShopResource from '../../resources/shop'
-import GrapeResource from '../../resources/grape'
-import ProducerResource from '../../resources/producer'
-import BrandResource from '../../resources/brand'
+import CatalogResource from 'src/resources/CatalogResource'
 
 // eslint-disable-next-line no-shadow
 export enum WineSugar {
@@ -32,37 +25,25 @@ export enum WineColor {
 }
 
 export interface WineInfoProps {
-  wine: WineResource
-  position: PositionResource
+  position: CatalogResource
 }
 
-function WineInfo({
-  wine,
-  position,
-}: WineInfoProps): ReactElement<WineInfoProps> {
-  const region = useResource(RegionResource.detailShape(), {
-    id: wine.regionId,
-  })
-  const shop = useResource(ShopResource.detailShape(), { id: position.shopId })
-  const grape = useResource(GrapeResource.detailShape(), { id: wine.grapeId })
-  const producer = useResource(ProducerResource.detailShape(), {
-    id: wine.producerId,
-  })
-  const brand = useResource(BrandResource.detailShape(), { id: wine.brandId })
+function WineInfo({ position }: WineInfoProps): ReactElement<WineInfoProps> {
+  const wine = position.wine
   const description = [
-    region.country,
+    wine.region[0].country,
     WineSugar[wine.sugar as keyof typeof WineSugar],
     WineColor[wine.color as keyof typeof WineColor],
     `${position.volume} л.`,
   ].join(', ')
-  const discount = 1 - position.actualPrice / position.price
+  const discount = 1 - position.actual_price / position.price
 
   const optionsRef = useRef<RNText>(null)
   const extraOptions = [
-    { param: 'Виноград', answ: grape.name },
-    { param: 'Region', answ: region.name },
-    { param: 'Производитель', answ: producer.name },
-    { param: 'Бренд', answ: brand.name },
+    { param: 'Виноград', answ: wine.grape[0].name },
+    { param: 'Region', answ: wine.region[0].name },
+    { param: 'Производитель', answ: wine.producer.name },
+    { param: 'Бренд', answ: wine.brand.name },
   ]
   const [isModalVisible, setModalVisible] = React.useState(false)
 
@@ -79,7 +60,7 @@ function WineInfo({
       <Rating rating={3} />
       <Heading>{wine.name}</Heading>
       <Heading>
-        {grape.name}, {wine.year} г.
+        {wine.grape[0].name}, {wine.year} г.
       </Heading>
       <Description>{description}</Description>
       {extraOptions && (
@@ -96,8 +77,8 @@ function WineInfo({
         </>
       )}
       <BottomBar>
-        <WineBottlePrice price={position.actualPrice} discount={discount} />
-        <WineShopName name={shop.site} />
+        <WineBottlePrice price={position.actual_price} discount={discount} />
+        <WineShopName name={position.shop.site} />
       </BottomBar>
     </>
   )

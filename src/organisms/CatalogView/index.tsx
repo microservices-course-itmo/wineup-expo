@@ -6,17 +6,13 @@ import WineCard from '../../molecules/WineCard'
 import PositionResource from '../../resources/position'
 
 function CatalogView() {
-  const positions = useResource(PositionResource.listShape(), {})
-
-  // Add resource using
   const catalog = useResource(CatalogResource.listShape(), {})
 
   return (
     <ScrollView>
-      {positions.map((position) => (
+      {catalog.map((position) => (
         <WineCard key={position.pk()} position={position} />
       ))}
-      {/* {catalog} */}
     </ScrollView>
   )
 }

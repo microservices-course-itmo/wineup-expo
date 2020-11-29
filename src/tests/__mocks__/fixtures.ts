@@ -34,30 +34,52 @@ export const wineMock = {
 }
 
 const wine1CatMock = {
-  avg: 14,
-  brand: {id:'1', name: 'brand1'},
-  color: 'RED',
-  grape: {id:'1', name: 'grape1'},
-  name: 'Sweet Pays D`Herault',
-  producer: {id:'1', name:'producer1'},
-  region: {country:'France',id:'1', name:'Languedoc-Roussillon'
+  actual_price: 700,
+  description: 'description1',
+  gastronomy: 'gastronomy1',
+  image: 'image1',
+  link_to_wine: 'http://shop1.com/wine1',
+  price: 1200,
+  shop: {id: 10, site: 'http://shop1.com/'},
+  volume: 0.75,
+  wine: {
+    avg: 14,
+    brand: {id:'1', name: 'brand1'},
+    color: 'RED',
+    grape: [{id:'1', name: 'grape1'}],
+    name: 'Sweet Pays D`Herault',
+    producer: {id:'1', name:'producer1'},
+    region: [{country:'France',id:'1', name:'Languedoc-Roussillon'
+    }],
+    sugar:'SEMI-DRY',
+    wine_id:'1',
+    year: 2014,
   },
-  sugar:'SEMI-DRY',
-  wine_id:'1',
-  year: 2014
+  wine_position_id: '1'
 }
 
 const wine2CatMock = {
-  avg: 12,
-  brand: {id:'2', name: 'brand2'},
-  color: 'WHITE',
-  grape: {id:'2', name: 'grape2'},
-  name: 'Tenute del Neccio Chianti',
-  producer: {id:'2', name:'producer2'},
-  region: {country:'Italy', id:'2', name:'Toskana'},
-  sugar:'SWEET',
-  wine_id:'2',
-  year: 2016
+  actual_price: 950,
+  description: 'description2',
+  gastronomy: 'gastronomy2',
+  image: 'image2',
+  link_to_wine: 'http://shop1.com/wine2',
+  price: 1400,
+  shop: {id: 10, site: 'http://shop1.com/'},
+  volume: 0.75,
+  wine:{
+    avg: 12,
+    brand: {id:'2', name: 'brand2'},
+    color: 'WHITE',
+    grape: [{id:'2', name: 'grape2'}],
+    name: 'Tenute del Neccio Chianti',
+    producer: {id:'2', name:'producer2'},
+    region: [{country:'Italy', id:'2', name:'Toskana'}],
+    sugar:'SWEET',
+    wine_id:'2',
+    year: 2016,
+  },
+  wine_position_id: '2'
 }
 
 export const fixtures = [
