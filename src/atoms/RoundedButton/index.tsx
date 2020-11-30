@@ -7,6 +7,7 @@ interface RoundedButtonProps {
   onPress?: () => void
   style?: StyleProp<any>
   textStyle?: StyleProp<any>
+  img?: any
 }
 
 function RoundedButton({
@@ -15,6 +16,7 @@ function RoundedButton({
   style,
   textStyle,
   children,
+  img,
 }: PropsWithChildren<RoundedButtonProps>) {
   return (
     <TouchableOpacity onPress={onPress}>
@@ -22,6 +24,7 @@ function RoundedButton({
         <Text style={textStyle} selected={selected}>
           {children}
         </Text>
+        {img}
       </Container>
     </TouchableOpacity>
   )

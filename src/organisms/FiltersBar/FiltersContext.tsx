@@ -13,6 +13,14 @@ export enum SortBy {
   Rating,
 }
 
+// eslint-disable-next-line no-shadow
+export enum FavouriteSortBy {
+  Recommended,
+  Rating,
+  CostIncrease,
+  CostDecrease,
+}
+
 export interface FiltersState {
   price: {
     from: number
@@ -23,6 +31,7 @@ export interface FiltersState {
   sugar: Array<keyof typeof WineSugar>
   color: Array<keyof typeof WineColor>
   sortBy: SortBy
+  favouriteSortBy: FavouriteSortBy
 }
 
 interface FiltersContextState {
@@ -41,6 +50,7 @@ const defaultFiltersState = {
   sugar: [],
   color: [],
   sortBy: SortBy.Recommended,
+  favouriteSortBy: FavouriteSortBy.Recommended,
 }
 
 export const FiltersContext = createContext<FiltersContextState>({
