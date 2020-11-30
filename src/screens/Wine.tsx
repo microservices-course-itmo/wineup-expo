@@ -26,7 +26,7 @@ function WineScreen() {
           <Ionicons name='ios-arrow-back' size={24} color='black' />
         </BackButton>
         <WineCard position={position!} full />
-        <StyledWineDescription position={position} />
+        <StyledWineDescription position={position!} />
         <StyledWineReviews cards={reviews} />
         <StyledRecommendationBlock />
       </Container>

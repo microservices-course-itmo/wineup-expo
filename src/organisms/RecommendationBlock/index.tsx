@@ -25,10 +25,13 @@ function RecommendationBlock({ style }: RecommendationBlockProps) {
   const navigate = (
     winePositionId: CatalogResource['winePositionId']
   ) => () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     navigation.push(ROUTES.WINE_PAGE, { winePositionId })
   }
 
-  const renderItem = ({ item }) => (
+  // eslint-disable-next-line react/no-unused-prop-types
+  const renderItem = ({ item }: { item: CatalogResource }) => (
     <Suspense fallback={<WineCardLoader />}>
       <TouchableOpacity
         activeOpacity={1}
@@ -51,7 +54,7 @@ function RecommendationBlock({ style }: RecommendationBlockProps) {
       <Title>Мы подобрали для вас{'\n'}схожие вина:</Title>
       <Carousel
         ref={carouselRef}
-        data={positions}
+        data={positions!}
         renderItem={renderItem}
         sliderWidth={350}
         itemWidth={350}
