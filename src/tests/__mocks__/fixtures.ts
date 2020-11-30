@@ -5,7 +5,7 @@ import ProducerResource from '../../resources/producer'
 import BrandResource from '../../resources/brand'
 import WineResource from '../../resources/wine'
 import PositionResource from '../../resources/position'
-import CatalogResource from '../../resources/CatalogResource'
+import CatalogResource from '../../resources/catalog'
 
 export const positionMock = {
   winePositionId: 'wine_position1',
@@ -33,53 +33,52 @@ export const wineMock = {
   year: 2018,
 }
 
-const wine1CatMock = {
-  actual_price: 700,
+export const wine1CatMock = {
+  actualPrice: 700,
   description: 'description1',
   gastronomy: 'gastronomy1',
-  image: 'image1',
-  link_to_wine: 'http://shop1.com/wine1',
+  image: [],
+  linkToWine: 'http://shop1.com/wine1',
   price: 1200,
-  shop: {id: 10, site: 'http://shop1.com/'},
+  shop: { id: '10', site: 'http://shop1.com/' },
   volume: 0.75,
   wine: {
     avg: 14,
-    brand: {id:'1', name: 'brand1'},
+    brand: { id: '1', name: 'brand1' },
     color: 'RED',
-    grape: [{id:'1', name: 'grape1'}],
+    grape: [{ id: '1', name: 'grape1' }],
     name: 'Sweet Pays D`Herault',
-    producer: {id:'1', name:'producer1'},
-    region: [{country:'France',id:'1', name:'Languedoc-Roussillon'
-    }],
-    sugar:'SEMI-DRY',
-    wine_id:'1',
+    producer: { id: '1', name: 'producer1' },
+    region: [{ country: 'France', id: '1', name: 'Languedoc-Roussillon' }],
+    sugar: 'SEMI-DRY',
+    wineId: 'wine_1',
     year: 2014,
   },
-  wine_position_id: '1'
+  winePositionId: 'wine_position_1',
 }
 
-const wine2CatMock = {
-  actual_price: 950,
+export const wine2CatMock = {
+  actualPrice: 950,
   description: 'description2',
   gastronomy: 'gastronomy2',
   image: 'image2',
-  link_to_wine: 'http://shop1.com/wine2',
+  linkToWine: 'http://shop1.com/wine2',
   price: 1400,
-  shop: {id: 10, site: 'http://shop1.com/'},
+  shop: { id: 10, site: 'http://shop1.com/' },
   volume: 0.75,
-  wine:{
+  wine: {
     avg: 12,
-    brand: {id:'2', name: 'brand2'},
+    brand: { id: '2', name: 'brand2' },
     color: 'WHITE',
-    grape: [{id:'2', name: 'grape2'}],
+    grape: [{ id: '2', name: 'grape2' }],
     name: 'Tenute del Neccio Chianti',
-    producer: {id:'2', name:'producer2'},
-    region: [{country:'Italy', id:'2', name:'Toskana'}],
-    sugar:'SWEET',
-    wine_id:'2',
+    producer: { id: '2', name: 'producer2' },
+    region: [{ country: 'Italy', id: '2', name: 'Toskana' }],
+    sugar: 'SWEET',
+    wineId: 'wine_2',
     year: 2016,
   },
-  wine_position_id: '2'
+  winePositionId: 'wine_position_2',
 }
 
 export const fixtures = [
@@ -172,9 +171,8 @@ export const fixtures = [
     ],
   },
   {
-    request: CatalogResource.listShape(),
-    params: {},
-    result:[ wine1CatMock, wine2CatMock ]
+    request: CatalogResource.filteredShape(),
+    params: { from: 0, to: 10 },
+    result: [wine1CatMock, wine2CatMock],
   },
-
 ]

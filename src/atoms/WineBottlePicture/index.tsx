@@ -2,18 +2,24 @@ import React from 'react'
 import styled from 'styled-components/native'
 import Placeholder from '../Placeholder'
 import Ribbon from '../Ribbon'
+import CatalogResource from '../../resources/catalog'
 
-interface ComponentProps {
-  image: { uri: string }
-  discount: number
+interface WineBottlePictureProps {
+  position: CatalogResource
 }
 
-const WineBottlePicture = ({ image, discount = 0 }: ComponentProps) => {
+const WineBottlePicture = ({
+  position: { discount, imageUri },
+}: WineBottlePictureProps) => {
   return (
     <Container>
       <Placeholder />
       {discount > 0 && <Ribbon>-{discount * 100} %</Ribbon>}
-      <Image resizeMethod='scale' resizeMode='contain' source={image} />
+      <Image
+        resizeMethod='scale'
+        resizeMode='contain'
+        source={{ uri: imageUri }}
+      />
     </Container>
   )
 }

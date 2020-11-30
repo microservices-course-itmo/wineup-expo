@@ -1,13 +1,15 @@
 import React, { ReactElement, useRef } from 'react'
-import { TouchableOpacity, Text as RNText } from 'react-native'
+import { TouchableOpacity, Text as RNText, Linking } from 'react-native'
 import styled from 'styled-components/native'
+import { AntDesign } from '@expo/vector-icons'
+import CatalogResource from '../../resources/catalog'
 import Text from '../Text'
 import Heading from '../Heading'
 import Rating from '../Rating'
 import WineBottlePrice from '../WineBottlePrice'
 import WineShopName from '../WineShopName'
 import ExtraOptions from '../../organisms/ExtraOptions'
-import CatalogResource from 'src/resources/CatalogResource'
+import PrimaryButton from '../PrimaryButton'
 
 // eslint-disable-next-line no-shadow
 export enum WineSugar {
@@ -26,25 +28,54 @@ export enum WineColor {
 
 export interface WineInfoProps {
   position: CatalogResource
+  full?: boolean
 }
 
-function WineInfo({ position }: WineInfoProps): ReactElement<WineInfoProps> {
-  const wine = position.wine
+function WineInfo({
+  position,
+  full,
+}: WineInfoProps): ReactElement<WineInfoProps> {
+  const { wine, shop } = position
   const description = [
-    wine.region[0].country,
+    wine.region[0]?.country,
     WineSugar[wine.sugar as keyof typeof WineSugar],
     WineColor[wine.color as keyof typeof WineColor],
     `${position.volume} л.`,
-  ].join(', ')
-  const discount = 1 - position.actual_price / position.price
+  ]
+    .filter((e) => e !== undefined)
+    .join(', ')
 
   const optionsRef = useRef<RNText>(null)
-  const extraOptions = [
-    { param: 'Виноград', answ: wine.grape[0].name },
-    { param: 'Region', answ: wine.region[0].name },
-    { param: 'Производитель', answ: wine.producer.name },
-    { param: 'Бренд', answ: wine.brand.name },
-  ]
+  const extraOptions = []
+
+  if (position.grapes) {
+    extraOptions.push({
+      param: 'Виноград',
+      answ: position.grapes,
+    })
+  }
+
+  if (position.regions) {
+    extraOptions.push({
+      param: 'Регион',
+      answ: position.regions,
+    })
+  }
+
+  if (wine.producer) {
+    extraOptions.push({
+      param: 'Производитель',
+      answ: wine.producer.name,
+    })
+  }
+
+  if (wine.brand) {
+    extraOptions.push({
+      param: 'Бренд',
+      answ: wine.brand.name,
+    })
+  }
+
   const [isModalVisible, setModalVisible] = React.useState(false)
 
   const openModal = () => {
@@ -55,12 +86,17 @@ function WineInfo({ position }: WineInfoProps): ReactElement<WineInfoProps> {
     setModalVisible(false)
   }
 
+  const goToShop = () => {
+    Linking.openURL(position.linkToWine).catch(console.log)
+  }
+
   return (
     <>
       <Rating rating={3} />
       <Heading>{wine.name}</Heading>
       <Heading>
-        {wine.grape[0].name}, {wine.year} г.
+        {position.grapes && `${position.grapes}, `}
+        {wine.year} г.
       </Heading>
       <Description>{description}</Description>
       {extraOptions && (
@@ -76,9 +112,17 @@ function WineInfo({ position }: WineInfoProps): ReactElement<WineInfoProps> {
           />
         </>
       )}
-      <BottomBar>
-        <WineBottlePrice price={position.actual_price} discount={discount} />
-        <WineShopName name={position.shop.site} />
+      <BottomBar full={full}>
+        <WineBottlePrice position={position} />
+        <ShopContainer>
+          <WineShopName name={shop.site} />
+          {full && (
+            <ToShopButton onPress={goToShop}>
+              <ToShopLabel>В магазин</ToShopLabel>
+              <AntDesign name='shoppingcart' color='#fff' size={16} />
+            </ToShopButton>
+          )}
+        </ShopContainer>
       </BottomBar>
     </>
   )
@@ -95,11 +139,28 @@ const Parameters = styled(Text)`
   text-decoration: underline;
 `
 
-const BottomBar = styled.View`
+const BottomBar = styled.View<{ full?: boolean }>`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 0 15px 0 20px;
-  margin-top: 20px;
+  padding: ${({ full }) => (full ? '0' : '0 15px 0 20px')};
+  margin-top: ${({ full }) => (full ? 40 : 20)}px;
+`
+
+const ShopContainer = styled.View`
+  max-width: 135px;
+`
+
+const ToShopButton = styled(PrimaryButton)`
+  padding: 15px 24px;
+  margin-top: 10px;
+`
+
+const ToShopLabel = styled.Text`
+  margin-right: 5px;
+
+  font-family: Roboto_400Regular;
+  font-size: 12px;
+  color: #fff;
 `

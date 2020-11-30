@@ -3,21 +3,21 @@ import { View } from 'react-native'
 import styled from 'styled-components/native'
 import Text from '../Text'
 import { prettifyNumber } from '../../utils/strings'
+import CatalogResource from '../../resources/catalog'
 
 interface ComponentProps {
-  price: number
-  discount?: number
+  position: CatalogResource
 }
 
-const WineBottlePrice = ({ price, discount = 0 }: ComponentProps) => {
-  const factor = 1 - discount
-
+const WineBottlePrice = ({
+  position: { price, actualPrice, discount },
+}: ComponentProps) => {
   return (
     <View>
       {discount > 0 && (
-        <OldPrice>{prettifyNumber(price.toFixed(2))} ₽</OldPrice>
+        <OldPrice>{prettifyNumber(actualPrice.toFixed(2))} ₽</OldPrice>
       )}
-      <Price>{prettifyNumber((factor * price).toFixed(2))} ₽</Price>
+      <Price>{prettifyNumber(price.toFixed(2))} ₽</Price>
     </View>
   )
 }
