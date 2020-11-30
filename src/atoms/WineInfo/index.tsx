@@ -1,7 +1,8 @@
 import React, { ReactElement, useRef } from 'react'
-import { TouchableOpacity, Text as RNText } from 'react-native'
+import { TouchableOpacity, Text as RNText, Linking } from 'react-native'
 import styled from 'styled-components/native'
 import { useResource } from 'rest-hooks'
+import { AntDesign } from '@expo/vector-icons'
 import Text from '../Text'
 import Heading from '../Heading'
 import Rating from '../Rating'
@@ -15,6 +16,7 @@ import ShopResource from '../../resources/shop'
 import GrapeResource from '../../resources/grape'
 import ProducerResource from '../../resources/producer'
 import BrandResource from '../../resources/brand'
+import PrimaryButton from '../PrimaryButton'
 
 // eslint-disable-next-line no-shadow
 export enum WineSugar {
@@ -34,21 +36,21 @@ export enum WineColor {
 export interface WineInfoProps {
   wine: WineResource
   position: PositionResource
+  full?: boolean
 }
 
 function WineInfo({
   wine,
   position,
+  full,
 }: WineInfoProps): ReactElement<WineInfoProps> {
-  const region = useResource(RegionResource.detailShape(), {
-    id: wine.regionId,
-  })
-  const shop = useResource(ShopResource.detailShape(), { id: position.shopId })
-  const grape = useResource(GrapeResource.detailShape(), { id: wine.grapeId })
-  const producer = useResource(ProducerResource.detailShape(), {
-    id: wine.producerId,
-  })
-  const brand = useResource(BrandResource.detailShape(), { id: wine.brandId })
+  const [region, shop, grape, producer, brand] = useResource(
+    [RegionResource.detailShape(), { id: wine.regionId }],
+    [ShopResource.detailShape(), { id: position.shopId }],
+    [GrapeResource.detailShape(), { id: wine.grapeId }],
+    [ProducerResource.detailShape(), { id: wine.producerId }],
+    [BrandResource.detailShape(), { id: wine.brandId }]
+  )
   const description = [
     region.country,
     WineSugar[wine.sugar as keyof typeof WineSugar],
@@ -74,6 +76,10 @@ function WineInfo({
     setModalVisible(false)
   }
 
+  const goToShop = () => {
+    Linking.openURL(position.linkToWine).catch(console.log)
+  }
+
   return (
     <>
       <Rating rating={3} />
@@ -95,9 +101,17 @@ function WineInfo({
           />
         </>
       )}
-      <BottomBar>
+      <BottomBar full={full}>
         <WineBottlePrice price={position.actualPrice} discount={discount} />
-        <WineShopName name={shop.site} />
+        <ShopContainer>
+          <WineShopName name={shop.site} />
+          {full && (
+            <ToShopButton onPress={goToShop}>
+              <ToShopLabel>В магазин</ToShopLabel>
+              <AntDesign name='shoppingcart' color='#fff' size={16} />
+            </ToShopButton>
+          )}
+        </ShopContainer>
       </BottomBar>
     </>
   )
@@ -114,11 +128,28 @@ const Parameters = styled(Text)`
   text-decoration: underline;
 `
 
-const BottomBar = styled.View`
+const BottomBar = styled.View<{ full?: boolean }>`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 0 15px 0 20px;
-  margin-top: 20px;
+  padding: ${({ full }) => (full ? '0' : '0 15px 0 20px')};
+  margin-top: ${({ full }) => (full ? 40 : 20)}px;
+`
+
+const ShopContainer = styled.View`
+  max-width: 135px;
+`
+
+const ToShopButton = styled(PrimaryButton)`
+  padding: 15px 24px;
+  margin-top: 10px;
+`
+
+const ToShopLabel = styled.Text`
+  margin-right: 5px;
+
+  font-family: Roboto_400Regular;
+  font-size: 12px;
+  color: #fff;
 `

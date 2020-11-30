@@ -5,15 +5,19 @@ import RoundedButton from '../../atoms/RoundedButton'
 
 interface FilterButtonProps {
   style?: StyleProp<any>
+  textStyle?: StyleProp<any>
   renderFilterPage: (onApply: () => void) => ReactElement
   filterPageHeight?: number
+  btnImg?: any
 }
 
 function FilterButton({
   children,
   style,
+  textStyle,
   renderFilterPage,
   filterPageHeight = 320,
+  btnImg,
 }: PropsWithChildren<FilterButtonProps>) {
   const [selected, setSelected] = useState(false)
   const rbSheetRef = useRef<RBSheet>(null)
@@ -36,7 +40,13 @@ function FilterButton({
 
   return (
     <>
-      <RoundedButton style={style} selected={selected} onPress={onPress}>
+      <RoundedButton
+        img={btnImg}
+        textStyle={textStyle}
+        style={style}
+        selected={selected}
+        onPress={onPress}
+      >
         {children}
       </RoundedButton>
       <RBSheet
