@@ -3,22 +3,42 @@ import styled from 'styled-components/native'
 import { TouchableOpacity } from 'react-native'
 import FavoritesFilterButton from '../../molecules/FilterButton/Favorites'
 import { FiltersProvider } from '../FiltersBar/FiltersContext'
+import ConfirmPopUp from '../../molecules/ConfirmPopUp'
 
 interface FavoritesToolbarProps {
   handleClear?: () => void
 }
 
 export default function FavoritesToolbar({
-  handleClear,
+  handleClear = () => {},
 }: FavoritesToolbarProps) {
+  const [isModalVisible, setModalVisible] = React.useState(false)
+
+  const openModal = () => {
+    setModalVisible(true)
+  }
+  const closeModal = () => {
+    setModalVisible(false)
+  }
+
+  const onClear = () => {
+    closeModal()
+    handleClear()
+  }
+
   return (
     <Container>
       <FiltersProvider>
         <FavoritesFilterButton />
       </FiltersProvider>
-      <TouchableOpacity onPress={handleClear}>
+      <TouchableOpacity onPress={openModal}>
         <ClearText>Очистить избранное</ClearText>
       </TouchableOpacity>
+      <ConfirmPopUp
+        visible={isModalVisible}
+        onConfirm={onClear}
+        onDismiss={closeModal}
+      />
     </Container>
   )
 }
