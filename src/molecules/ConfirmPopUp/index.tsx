@@ -3,31 +3,30 @@ import styled from 'styled-components/native'
 import { Modal } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 
-export interface PopUpProps {
+export interface ConfirmPopUpProps {
   visible: boolean
-  handleClose: () => void
+  onDismiss?: () => void
+  onConfirm?: () => void
 }
 
-function PopUp({ visible, handleClose }: PopUpProps) {
-  const onClose = () => {
-    handleClose()
-  }
-
-  const cleanFavorites = () => {}
-
+function ConfirmPopUp({
+  visible,
+  onDismiss = () => {},
+  onConfirm = () => {},
+}: ConfirmPopUpProps) {
   return (
     <Modal animated animationType='fade' visible={visible} transparent>
-      <ModalOverlay onPress={onClose} />
+      <ModalOverlay onPress={onDismiss} />
       <Container>
         <ModalTitle>
           Вы уверены, что хотите <BoldText>очистить избранное</BoldText>?
         </ModalTitle>
         <Buttons>
-          <Touchable onPress={cleanFavorites}>
+          <Touchable onPress={onConfirm}>
             <AntDesign name='check' size={20} color='white' />
             <ApplyLabel>Да</ApplyLabel>
           </Touchable>
-          <Touchable onPress={onClose}>
+          <Touchable onPress={onDismiss}>
             <AntDesign name='close' size={20} color='white' />
             <ApplyLabel>Нет</ApplyLabel>
           </Touchable>
@@ -37,7 +36,7 @@ function PopUp({ visible, handleClose }: PopUpProps) {
   )
 }
 
-export default PopUp
+export default ConfirmPopUp
 
 const Container = styled.View`
   position: absolute;
@@ -59,6 +58,7 @@ const ModalOverlay = styled.TouchableOpacity`
   flex: 1;
   justify-content: center;
   align-items: center;
+  background-color: rgba(27, 5, 10, 0.75);
 `
 const ApplyLabel = styled.Text`
   margin-left: 5px;
