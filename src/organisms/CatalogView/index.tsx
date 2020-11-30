@@ -5,12 +5,17 @@ import { useNavigation } from '@react-navigation/native'
 import CatalogResource from '../../resources/catalog'
 import WineCard from '../../molecules/WineCard'
 import ROUTES from '../../routes'
+import { useFilters } from '../FiltersBar/FiltersContext'
 
 function CatalogView() {
+  const { query } = useFilters()
+
   const catalog = useResource(CatalogResource.filteredShape(), {
     from: 0,
-    to: 10,
+    to: 5,
+    searchParameters: query,
   })
+
   const navigation = useNavigation()
 
   const navigate = (

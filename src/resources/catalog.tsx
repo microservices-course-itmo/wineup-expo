@@ -1,5 +1,4 @@
 import { Method, Resource } from 'rest-hooks'
-import snakeCase from 'lodash/snakeCase'
 import camelCase from 'lodash/camelCase'
 import { ReadShape } from 'rest-hooks/lib/resource/shapes'
 import { SchemaList } from 'rest-hooks/lib/resource/normal'
@@ -105,10 +104,10 @@ export default class CatalogResource extends Resource {
     body?: Readonly<object | string>
   ) {
     // we'll need to do the inverse operation when sending data back to the server
-    if (body) {
-      // eslint-disable-next-line no-param-reassign
-      body = deeplyApplyKeyTransform(body, snakeCase)
-    }
+    // if (body) {
+    //   // eslint-disable-next-line no-param-reassign
+    //   body = deeplyApplyKeyTransform(body, snakeCase)
+    // }
 
     // perform actual network request getting back json
     const jsonResponse = await super.fetch(
@@ -128,8 +127,8 @@ export default class CatalogResource extends Resource {
       ...this.createShape(),
       type: 'read',
       schema: [this.asSchema()],
-      getFetchKey: (): string => {
-        return ''
+      getFetchKey: (params: FilterParams): string => {
+        return JSON.stringify(params)
       },
       fetch: (params: FilterParams) => {
         return this.fetch('post', this.urlRoot, params)

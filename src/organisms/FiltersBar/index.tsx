@@ -7,32 +7,29 @@ import CountryFilterButton from '../../molecules/FilterButton/Country'
 import RecommendedFilterButton from '../../molecules/FilterButton/Recommended'
 import SugarFilterButton from '../../molecules/FilterButton/Sugar'
 import PriceFilterButton from '../../molecules/FilterButton/Price'
-import { FiltersProvider } from './FiltersContext'
 import FiltersBarLoader from './Loader'
 
 function FiltersBar() {
   return (
-    <FiltersProvider>
-      <Suspense fallback={<FiltersBarLoader />}>
-        <Container>
-          <TouchableWithoutFeedback>
-            <AllFiltersContainer>
-              <AllFiltersText>Все фильтры</AllFiltersText>
-              <StyledIonicons name='ios-arrow-down' color='#333' />
-            </AllFiltersContainer>
-          </TouchableWithoutFeedback>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <FiltersContainer>
-              <CountryFilterButton />
-              <PriceFilterButton />
-              <RecommendedFilterButton />
-              <SugarFilterButton />
-              <ColorFilterButton />
-            </FiltersContainer>
-          </ScrollView>
-        </Container>
-      </Suspense>
-    </FiltersProvider>
+    <Suspense fallback={<FiltersBarLoader />}>
+      <Container>
+        <TouchableWithoutFeedback>
+          <AllFiltersContainer>
+            <AllFiltersText>Все фильтры</AllFiltersText>
+            <StyledIonicons name='ios-arrow-down' color='#333' />
+          </AllFiltersContainer>
+        </TouchableWithoutFeedback>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          <FiltersContainer>
+            <CountryFilterButton />
+            <PriceFilterButton />
+            <RecommendedFilterButton />
+            <SugarFilterButton />
+            <ColorFilterButton />
+          </FiltersContainer>
+        </ScrollView>
+      </Container>
+    </Suspense>
   )
 }
 
