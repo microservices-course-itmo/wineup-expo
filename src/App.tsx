@@ -35,6 +35,10 @@ const Tab = createBottomTabNavigator()
 
 const App: React.FC = () => {
   const [isAuth, setIsAuth] = useState(false)
+  const [userTokens, setUserTokens] = useState({
+    accessToken: '',
+    refreshToken: '',
+  })
 
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig)
@@ -66,12 +70,14 @@ const App: React.FC = () => {
         <MockProvider results={fixtures}>
           <NavigationContainer>
             {isAuth ? (
-              <Tab.Navigator>
-                <Tab.Screen name='Каталог' component={CatalogScreen} />
-                <Tab.Screen name='Settings' component={SettingsScreen} />
-              </Tab.Navigator>
+              <AuthProvider value={{ setIsAuth, userTokens, setUserTokens }}>
+                <Tab.Navigator>
+                  <Tab.Screen name='Каталог' component={CatalogScreen} />
+                  <Tab.Screen name='Settings' component={SettingsScreen} />
+                </Tab.Navigator>
+              </AuthProvider>
             ) : (
-              <AuthProvider value={{ setIsAuth }}>
+              <AuthProvider value={{ setIsAuth, userTokens, setUserTokens }}>
                 <AuthWrapper />
               </AuthProvider>
             )}

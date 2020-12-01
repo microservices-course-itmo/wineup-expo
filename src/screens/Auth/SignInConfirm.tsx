@@ -10,6 +10,7 @@ import { AuthContext } from './AuthContext'
 import styles from './styles'
 import GoBackArrowIcon from '../../molecules/Auth/GoBackArrowIcon'
 import confirmButtonCross from '../../../assets/confirmButtonCross.png'
+import { User } from '../../resources/login'
 
 type SignInConfirmScreenNavigationProps = StackNavigationProp<
   any,
@@ -27,7 +28,6 @@ function SignInConfirm({
   navigation,
   route,
 }: SignInConfirmProps): ReactElement<SignInConfirmProps> {
-  let isCorrectCode = false
   const [userCode, setUserCode] = useState('')
   const [isLongEnough, setIsLongEnough] = useState(false)
   const [isTimerStarted, setIsTimerStarted] = useState(false)
@@ -47,8 +47,9 @@ function SignInConfirm({
     return 0
   }
 
-  const isAuth = useContext(AuthContext)
-  const isUnregistered = true
+  const { setIsAuth } = useContext(AuthContext)
+  const { setUserTokens } = useContext(AuthContext)
+  let isUnregistered = false
 
   async function signInWithPhoneNumber() {
     try {
@@ -62,56 +63,80 @@ function SignInConfirm({
         .signInWithCredential(credential)
 
       if (userCredential.user) {
-        isCorrectCode = true
-        const jwtToken = await userCredential.user.getIdToken()
-
-        return jwtToken
+        return userCredential.user.getIdToken()
       }
 
       return null
     } catch (err) {
-      isCorrectCode = false
       console.log(err)
 
       return null
     }
   }
 
-  // const signInWithJwtToken = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       'http://77.234.215.138:48080/user-service/login/',
-  //       {
-  //         method: 'POST',
-  //         body: JSON.stringify({
-  //           accessToken: jwtToken
-  //         })
-  //       }
-  //     )
-  //     const json = await response.json()
-  //     console.log('json:', json)
+  async function signInWithJwtToken(jwtToken: string) {
+    try {
+      const responce = await fetch(
+        'http://77.234.215.138:48080/user-service/login/',
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            fireBaseToken: jwtToken,
+          }),
+        }
+      )
 
-  //     return json
-  //   } catch (error) {
-  //     console.error(error)
-  //   }
-  // }
+      if (responce.status === 401) {
+        isUnregistered = true
+
+        return null
+      }
+
+      return responce.json()
+    } catch (err) {
+      console.log(err.message)
+
+      return null
+    }
+  }
 
   const enterCodeHandler = () => {
+    setIsCodeEnteredOnce(true)
     signInWithPhoneNumber().then((jwtToken) => {
-      console.log(jwtToken)
-      if (isLongEnough) {
-        setIsCodeEnteredOnce(true)
-        if (!isCorrectCode) {
-          setIsWarningOn(true)
-          setIsPenalty(true)
-          setIsTimerStarted(true)
-        } else if (isUnregistered) navigation.navigate(ROUTES.SIGN_UP)
-        else isAuth.setIsAuth(true)
+      if (jwtToken) {
+        signInWithJwtToken(jwtToken)
+          .then((data: User) => {
+            if (data) {
+              // TODO: put tokens into persistent storage
+              console.log('accessToken :', data.accessToken)
+              console.log('refreshToken :', data.refreshToken)
+              setUserTokens({
+                accessToken: data.accessToken,
+                refreshToken: data.refreshToken,
+              })
+              setIsAuth(true)
+            } else if (isUnregistered)
+              navigation.navigate(ROUTES.SIGN_UP, { jwtToken })
+            else {
+              throw new Error('Network response was not ok')
+            }
+          })
+          .catch((err) => {
+            console.log(err.message)
+          })
+      } else {
+        setIsWarningOn(true)
+        setIsPenalty(true)
+        setIsTimerStarted(true)
       }
     })
   }
 
+  // TODO: implement code resend / probably with recaptcha again :(
   const resendCode = () => {
     console.log('code resent')
   }

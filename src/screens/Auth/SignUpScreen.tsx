@@ -1,28 +1,34 @@
 import React, { useState, ReactElement, useEffect, useContext } from 'react'
 import { Text, View, TouchableOpacity } from 'react-native'
-import { isName, City } from '../../helpers'
+import { RouteProp } from '@react-navigation/native'
+import { isName } from '../../helpers'
 import LabeledInput from '../../molecules/Auth/LabeledInput'
 import LabeledDatePicker from '../../molecules/Auth/LabeledDatePicker'
 import LabeledDropdown from '../../molecules/Auth/LabeledDropdown'
 import ConsentCheckBox from '../../molecules/Auth/ConsentCheckBox'
 import { AuthContext } from './AuthContext'
 import styles from './styles'
+import { User } from '../../resources/login'
 
-function SignUpScreen(): ReactElement {
-  const [userName, setUserName] = useState('')
+interface SignUpScreenProps {
+  route: RouteProp<{ params: { jwtToken: string } }, 'params'>
+}
 
+function SignUpScreen({ route }: SignUpScreenProps): ReactElement {
   const maximumDate = new Date()
 
   maximumDate.setFullYear(maximumDate.getFullYear() - 18)
+  // TODO: Date format should be dd.MM.yyyy
   const [userDate, setUserDate] = useState(maximumDate)
-
-  const [userCity, setUserCity] = useState<City>('Москва')
+  const [userName, setUserName] = useState('')
+  const [userCity, setUserCity] = useState(0)
 
   const [isSignUpEnabled, setIsSignUpEnabled] = useState<boolean | undefined>(
     false
   )
   const buttonOpacity = isSignUpEnabled ? 1 : 0.5
-  const isAuth = useContext(AuthContext)
+  const { setIsAuth } = useContext(AuthContext)
+  const { setUserTokens } = useContext(AuthContext)
 
   const isValidName = isName(userName)
   const [isDateFilled, setIsDateFilled] = useState(false)
@@ -34,20 +40,50 @@ function SignUpScreen(): ReactElement {
     setIsSignUpEnabled(
       isValidName && isDateFilled && isCityFilled && isСonsentGiven
     )
-  }, [
-    userName,
-    userDate,
-    userCity,
-    isValidName,
-    isDateFilled,
-    isCityFilled,
-    isСonsentGiven,
-  ])
+  }, [isValidName, isDateFilled, isCityFilled, isСonsentGiven])
+
+  async function signUpWithUserData(cityId: number, name: string) {
+    try {
+      const response = await fetch(
+        'http://77.234.215.138:48080/user-service/registration/',
+        {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            birthday: '11.11.1999',
+            cityId,
+            fireBaseToken: route.params.jwtToken,
+            name,
+          }),
+        }
+      )
+
+      if (response.ok) {
+        return response.json()
+      }
+      throw new Error(`Network response was not ok ${response.status}`)
+    } catch (err) {
+      console.log(err.message)
+
+      return null
+    }
+  }
 
   const onSubmit = () => {
-    console.log(userName, userDate, userCity)
-    isAuth.setIsAuth(true)
-    // fetch ? response.ok : response.error, return
+    signUpWithUserData(userCity, userName).then((data: User) => {
+      if (data) {
+        console.log(data)
+        // TODO: put tokens into persistent storage
+        setUserTokens({
+          accessToken: data.accessToken,
+          refreshToken: data.refreshToken,
+        })
+        setIsAuth(true)
+      }
+    })
   }
 
   return (
