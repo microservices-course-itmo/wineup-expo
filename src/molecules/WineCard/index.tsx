@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components/native'
+import styled, { css } from 'styled-components/native'
 import { useResource } from 'rest-hooks'
 import { Shop } from '../../atoms/WineShopName'
 import Recommendation from '../../atoms/Recommendation'
@@ -16,20 +16,20 @@ export interface Wine {
   color: string
   volume: number
   shop: Shop
-  extraOptions: Array<any>
 }
 
 interface WineCardProps {
   position: PositionResource
+  full?: boolean
 }
 
-function WineCard({ position }: WineCardProps) {
+function WineCard({ position, full }: WineCardProps) {
   const wine = useResource(WineResource.detailShape(), {
     wineId: position.wineId,
   })
 
   return (
-    <Container>
+    <Container full={full}>
       <TopBar>
         <Recommendation ratioAdvice={45} />
         <Like liked />
@@ -42,21 +42,29 @@ function WineCard({ position }: WineCardProps) {
           // uri: position.image || '',
         }}
       />
-      <WineInfo wine={wine} position={position} />
+      <WineInfo wine={wine} position={position} full={full} />
     </Container>
   )
 }
 
 export default WineCard
 
-const Container = styled.View`
+const Container = styled.View<{ full?: boolean }>`
   justify-content: center;
   align-items: center;
   margin: 10px;
   padding: 30px;
   background-color: #fff;
   border-radius: 15px;
-  box-shadow: 0px 3px 4px rgba(178, 178, 178, 0.5);
+  ${({ full }) =>
+    !full
+      ? css`
+          box-shadow: 0px 3px 4px rgba(178, 178, 178, 0.5);
+          border: 1px solid rgba(178, 178, 178, 0.3);
+        `
+      : css`
+          padding-top: 20px;
+        `}
 `
 
 const TopBar = styled.View`
