@@ -42,8 +42,15 @@ function SignUpScreen({ route }: SignUpScreenProps): ReactElement {
     )
   }, [isValidName, isDateFilled, isCityFilled, isСonsentGiven])
 
-  async function signUpWithUserData(cityId: number, name: string) {
+  async function signUpWithUserData(
+    birthday: Date,
+    cityId: number,
+    name: string
+  ) {
     try {
+      const birthdayString = `${birthday.getDate()}.${
+        birthday.getMonth() + 1
+      }.${birthday.getFullYear()}`
       const response = await fetch(
         'http://77.234.215.138:48080/user-service/registration/',
         {
@@ -53,7 +60,7 @@ function SignUpScreen({ route }: SignUpScreenProps): ReactElement {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            birthday: '11.11.1999',
+            birthday: birthdayString,
             cityId,
             fireBaseToken: route.params.jwtToken,
             name,
@@ -73,7 +80,8 @@ function SignUpScreen({ route }: SignUpScreenProps): ReactElement {
   }
 
   const onSubmit = () => {
-    signUpWithUserData(userCity, userName).then((data: User) => {
+    console.log(userDate)
+    signUpWithUserData(userDate, userCity, userName).then((data: User) => {
       if (data) {
         console.log(data)
         // TODO: put tokens into persistent storage
@@ -81,6 +89,7 @@ function SignUpScreen({ route }: SignUpScreenProps): ReactElement {
           accessToken: data.accessToken,
           refreshToken: data.refreshToken,
         })
+
         setIsAuth(true)
       }
     })

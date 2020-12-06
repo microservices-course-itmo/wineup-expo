@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity, Image } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/native'
 import * as firebase from 'firebase'
+import * as SecureStore from 'expo-secure-store'
 import Countdown from '../../molecules/Countdown'
 import LabeledInput from '../../molecules/Auth/LabeledInput'
 import ROUTES from '../../routes'
@@ -118,6 +119,12 @@ function SignInConfirm({
                 accessToken: data.accessToken,
                 refreshToken: data.refreshToken,
               })
+              SecureStore.setItemAsync('accessToken', data.accessToken)
+              SecureStore.setItemAsync('refreshToken', data.refreshToken)
+              console.log(
+                'secure store',
+                SecureStore.getItemAsync('refreshToken')
+              )
               setIsAuth(true)
             } else if (isUnregistered)
               navigation.navigate(ROUTES.SIGN_UP, { jwtToken })
