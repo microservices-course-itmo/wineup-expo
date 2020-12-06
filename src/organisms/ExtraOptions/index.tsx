@@ -89,6 +89,8 @@ const ModalItemsWrapper = styled.View`
 
 const ModalTextBold = styled.Text`
   font-weight: 700;
+  max-width: 50%;
+  text-align: right;
 `
 const ModalCloseIcon = styled.View`
   position: absolute;

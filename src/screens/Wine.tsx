@@ -3,12 +3,12 @@ import { useCache } from 'rest-hooks'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import styled from 'styled-components/native'
 import { Ionicons } from '@expo/vector-icons'
-import PositionResource from '../resources/position'
 import WineCard from '../molecules/WineCard'
 import WineDescription from '../organisms/WineDescription'
 import RecommendationBlock from '../organisms/RecommendationBlock'
 import WineReviews from '../organisms/WineReviews'
 import { WineReviewCardProps } from '../molecules/WineReviewCard'
+import CatalogResource from '../resources/catalog'
 
 function WineScreen() {
   const {
@@ -16,7 +16,7 @@ function WineScreen() {
     // @ts-ignore
     params: { winePositionId },
   } = useRoute()
-  const position = useCache(PositionResource.detailShape(), { winePositionId })
+  const position = useCache(CatalogResource.detailShape(), { winePositionId })
   const { goBack } = useNavigation()
 
   return (
@@ -26,7 +26,7 @@ function WineScreen() {
           <Ionicons name='ios-arrow-back' size={24} color='black' />
         </BackButton>
         <WineCard position={position!} full />
-        <StyledWineDescription />
+        <StyledWineDescription position={position!} />
         <StyledWineReviews cards={reviews} />
         <StyledRecommendationBlock />
       </Container>

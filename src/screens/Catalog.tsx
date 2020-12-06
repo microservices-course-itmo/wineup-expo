@@ -5,6 +5,7 @@ import CatalogView from '../organisms/CatalogView'
 import SearchInput from '../molecules/SearchInput'
 import FiltersBar from '../organisms/FiltersBar'
 import WineCardLoader from '../molecules/WineCard/Loader'
+import { FiltersProvider } from '../organisms/FiltersBar/FiltersContext'
 
 export default function CatalogScreen() {
   const loader = (
@@ -16,13 +17,13 @@ export default function CatalogScreen() {
   )
 
   return (
-    <>
+    <FiltersProvider>
       <StyledSearchInput value='' />
       <FiltersBar />
       <Suspense fallback={loader}>
         <CatalogView />
       </Suspense>
-    </>
+    </FiltersProvider>
   )
 }
 

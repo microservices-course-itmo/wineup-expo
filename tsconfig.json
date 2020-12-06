@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "target": "ES2018",
     "allowSyntheticDefaultImports": true,
     "jsx": "react-native",
     "lib": ["dom", "esnext"],

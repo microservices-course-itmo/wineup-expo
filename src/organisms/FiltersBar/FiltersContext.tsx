@@ -37,6 +37,7 @@ export interface FiltersState {
 interface FiltersContextState {
   filters: FiltersState
   apply(name: keyof FiltersState, state: FiltersState[keyof FiltersState]): void
+  query: string
 }
 
 const defaultFiltersState = {
@@ -55,6 +56,7 @@ const defaultFiltersState = {
 export const FiltersContext = createContext<FiltersContextState>({
   filters: defaultFiltersState,
   apply: () => {},
+  query: '',
 })
 
 export function FiltersProvider({ children }: PropsWithChildren<any>) {
@@ -71,7 +73,9 @@ export function FiltersProvider({ children }: PropsWithChildren<any>) {
   }
 
   return (
-    <FiltersContext.Provider value={{ filters, apply }}>
+    <FiltersContext.Provider
+      value={{ filters, apply, query: composeQuery(filters) }}
+    >
       {children}
     </FiltersContext.Provider>
   )
@@ -79,4 +83,13 @@ export function FiltersProvider({ children }: PropsWithChildren<any>) {
 
 export function useFilters(): FiltersContextState {
   return useContext(FiltersContext)
+}
+
+export function composeQuery(filters: FiltersContextState['filters']): string {
+  const queries = [
+    filters.sugar.map((value) => `sugar:${value}`).join(';'),
+    filters.color.map((value) => `color:${value}`).join(';'),
+  ].filter((query) => query.length > 0)
+
+  return queries.join('*')
 }

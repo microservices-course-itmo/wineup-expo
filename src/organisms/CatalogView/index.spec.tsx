@@ -18,7 +18,7 @@ describe('CatalogView', () => {
     render(
       <MockedNavigator
         component={Component}
-        data={{ winePositionId: 'wine_position1' }}
+        params={{ winePositionId: 'wine_position1' }}
       />
     )
   })
