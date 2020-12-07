@@ -1,7 +1,7 @@
 import React, { useState, ReactElement, useEffect, useContext } from 'react'
 import { Text, View, TouchableOpacity } from 'react-native'
 import { RouteProp } from '@react-navigation/native'
-import { SecureStore } from 'expo'
+import * as SecureStore from 'expo-secure-store'
 import { isName, User } from '../../helpers'
 import LabeledInput from '../../molecules/Auth/LabeledInput'
 import LabeledDatePicker from '../../molecules/Auth/LabeledDatePicker'
@@ -46,9 +46,10 @@ function SignUpScreen({ route }: SignUpScreenProps): ReactElement {
     name: string
   ) {
     try {
-      const birthdayString = `${birthday.getDate()}.${
+      const birthdayString = `${`0${birthday.getDate()}`.slice(-2)}.${
         birthday.getMonth() + 1
       }.${birthday.getFullYear()}`
+
       const response = await fetch(
         'http://77.234.215.138:48080/user-service/registration/',
         {
