@@ -49,7 +49,6 @@ function SignInConfirm({
   }
 
   const { setIsAuth } = useContext(AuthContext)
-  const { setUserTokens } = useContext(AuthContext)
   let isUnregistered = false
 
   async function signInWithPhoneNumber() {
@@ -112,19 +111,9 @@ function SignInConfirm({
         signInWithJwtToken(jwtToken)
           .then((data: User) => {
             if (data) {
-              // TODO: put tokens into persistent storage
-              console.log('accessToken :', data.accessToken)
-              console.log('refreshToken :', data.refreshToken)
-              setUserTokens({
-                accessToken: data.accessToken,
-                refreshToken: data.refreshToken,
-              })
               SecureStore.setItemAsync('accessToken', data.accessToken)
               SecureStore.setItemAsync('refreshToken', data.refreshToken)
-              console.log(
-                'secure store',
-                SecureStore.getItemAsync('refreshToken')
-              )
+
               setIsAuth(true)
             } else if (isUnregistered)
               navigation.navigate(ROUTES.SIGN_UP, { jwtToken })

@@ -23,6 +23,7 @@ import { SafeAreaView, StatusBar } from 'react-native'
 import { CacheProvider } from 'rest-hooks'
 import { MockProvider } from '@rest-hooks/test'
 import * as firebase from 'firebase'
+import * as SecureStore from 'expo-secure-store'
 import AuthWrapper from './screens/Auth/AuthWrapper'
 import { AuthProvider } from './screens/Auth/AuthContext'
 import MainRouter from './screens/Router'
@@ -31,10 +32,14 @@ import firebaseConfig from '../firebaseconfig'
 
 const App: React.FC = () => {
   const [isAuth, setIsAuth] = useState(false)
-  const [userTokens, setUserTokens] = useState({
-    accessToken: '',
-    refreshToken: '',
-  })
+
+  if (!isAuth) {
+    SecureStore.getItemAsync('accessToken').then((accessToken) => {
+      if (accessToken) {
+        setIsAuth(true)
+      }
+    })
+  }
 
   if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig)
@@ -65,7 +70,7 @@ const App: React.FC = () => {
       <CacheProvider>
         <MockProvider results={fixtures}>
           <NavigationContainer>
-            <AuthProvider value={{ setIsAuth, userTokens, setUserTokens }}>
+            <AuthProvider value={{ setIsAuth }}>
               {isAuth ? <MainRouter /> : <AuthWrapper />}
             </AuthProvider>
           </NavigationContainer>

@@ -1,6 +1,7 @@
 import React, { useState, ReactElement, useEffect, useContext } from 'react'
 import { Text, View, TouchableOpacity } from 'react-native'
 import { RouteProp } from '@react-navigation/native'
+import { SecureStore } from 'expo'
 import { isName } from '../../helpers'
 import LabeledInput from '../../molecules/Auth/LabeledInput'
 import LabeledDatePicker from '../../molecules/Auth/LabeledDatePicker'
@@ -18,17 +19,15 @@ function SignUpScreen({ route }: SignUpScreenProps): ReactElement {
   const maximumDate = new Date()
 
   maximumDate.setFullYear(maximumDate.getFullYear() - 18)
-  // TODO: Date format should be dd.MM.yyyy
   const [userDate, setUserDate] = useState(maximumDate)
   const [userName, setUserName] = useState('')
-  const [userCity, setUserCity] = useState(0)
+  const [userCity, setUserCity] = useState(1)
 
   const [isSignUpEnabled, setIsSignUpEnabled] = useState<boolean | undefined>(
     false
   )
   const buttonOpacity = isSignUpEnabled ? 1 : 0.5
   const { setIsAuth } = useContext(AuthContext)
-  const { setUserTokens } = useContext(AuthContext)
 
   const isValidName = isName(userName)
   const [isDateFilled, setIsDateFilled] = useState(false)
@@ -80,15 +79,10 @@ function SignUpScreen({ route }: SignUpScreenProps): ReactElement {
   }
 
   const onSubmit = () => {
-    console.log(userDate)
     signUpWithUserData(userDate, userCity, userName).then((data: User) => {
       if (data) {
-        console.log(data)
-        // TODO: put tokens into persistent storage
-        setUserTokens({
-          accessToken: data.accessToken,
-          refreshToken: data.refreshToken,
-        })
+        SecureStore.setItemAsync('accessToken', data.accessToken)
+        SecureStore.setItemAsync('refreshToken', data.refreshToken)
 
         setIsAuth(true)
       }
