@@ -2,23 +2,31 @@ import React from 'react'
 import { ScrollView, TouchableOpacity } from 'react-native'
 import { useResource } from 'rest-hooks'
 import { useNavigation } from '@react-navigation/native'
+import CatalogResource from '../../resources/catalog'
 import WineCard from '../../molecules/WineCard'
-import PositionResource from '../../resources/position'
 import ROUTES from '../../routes'
+import { useFilters } from '../FiltersBar/FiltersContext'
 
 function CatalogView() {
-  const positions = useResource(PositionResource.listShape(), {})
+  const { query } = useFilters()
+
+  const catalog = useResource(CatalogResource.filteredShape(), {
+    from: 0,
+    to: 5,
+    searchParameters: query,
+  })
+
   const navigation = useNavigation()
 
   const navigate = (
-    winePositionId: PositionResource['winePositionId']
+    winePositionId: CatalogResource['winePositionId']
   ) => () => {
     navigation.navigate(ROUTES.WINE_PAGE, { winePositionId })
   }
 
   return (
     <ScrollView>
-      {positions.map((position) => (
+      {catalog.map((position) => (
         <TouchableOpacity
           key={position.pk()}
           onPress={navigate(position.winePositionId)}

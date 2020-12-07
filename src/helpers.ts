@@ -69,3 +69,16 @@ export function isAllowedPassword(password: string): boolean {
 export function isRightCode(code: string): boolean {
   return code === '123456'
 }
+
+export type User = {
+  accessToken: string
+  refreshToken: string
+  user: {
+    birthdate: string
+    cityId: number
+    id: string
+    name: string
+    phoneNumber: string
+    role: string
+  }
+}

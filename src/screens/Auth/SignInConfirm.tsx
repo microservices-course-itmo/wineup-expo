@@ -11,7 +11,7 @@ import { AuthContext } from './AuthContext'
 import styles from './styles'
 import GoBackArrowIcon from '../../molecules/Auth/GoBackArrowIcon'
 import confirmButtonCross from '../../../assets/confirmButtonCross.png'
-import { User } from '../../resources/login'
+import { User } from '../../helpers'
 
 type SignInConfirmScreenNavigationProps = StackNavigationProp<
   any,

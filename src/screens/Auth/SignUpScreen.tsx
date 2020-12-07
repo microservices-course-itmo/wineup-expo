@@ -2,14 +2,13 @@ import React, { useState, ReactElement, useEffect, useContext } from 'react'
 import { Text, View, TouchableOpacity } from 'react-native'
 import { RouteProp } from '@react-navigation/native'
 import { SecureStore } from 'expo'
-import { isName } from '../../helpers'
+import { isName, User } from '../../helpers'
 import LabeledInput from '../../molecules/Auth/LabeledInput'
 import LabeledDatePicker from '../../molecules/Auth/LabeledDatePicker'
 import LabeledDropdown from '../../molecules/Auth/LabeledDropdown'
 import ConsentCheckBox from '../../molecules/Auth/ConsentCheckBox'
 import { AuthContext } from './AuthContext'
 import styles from './styles'
-import { User } from '../../resources/login'
 
 interface SignUpScreenProps {
   route: RouteProp<{ params: { jwtToken: string } }, 'params'>

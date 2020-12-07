@@ -4,29 +4,30 @@ import { StyleProp } from 'react-native'
 import Text from '../../atoms/Text'
 
 import background from './background.png'
-import bottle from './bottle.png'
 import fork from './fork.png'
+import CatalogResource from '../../resources/catalog'
 
 interface WineDescriptionProps {
+  position: CatalogResource
   style?: StyleProp<any>
 }
 
-function WineDescription({ style }: WineDescriptionProps) {
+function WineDescription({ style, position }: WineDescriptionProps) {
   return (
     <Container style={style}>
-      <TasteLabel>
-        Вкус вина — очень сухой, свежий и бархатистый, с приятной горчинкой,
-        нотами белых цветов в нежном букете..
-      </TasteLabel>
+      <TasteLabel>{position.description}</TasteLabel>
       <Background source={background} />
-      <Bottle source={bottle} />
-      <RecommendationContainer>
-        <Fork source={fork} />
-        <RecommendationLabel>
-          Прекрасно в сочетании с жареным ягненком, свининой с овощами и сырами
-          средней выдержки
-        </RecommendationLabel>
-      </RecommendationContainer>
+      <Bottle
+        resizeMethod='scale'
+        resizeMode='contain'
+        source={{ uri: position.imageUri }}
+      />
+      {position.gastronomy.length > 0 && (
+        <RecommendationContainer>
+          <Fork source={fork} />
+          <RecommendationLabel>{position.gastronomy}</RecommendationLabel>
+        </RecommendationContainer>
+      )}
     </Container>
   )
 }
@@ -46,6 +47,8 @@ const Background = styled.Image``
 
 const Bottle = styled.Image`
   position: absolute;
+  width: 100px;
+  height: 300px;
   right: 0;
 `
 

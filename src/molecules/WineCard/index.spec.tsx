@@ -2,22 +2,31 @@ import React, { Suspense } from 'react'
 import { render } from '@testing-library/react-native'
 import { MockProvider } from '@rest-hooks/test'
 import WineCard from './index'
-import {
-  fixtures,
-  positionMock,
-  wineMock,
-} from '../../tests/__mocks__/fixtures'
+import { fixtures, wine1CatMock } from '../../tests/__mocks__/fixtures'
 import { WineColor, WineSugar } from '../../atoms/WineInfo'
 
 describe('WineCard', () => {
-  const renderComponent = () =>
-    render(
+  const renderComponent = () => {
+    const fixture = {
+      ...wine1CatMock,
+      grapes: wine1CatMock.wine.grape.map(({ name }) => name).join(', '),
+      regions: wine1CatMock.wine.region.map(({ name }) => name).join(', '),
+      discount: 1 - wine1CatMock.actualPrice / wine1CatMock.price,
+      pk() {
+        return wine1CatMock.winePositionId
+      },
+      url: '',
+      imageUri: '',
+    }
+
+    return render(
       <Suspense fallback='Loading'>
         <MockProvider results={fixtures}>
-          <WineCard position={positionMock} />
+          <WineCard position={fixture} />
         </MockProvider>
       </Suspense>
     )
+  }
 
   it('should render', () => {
     renderComponent()
@@ -26,7 +35,7 @@ describe('WineCard', () => {
   it('should contain name', () => {
     const { getByText } = renderComponent()
 
-    getByText(wineMock.name)
+    getByText(wine1CatMock.wine.name)
   })
 
   it('should contain description', () => {
@@ -34,17 +43,19 @@ describe('WineCard', () => {
 
     getByText(
       [
-        fixtures[0].result.country,
-        WineSugar[wineMock.sugar],
-        WineColor[wineMock.color],
-        `${positionMock.volume} л.`,
-      ].join(', ')
+        wine1CatMock.wine.region[0]?.country,
+        WineSugar[wine1CatMock.wine.sugar as keyof typeof WineSugar],
+        WineColor[wine1CatMock.wine.color as keyof typeof WineColor],
+        `${wine1CatMock.volume} л.`,
+      ]
+        .filter((e) => e !== undefined)
+        .join(', ')
     )
   })
 
   it('should contain shop name', () => {
     const { getByText } = renderComponent()
 
-    getByText(fixtures[1].result.site)
+    getByText(wine1CatMock.shop.site)
   })
 })
