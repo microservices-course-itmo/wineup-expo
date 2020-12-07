@@ -46,9 +46,11 @@ function SignUpScreen({ route }: SignUpScreenProps): ReactElement {
     name: string
   ) {
     try {
-      const birthdayString = `${`0${birthday.getDate()}`.slice(-2)}.${
+      const birthdayString = `${`0${birthday.getDate()}`.slice(-2)}.${`0${
         birthday.getMonth() + 1
-      }.${birthday.getFullYear()}`
+      }`.slice(-2)}.${birthday.getFullYear()}`
+
+      console.log(birthdayString)
 
       const response = await fetch(
         'http://77.234.215.138:48080/user-service/registration/',
