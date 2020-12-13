@@ -29,6 +29,12 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
     }
   }
 
+  function isPhoneValid() {
+    return (
+      userPhone.length === 12 && userPhone[0] === '+' && userPhone[1] === '7'
+    )
+  }
+
   function handlePress() {
     verifyPhoneNumber(userPhone)
   }
@@ -71,7 +77,11 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
       </View>
       <TouchableOpacity
         activeOpacity={0.8}
-        style={[styles.buttonStyle, { marginTop: 23 }]}
+        style={[
+          styles.buttonStyle,
+          { marginTop: 23, opacity: isPhoneValid() ? 1 : 0.4 },
+        ]}
+        disabled={!isPhoneValid()}
         onPress={handlePress}
       >
         <Text style={styles.buttonText}>Войти</Text>
