@@ -9,8 +9,8 @@ import ConfirmPopUp from '../molecules/ConfirmPopUp'
 import image from '../../assets/profile-main.png'
 
 const AuthorizedProfile: React.FC = () => {
-  const [phone, setPhone] = React.useState<string>('')
-  const [city, setCity] = React.useState<string>('')
+  const [phone, setPhone] = React.useState<string>('+79991111111')
+  const [city, setCity] = React.useState<string>('Санкт-Петербург')
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false)
 
   const onModalOpen = (): void => {
@@ -31,6 +31,7 @@ const AuthorizedProfile: React.FC = () => {
         onChangeText={setPhone}
         label='Номер телефона:'
         value={phone}
+        editable={false}
         labelStyle={styles.inputLabel}
         containerStyle={{
           marginTop: 0,
@@ -46,6 +47,7 @@ const AuthorizedProfile: React.FC = () => {
         onChangeText={setCity}
         label='Город:'
         labelStyle={styles.inputLabel}
+        editable={false}
         containerStyle={{
           marginTop: 20,
           height: 85,

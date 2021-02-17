@@ -15,6 +15,7 @@ interface LabeledInputProps {
   containerStyle?: StyleProp<ViewStyle>
   inputStyle?: StyleProp<ViewStyle>
   labelStyle?: StyleProp<ViewStyle>
+  editable?: boolean
 }
 
 function LabeledInput({
@@ -30,6 +31,7 @@ function LabeledInput({
   containerStyle,
   inputStyle,
   labelStyle,
+  editable = true,
 }: LabeledInputProps): ReactElement<LabeledInputProps> {
   const [isFocused, setIsFocused] = useState(false)
   const handleFocus = () => {
@@ -51,6 +53,7 @@ function LabeledInput({
           inputStyle,
         ]}
         value={value}
+        editable={editable}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
         onFocus={handleFocus}
