@@ -1,25 +1,35 @@
 import React from 'react'
 import styled from 'styled-components/native'
-import { Modal } from 'react-native'
+import { Modal, StyleProp, ViewStyle, Text } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
 
 export interface ConfirmPopUpProps {
   visible: boolean
   onDismiss?: () => void
   onConfirm?: () => void
+  text?: string
+  containerStyle?: StyleProp<ViewStyle>
 }
 
 function ConfirmPopUp({
   visible,
   onDismiss = () => {},
   onConfirm = () => {},
+  text,
+  containerStyle,
 }: ConfirmPopUpProps) {
   return (
     <Modal animated animationType='fade' visible={visible} transparent>
       <ModalOverlay onPress={onDismiss} />
-      <Container>
+      <Container style={containerStyle}>
         <ModalTitle>
-          Вы уверены, что хотите <BoldText>очистить избранное</BoldText>?
+          {text ? (
+            <Text>{text}</Text>
+          ) : (
+            <Text>
+              Вы уверены, что хотите <BoldText>очистить избранное</BoldText>?
+            </Text>
+          )}
         </ModalTitle>
         <Buttons>
           <Touchable onPress={onConfirm}>
