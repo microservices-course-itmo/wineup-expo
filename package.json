@@ -94,7 +94,8 @@
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged && lint-staged && yarn lint",
-      "pre-push": "CI=true yarn test"
+      "pre-push": "CI=true yarn test",
+      "post-checkout": "rnstl"
     }
   },
   "lint-staged": {
