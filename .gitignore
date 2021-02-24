@@ -13,3 +13,5 @@ web-build/
 
 # IDEA
 .idea/
+
+storybook/storyLoader.js
