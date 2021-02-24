@@ -11,6 +11,11 @@ export type TProps = StackScreenProps<any, typeof ROUTES.SIGN_IN>
 const SignInScreen: React.FC<TProps> = ({ navigation }) => {
   const [userPhone, setUserPhone] = useState('')
 
+  const navigateToSignInConfirm = (): void => {
+    navigation.navigate(ROUTES.SIGN_IN_CONFIRM)
+    console.log(userPhone)
+  }
+
   return (
     <View style={styles.container}>
       <Text style={[styles.header, { textAlign: 'center' }]}>
@@ -44,10 +49,7 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
       <TouchableOpacity
         activeOpacity={0.8}
         style={[styles.buttonStyle, { marginTop: 23 }]}
-        onPress={() => {
-          navigation.navigate(ROUTES.SIGN_IN_CONFIRM)
-          console.log(userPhone)
-        }}
+        onPress={navigateToSignInConfirm}
       >
         <Text style={styles.buttonText}>Войти</Text>
       </TouchableOpacity>
