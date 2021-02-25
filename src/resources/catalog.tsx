@@ -3,7 +3,7 @@ import camelCase from 'lodash/camelCase'
 import { ReadShape } from 'rest-hooks/lib/resource/shapes'
 import { SchemaList } from 'rest-hooks/lib/resource/normal'
 import { AbstractInstanceType } from 'rest-hooks/lib/types'
-import { deeplyApplyKeyTransform } from './utils'
+import { deeplyApplyKeyTransform, Utils } from './utils'
 
 interface Shop {
   id: string
@@ -168,15 +168,7 @@ export default class CatalogResource extends Resource {
     return uri
   }
 
-  static fetchOptionsPlugin = (options: RequestInit): RequestInit => {
-    return {
-      ...options,
-      headers: {
-        ...options.headers,
-        accessToken: '123',
-      },
-    }
-  }
+  static fetchOptionsPlugin = Utils.fetchOptionsPlugin
 
-  static urlRoot = 'http://77.234.215.138:48080/catalog-service/position/true/'
+  static urlRoot = `${Utils.urlRoot}/position/true/`
 }

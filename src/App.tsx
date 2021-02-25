@@ -21,11 +21,11 @@ import { PTSans_400Regular, PTSans_700Bold } from '@expo-google-fonts/pt-sans'
 import { AppLoading } from 'expo'
 import { SafeAreaView, StatusBar } from 'react-native'
 import { CacheProvider } from 'rest-hooks'
-// import { MockProvider } from '@rest-hooks/test'
+import { MockProvider } from '@rest-hooks/test'
 import AuthWrapper from './screens/Auth/AuthWrapper'
 import { AuthProvider } from './screens/Auth/AuthContext'
 import MainRouter from './screens/Router'
-// import { fixtures } from './tests/__mocks__/fixtures'
+import { fixtures } from './tests/__mocks__/fixtures'
 
 const App: React.FC = () => {
   const [isAuth, setIsAuth] = useState(true)
@@ -53,17 +53,17 @@ const App: React.FC = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar hidden />
       <CacheProvider>
-        {/* <MockProvider results={fixtures}> */}
-        <NavigationContainer>
-          {isAuth ? (
-            <MainRouter />
-          ) : (
-            <AuthProvider value={{ setIsAuth }}>
-              <AuthWrapper />
-            </AuthProvider>
-          )}
-        </NavigationContainer>
-        {/* </MockProvider> */}
+        <MockProvider results={fixtures}>
+          <NavigationContainer>
+            {isAuth ? (
+              <MainRouter />
+            ) : (
+              <AuthProvider value={{ setIsAuth }}>
+                <AuthWrapper />
+              </AuthProvider>
+            )}
+          </NavigationContainer>
+        </MockProvider>
       </CacheProvider>
     </SafeAreaView>
   )
