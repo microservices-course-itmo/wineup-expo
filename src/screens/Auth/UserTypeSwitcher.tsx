@@ -1,17 +1,6 @@
 import React, { useState } from 'react'
 import { View, Switch, StyleSheet, Text } from 'react-native'
 
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    position: 'absolute',
-    top: '15%',
-  },
-})
-
 const UserTypeSwitcher: React.FC = () => {
   const [isEnabled, setIsEnabled] = useState(false)
   const toggleSwitch = () => setIsEnabled((prev) => !prev)
@@ -32,3 +21,14 @@ const UserTypeSwitcher: React.FC = () => {
 }
 
 export default UserTypeSwitcher
+
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    position: 'absolute',
+    top: '15%',
+  },
+})
