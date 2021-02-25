@@ -1,6 +1,5 @@
 import React, { useState, ReactElement, useEffect, useContext } from 'react'
-import { Text, View, TouchableOpacity } from 'react-native'
-import styled from 'styled-components'
+import styled from 'styled-components/native'
 import { AuthContext } from './AuthContext'
 import LabeledInput from '../../molecules/Auth/LabeledInput'
 import LabeledDatePicker from '../../molecules/Auth/LabeledDatePicker'
@@ -86,20 +85,20 @@ function SignUpScreen(): ReactElement {
   )
 }
 
-const SingUpWrapper = styled(View)`
+const SingUpWrapper = styled.View`
   margin-top: 106px;
   flex: 1;
   align-items: center;
   justify-content: center;
 `
 
-const SingUpTitle = styled(Text)`
+const SingUpTitle = styled.Text`
   font-size: 20px;
   font-family: 'PTSans_700Bold';
   color: #fff;
 `
 
-const SignUpButton = styled(TouchableOpacity)<{ buttonOpacity: number }>`
+const SignUpButton = styled.TouchableOpacity<{ buttonOpacity: number }>`
   margin-top: 35px;
   width: 268px;
   max-height: 57px;
@@ -111,7 +110,7 @@ const SignUpButton = styled(TouchableOpacity)<{ buttonOpacity: number }>`
   background-color: #931332;
   opacity: ${(props) => props.buttonOpacity};
 `
-const SignUpButtonText = styled(Text)`
+const SignUpButtonText = styled.Text`
   font-size: 16px;
   font-family: 'PTSans_700Bold';
   color: #fff;
