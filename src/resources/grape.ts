@@ -1,7 +1,6 @@
-import { Method, Resource } from 'rest-hooks'
-import { Utils } from './utils'
+import { WineUpResource} from './WineUpResource'
 
-export default class GrapeResource extends Resource {
+export default class GrapeResource extends WineUpResource {
   readonly id: string = ''
 
   readonly name: string = ''
@@ -10,9 +9,5 @@ export default class GrapeResource extends Resource {
     return this.id
   }
 
-  static fetch = Utils.fetch
-
-  static fetchOptionsPlugin = Utils.fetchOptionsPlugin
-
-  static urlRoot = `${Utils.urlRoot}/grape/`
+  urlRoot = super.urlHandler('/grape/')
 }

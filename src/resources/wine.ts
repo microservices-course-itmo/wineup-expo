@@ -1,11 +1,10 @@
-import { Resource } from 'rest-hooks'
 import ProducerResource from './producer'
 import BrandResource from './brand'
 import RegionResource from './region'
 import GrapeResource from './grape'
-import {Utils} from './utils'
+import { WineUpResource } from './WineUpResource'
 
-export default class WineResource extends Resource {
+export default class WineResource extends WineUpResource {
   readonly wineId: string = ''
 
   readonly name: string = ''
@@ -30,11 +29,7 @@ export default class WineResource extends Resource {
     return this.wineId
   }
 
-  static fetch = Utils.fetch
-
-  static fetchOptionsPlugin = Utils.fetchOptionsPlugin
-
-  static urlRoot = `${Utils.urlRoot}/wine/`
+  urlRoot = super.urlHandler('/wine/')
 
   static schema = {
     producerId: ProducerResource.asSchema(),
@@ -42,5 +37,4 @@ export default class WineResource extends Resource {
     regionId: RegionResource.asSchema(),
     grapeId: GrapeResource.asSchema(),
   }
-  
 }

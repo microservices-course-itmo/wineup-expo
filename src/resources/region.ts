@@ -1,7 +1,7 @@
 import { Resource } from 'rest-hooks'
-import { Utils } from './utils'
+import { WineUpResource} from './WineUpResource'
 
-export default class RegionResource extends Resource {
+export default class RegionResource extends WineUpResource {
   readonly id: string = ''
 
   readonly name: string = ''
@@ -12,9 +12,5 @@ export default class RegionResource extends Resource {
     return this.id
   }
 
-  static fetch = Utils.fetch
-
-  static fetchOptionsPlugin = Utils.fetchOptionsPlugin
-
-  static urlRoot = `${Utils.urlRoot}/region/`
+  urlRoot = super.urlHandler('/region/')
 }

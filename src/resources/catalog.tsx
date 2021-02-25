@@ -3,7 +3,7 @@ import camelCase from 'lodash/camelCase'
 import { ReadShape } from 'rest-hooks/lib/resource/shapes'
 import { SchemaList } from 'rest-hooks/lib/resource/normal'
 import { AbstractInstanceType } from 'rest-hooks/lib/types'
-import { deeplyApplyKeyTransform, Utils } from './utils'
+import { deeplyApplyKeyTransform, WineUpResource } from './WineUpResource'
 
 interface Shop {
   id: string
@@ -44,7 +44,7 @@ interface FilterParams {
   }
 }
 
-export default class CatalogResource extends Resource {
+export default class CatalogResource extends WineUpResource {
   readonly winePositionId: string = ''
 
   readonly actualPrice: number = 0
@@ -168,7 +168,5 @@ export default class CatalogResource extends Resource {
     return uri
   }
 
-  static fetchOptionsPlugin = Utils.fetchOptionsPlugin
-
-  static urlRoot = `${Utils.urlRoot}/position/true/`
+  urlRoot = super.urlHandler('/position/true/')
 }

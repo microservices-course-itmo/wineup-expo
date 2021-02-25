@@ -1,7 +1,6 @@
-import { Resource } from 'rest-hooks'
-import { Utils } from './utils'
+import { WineUpResource} from './WineUpResource'
 
-export default class ShopResource extends Resource {
+export default class ShopResource extends WineUpResource {
   readonly id: string = ''
 
   readonly site: string = ''
@@ -10,9 +9,5 @@ export default class ShopResource extends Resource {
     return this.id
   }
 
-  static fetch = Utils.fetch
-
-  static fetchOptionsPlugin = Utils.fetchOptionsPlugin
-
-  static urlRoot = `${Utils.urlRoot}/shop/`
+  urlRoot = super.urlHandler('/shop/')
 }
