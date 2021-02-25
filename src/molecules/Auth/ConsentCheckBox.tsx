@@ -25,6 +25,10 @@ function ConsentCheckBox({
     )
   }
 
+  const handlePress = (): void => {
+    onPress(!hasFilled)
+  }
+
   return (
     <View style={styles.checkBoxContainer}>
       <CheckBox
@@ -33,7 +37,7 @@ function ConsentCheckBox({
         center
         title={checkBoxText()}
         checked={hasFilled}
-        onPress={() => onPress(!hasFilled)}
+        onPress={handlePress}
         uncheckedIcon={<UncheckedIcon />}
         checkedIcon={<CheckedIcon />}
       />

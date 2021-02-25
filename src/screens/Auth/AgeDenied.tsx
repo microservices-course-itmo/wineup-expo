@@ -7,6 +7,10 @@ import styles from './styles'
 export type TProps = StackScreenProps<any, typeof ROUTES.AGE_DENIED>
 
 const AgeDenied: React.FC<TProps> = ({ navigation }) => {
+  const goBack = (): void => {
+    navigation.goBack()
+  }
+
   return (
     <View style={[styles.container, { marginBottom: 18 }]}>
       <Text style={[styles.header, { fontSize: 22 }]}>
@@ -29,7 +33,7 @@ const AgeDenied: React.FC<TProps> = ({ navigation }) => {
       <TouchableOpacity
         activeOpacity={0.8}
         style={[styles.buttonStyle, { marginTop: 52, width: 217 }]}
-        onPress={() => navigation.goBack()}
+        onPress={goBack}
       >
         <Text style={styles.buttonText}>Вернуться назад</Text>
       </TouchableOpacity>
