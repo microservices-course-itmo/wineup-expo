@@ -2,7 +2,7 @@ import ProducerResource from './producer'
 import BrandResource from './brand'
 import RegionResource from './region'
 import GrapeResource from './grape'
-import { WineUpResource } from './WineUpResource'
+import { WineUpResource } from './base'
 
 export default class WineResource extends WineUpResource {
   readonly wineId: string = ''
@@ -29,7 +29,7 @@ export default class WineResource extends WineUpResource {
     return this.wineId
   }
 
-  urlRoot = super.urlHandler('/wine/')
+  static urlRoot = WineUpResource.urlHandler('/wine/')
 
   static schema = {
     producerId: ProducerResource.asSchema(),

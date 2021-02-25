@@ -2,28 +2,10 @@ import camelCase from 'lodash/camelCase'
 import snakeCase from 'lodash/snakeCase'
 import { Method, Resource } from 'rest-hooks'
 
-// eslint-disable-next-line import/prefer-default-export
-export function deeplyApplyKeyTransform(
-  obj: any,
-  transform: (key: string) => string
-) {
-  const ret: Record<string, any> = Array.isArray(obj) ? [] : {}
-
-  Object.keys(obj).forEach((key) => {
-    if (obj[key] != null && typeof obj[key] === 'object') {
-      ret[transform(key)] = deeplyApplyKeyTransform(obj[key], transform)
-    } else {
-      ret[transform(key)] = obj[key]
-    }
-  })
-
-  return ret
-}
-
 export abstract class WineUpResource extends Resource {
-  urlRoot = 'http://77.234.215.138:48080/catalog-service'
+  static urlRoot = 'http://77.234.215.138:48080/catalog-service'
 
-  urlHandler(subPath: string) {
+  static urlHandler(subPath: string) {
     return `${this.urlRoot}${subPath}`
   }
 
@@ -54,4 +36,21 @@ export abstract class WineUpResource extends Resource {
       },
     }
   }
+}
+
+export function deeplyApplyKeyTransform(
+  obj: any,
+  transform: (key: string) => string
+) {
+  const ret: Record<string, any> = Array.isArray(obj) ? [] : {}
+
+  Object.keys(obj).forEach((key) => {
+    if (obj[key] != null && typeof obj[key] === 'object') {
+      ret[transform(key)] = deeplyApplyKeyTransform(obj[key], transform)
+    } else {
+      ret[transform(key)] = obj[key]
+    }
+  })
+
+  return ret
 }

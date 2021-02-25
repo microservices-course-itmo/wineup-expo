@@ -1,4 +1,4 @@
-import { WineUpResource } from './WineUpResource'
+import { WineUpResource } from './base'
 import WineResource from './wine'
 import ShopResource from './shop'
 
@@ -27,7 +27,7 @@ export default class PositionResource extends WineUpResource {
     return this.winePositionId
   }
 
-  urlRoot = super.urlHandler('/position/')
+  static urlRoot = WineUpResource.urlHandler('/position/')
 
   static schema = {
     wineId: WineResource.asSchema(),

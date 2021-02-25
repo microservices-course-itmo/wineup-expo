@@ -1,4 +1,4 @@
-import { WineUpResource } from './WineUpResource'
+import { WineUpResource } from './base'
 
 export default class RegionResource extends WineUpResource {
   readonly id: string = ''
@@ -11,5 +11,5 @@ export default class RegionResource extends WineUpResource {
     return this.id
   }
 
-  urlRoot = super.urlHandler('/region/')
+  static urlRoot = WineUpResource.urlHandler('/region/')
 }

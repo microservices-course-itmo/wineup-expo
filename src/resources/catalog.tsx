@@ -3,7 +3,7 @@ import camelCase from 'lodash/camelCase'
 import { ReadShape } from 'rest-hooks/lib/resource/shapes'
 import { SchemaList } from 'rest-hooks/lib/resource/normal'
 import { AbstractInstanceType } from 'rest-hooks/lib/types'
-import { deeplyApplyKeyTransform, WineUpResource } from './WineUpResource'
+import { deeplyApplyKeyTransform, WineUpResource } from './base'
 
 interface Shop {
   id: string
@@ -168,5 +168,5 @@ export default class CatalogResource extends WineUpResource {
     return uri
   }
 
-  urlRoot = super.urlHandler('/position/true/')
+  static urlRoot = WineUpResource.urlHandler('/position/true/')
 }
