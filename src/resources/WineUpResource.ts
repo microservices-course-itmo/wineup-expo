@@ -1,6 +1,6 @@
 import camelCase from 'lodash/camelCase'
 import snakeCase from 'lodash/snakeCase'
-import { Method,Resource } from 'rest-hooks'
+import { Method, Resource } from 'rest-hooks'
 
 // eslint-disable-next-line import/prefer-default-export
 export function deeplyApplyKeyTransform(
@@ -20,12 +20,12 @@ export function deeplyApplyKeyTransform(
   return ret
 }
 
-export abstract class WineUpResource extends Resource{
+export abstract class WineUpResource extends Resource {
   urlRoot = 'http://77.234.215.138:48080/catalog-service'
 
-	urlHandler( subPath:string ){
-		return `${this.urlRoot}${subPath}`
-	}
+  urlHandler(subPath: string ){
+    return `${this.urlRoot}${subPath}`
+  }
 
   static async fetch(
     method: Method = 'get',
@@ -40,7 +40,7 @@ export abstract class WineUpResource extends Resource{
     }
     // perform actual network request getting back json
     const jsonResponse = await super.fetch(method, url, body)
-  
+
     // do the conversion!
     return deeplyApplyKeyTransform(jsonResponse, camelCase)
   }
