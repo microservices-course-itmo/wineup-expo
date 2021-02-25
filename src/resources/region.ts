@@ -1,5 +1,4 @@
-import { Resource } from 'rest-hooks'
-import { WineUpResource} from './WineUpResource'
+import { WineUpResource } from './WineUpResource'
 
 export default class RegionResource extends WineUpResource {
   readonly id: string = ''

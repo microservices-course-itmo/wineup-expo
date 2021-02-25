@@ -1,4 +1,4 @@
-import { WineUpResource} from './WineUpResource'
+import { WineUpResource } from './WineUpResource'
 import WineResource from './wine'
 import ShopResource from './shop'
 

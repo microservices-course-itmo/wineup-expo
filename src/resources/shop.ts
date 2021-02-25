@@ -1,4 +1,4 @@
-import { WineUpResource} from './WineUpResource'
+import { WineUpResource } from './WineUpResource'
 
 export default class ShopResource extends WineUpResource {
   readonly id: string = ''

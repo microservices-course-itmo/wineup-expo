@@ -23,7 +23,7 @@ export function deeplyApplyKeyTransform(
 export abstract class WineUpResource extends Resource {
   urlRoot = 'http://77.234.215.138:48080/catalog-service'
 
-  urlHandler(subPath: string ){
+  urlHandler(subPath: string) {
     return `${this.urlRoot}${subPath}`
   }
 
