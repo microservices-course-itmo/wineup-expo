@@ -3,7 +3,7 @@ import snakeCase from 'lodash/snakeCase'
 import { Method, Resource } from 'rest-hooks'
 
 export abstract class WineUpResource extends Resource {
-  static urlRoot = 'http://77.234.215.138:48080/catalog-service'
+  static urlRoot = 'http://77.234.215.138:18080/catalog-service'
 
   static urlHandler(subPath: string) {
     return `${this.urlRoot}${subPath}`

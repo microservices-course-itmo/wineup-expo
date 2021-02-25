@@ -110,11 +110,7 @@ export default class CatalogResource extends WineUpResource {
     // }
 
     // perform actual network request getting back json
-    const jsonResponse = await super.fetch(
-      method === 'get' ? 'post' : method,
-      url,
-      body
-    )
+    const jsonResponse = await super.fetch(method, url, body)
 
     // do the conversion!
     return deeplyApplyKeyTransform(jsonResponse, camelCase)
@@ -124,14 +120,11 @@ export default class CatalogResource extends WineUpResource {
     this: T
   ): ReadShape<SchemaList<Readonly<AbstractInstanceType<T>>>> {
     return {
-      ...this.createShape(),
+      ...this.listShape(),
       type: 'read',
       schema: [this.asSchema()],
       getFetchKey: (params: FilterParams): string => {
         return JSON.stringify(params)
-      },
-      fetch: (params: FilterParams) => {
-        return this.fetch('post', this.urlRoot, params)
       },
     }
   }
