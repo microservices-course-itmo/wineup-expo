@@ -1,6 +1,7 @@
 import React, { useState, useEffect, ReactElement, useContext } from 'react'
-import { Text, View, TouchableOpacity, Image } from 'react-native'
+import { Text, TouchableOpacity, Image } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import styled from 'styled-components/native'
 import Countdown from '../../molecules/Countdown'
 import LabeledInput from '../../molecules/Auth/LabeledInput'
 import { isRightCode } from '../../helpers'
@@ -69,35 +70,41 @@ function SignInConfirm({
     setIsCorrectCode(isRightCode(userCode))
   }, [userCode])
 
+  const StyledViewWarningContainer = styled.View`
+    position: absolute;
+    top: -80px;
+    flex: 1;
+    flex-direction: row;
+    justifycontent: center;
+    align-items: center;
+    width: 220px;
+    height: 45px;
+    background-color: 'rgb(255, 255, 255)';
+    border-radius: 50px;
+    opacity: ${warningOpacity()};
+  `
+
   return (
-    <View style={[styles.container, { marginBottom: 10 }]}>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={navigation.goBack}
-        style={styles.goBackButton}
-      >
+    <StyledViewContainer>
+      <StyledBackButton activeOpacity={0.8} onPress={navigation.goBack}>
         <GoBackArrowIcon />
-        <Text style={styles.goBackButtonText}>Вернуться назад</Text>
-      </TouchableOpacity>
+        <StyledBackButtonText>Вернуться назад</StyledBackButtonText>
+      </StyledBackButton>
 
-      <View style={{ alignItems: 'center' }}>
-        <View
-          style={[styles.wrongCodeContainer, { opacity: warningOpacity() }]}
-        >
+      <StyledViewInfoBlockContainer>
+        <StyledViewWarningContainer>
           <Image source={confirmButtonCross} />
-          <Text style={styles.wrongCode}>
-            Код введён <Text style={{ fontWeight: 'bold' }}>неверно</Text>
-          </Text>
-        </View>
-
-        <Text style={styles.header}>Введите код подтверждения</Text>
-        <LabeledInput
+          <StyledWrongCodeText>
+            Код введён <StyledWrongWord>неверно</StyledWrongWord>
+          </StyledWrongCodeText>
+        </StyledViewWarningContainer>
+        <StyledCodeText>Введите код подтверждения</StyledCodeText>
+        <StyledLabelCode
           value={userCode}
           placeholder='Например, 123456'
           onChangeText={setUserCode}
           maxLength={6}
           keyBoardType='numeric'
-          containerStyle={{ marginTop: 37 }}
         />
         <TouchableOpacity
           activeOpacity={0.8}
@@ -135,9 +142,50 @@ function SignInConfirm({
             { opacity: warningOpacity(), position: 'relative', top: 118 },
           ]}
         />
-      </View>
-    </View>
+      </StyledViewInfoBlockContainer>
+    </StyledViewContainer>
   )
 }
+
+const StyledViewContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justifycontent: center;
+  margin-bottom: 10px;
+`
+const StyledBackButton = styled.TouchableOpacity`
+  position: absolute;
+  top: 56px;
+  left: 16px;
+  flex-direction: row;
+  align-items: center;
+`
+const StyledBackButtonText = styled.Text`
+  font-size: 14px;
+  color: 'rgb(255, 255, 255)';
+  font-family: 'PTSans_400Regular';
+  margin-left: 6px;
+`
+const StyledViewInfoBlockContainer = styled.View`
+  align-items: center;
+`
+const StyledWrongCodeText = styled.Text`
+  color: 'rgb(226, 3, 56)';
+  font-size: 16px;
+  font-family: 'PTSans_400Regular';
+  margin-left: 9px;
+`
+const StyledWrongWord = styled.Text`
+  font-weight: bold;
+`
+const StyledCodeText = styled.Text`
+  font-size: 20;
+  font-family: 'PTSans_700Bold';
+  color: 'rgb(255, 255, 255)';
+`
+const StyledLabelCode = styled(LabeledInput)`
+  margin-top: 37px;
+`
+// const StyledButtonEnter = styled.TouchableOpacity``
 
 export default SignInConfirm

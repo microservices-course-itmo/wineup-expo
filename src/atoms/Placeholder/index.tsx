@@ -10,8 +10,6 @@ function Placeholder() {
   )
 }
 
-export default Placeholder
-
 const Container = styled.View`
   position: absolute;
 `
@@ -33,3 +31,5 @@ const Circle = styled.View`
   height: 143px;
   border: 1px solid #f1f2f2;
 `
+
+export default Placeholder

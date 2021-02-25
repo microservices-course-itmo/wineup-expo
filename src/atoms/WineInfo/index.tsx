@@ -128,8 +128,6 @@ function WineInfo({
   )
 }
 
-export default WineInfo
-
 const Description = styled(Text)`
   margin-top: 14px;
 `
@@ -164,3 +162,5 @@ const ToShopLabel = styled.Text`
   font-size: 12px;
   color: #fff;
 `
+
+export default WineInfo

@@ -11,8 +11,6 @@ const RadioButton = ({
   return <Container>{checked && <Circle />}</Container>
 }
 
-export default RadioButton
-
 const Container = styled.View`
   align-items: center;
   justify-content: center;
@@ -28,3 +26,5 @@ const Circle = styled.View`
   border-radius: 7px;
   background: #872434;
 `
+
+export default RadioButton

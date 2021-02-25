@@ -10,8 +10,6 @@ function Ribbon({ children }: PropsWithChildren<any>) {
   )
 }
 
-export default Ribbon
-
 const Container = styled.ImageBackground`
   position: absolute;
   width: 144px;
@@ -32,3 +30,5 @@ const Text = styled.Text`
 
   transform: rotate(-3deg);
 `
+
+export default Ribbon

@@ -24,8 +24,6 @@ const WineBottlePicture = ({
   )
 }
 
-export default WineBottlePicture
-
 const Container = styled.View`
   width: 256px;
   height: 256px;
@@ -39,3 +37,5 @@ const Image = styled.Image`
   width: 250px;
   height: 250px;
 `
+
+export default WineBottlePicture
