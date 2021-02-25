@@ -22,7 +22,7 @@ function LabeledDropdown({
     onFill(true)
   }
 
-  const DropDownPickerChange = (item: any) => handleChange(item.value)
+  const dropDownPickerChange = (item: any) => handleChange(item.value)
 
   return (
     <View
@@ -54,7 +54,7 @@ function LabeledDropdown({
           hasFilled ? { color: '#000000' } : { color: '#A3A3A3' }
         }
         dropDownStyle={styles.dropdownItems}
-        onChangeItem={DropDownPickerChange}
+        onChangeItem={dropDownPickerChange}
       />
     </View>
   )
