@@ -28,7 +28,7 @@ import MainRouter from './screens/Router'
 // import { fixtures } from './tests/__mocks__/fixtures'
 
 const App: React.FC = () => {
-  const [isAuth, setIsAuth] = useState(false)
+  const [isAuth, setIsAuth] = useState(true)
 
   const [fontsLoaded] = useFonts({
     Merriweather_400Regular,

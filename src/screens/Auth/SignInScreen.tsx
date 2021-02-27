@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-import { Text, View, TouchableOpacity, TextInput, Image } from 'react-native'
+import styled from 'styled-components/native'
 import { StackScreenProps } from '@react-navigation/stack'
 import ROUTES from '../../routes'
-import styles from './styles'
-import inputStyle from '../../molecules/Auth/styles'
 import phoneEnterIcon from '../../../assets/phoneEnterIcon.png'
 
 export type TProps = StackScreenProps<any, typeof ROUTES.SIGN_IN>
@@ -12,21 +10,12 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
   const [userPhone, setUserPhone] = useState('')
 
   return (
-    <View style={styles.container}>
-      <Text style={[styles.header, { textAlign: 'center' }]}>
+    <StyledContainer>
+      <StyledEnterNumberText>
         Введите номер телефона для авторизации
-      </Text>
-      <View
-        style={{
-          backgroundColor: '#FFFFFF',
-          width: 268,
-          height: 57,
-          marginTop: 30,
-          borderRadius: 10,
-        }}
-      >
-        <TextInput
-          style={[inputStyle.input, inputStyle.textAreaStyle]}
+      </StyledEnterNumberText>
+      <StyledPhoneEnterForm>
+        <StyledInputPhone
           keyboardType='number-pad'
           maxLength={12}
           onChangeText={setUserPhone}
@@ -36,26 +25,92 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
           editable
           selectionColor='#000'
         />
-        <Image
-          source={phoneEnterIcon}
-          style={{ position: 'absolute', top: 17, left: 30 }}
-        />
-      </View>
-      <TouchableOpacity
+        <StyledImagePhone source={phoneEnterIcon} />
+      </StyledPhoneEnterForm>
+      <StyledEnterButton
         activeOpacity={0.8}
-        style={[styles.buttonStyle, { marginTop: 23 }]}
         onPress={() => {
           navigation.navigate(ROUTES.SIGN_IN_CONFIRM)
           console.log(userPhone)
         }}
       >
-        <Text style={styles.buttonText}>Войти</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.unregUser}>
-        <Text style={styles.resendCode}>Продолжить без авторизации</Text>
-      </TouchableOpacity>
-    </View>
+        <StyledEnterTextButton>Войти</StyledEnterTextButton>
+      </StyledEnterButton>
+      <StyledUnregButton>
+        <StyledUnregEnterTextButton>
+          Продолжить без авторизации
+        </StyledUnregEnterTextButton>
+      </StyledUnregButton>
+    </StyledContainer>
   )
 }
+
+const StyledContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justifycontent: center;
+`
+const StyledEnterNumberText = styled.Text`
+  font-size: 20px;
+  font-family: 'PTSans_700Bold';
+  color: 'rgb(255, 255, 255)';
+  text-align: center;
+`
+const StyledPhoneEnterForm = styled.View`
+  background-color: 'rgb(255, 255, 255)';
+  width: 268px;
+  height: 57px;
+  margin-top: 30px;
+  border-radius: 10px;
+`
+const StyledInputPhone = styled.TextInput`
+  flex: 1;
+  min-height: 57px;
+  max-height: 57px;
+  min-width: 268px;
+  justifycontent: center;
+  align-items: center;
+  border-radius: 5px;
+  color: 'rgb(0, 0, 0)';
+  background-color: 'rgb(255, 255, 255)';
+  text-align: center;
+  font-size: 16px;
+  font-family: 'PTSans_400Regular';
+  font-weight: normal;
+`
+const StyledImagePhone = styled.Image`
+  position: absolute;
+  top: 17px;
+  left: 30px;
+`
+const StyledEnterButton = styled.TouchableOpacity`
+  flex: 1;
+  align-items: center;
+  justifycontent: center;
+  width: 268px;
+  max-height: 57px;
+  min-height: 57px;
+  background-color: 'rgb(147, 19, 50)';
+  border-radius: 5px;
+  margin-top: 23px;
+`
+const StyledEnterTextButton = styled.Text`
+  font-size: 16px;
+  color: 'rgb(255, 255, 255)';
+  font-family: 'PTSans_700Bold';
+`
+const StyledUnregButton = styled.TouchableOpacity`
+  flex: 1;
+  align-items: center;
+  justifycontent: center;
+  margin-top: 30px;
+  width: 316px;
+  max-height: 35px;
+`
+const StyledUnregEnterTextButton = styled.Text`
+  text-decoration-line: underline;
+  font-size: 16px;
+  color: 'rgb(255, 255, 255)';
+`
 
 export default SignInScreen

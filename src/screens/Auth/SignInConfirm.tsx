@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ReactElement, useContext } from 'react'
-import { Text, TouchableOpacity, Image } from 'react-native'
+import { Image } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import styled from 'styled-components/native'
 import Countdown from '../../molecules/Countdown'
@@ -70,6 +70,7 @@ function SignInConfirm({
     setIsCorrectCode(isRightCode(userCode))
   }, [userCode])
 
+  // we need to fix this logic in styles for removing this constants into the bottom
   const StyledViewWarningContainer = styled.View`
     position: absolute;
     top: -80px;
@@ -82,6 +83,31 @@ function SignInConfirm({
     background-color: 'rgb(255, 255, 255)';
     border-radius: 50px;
     opacity: ${warningOpacity()};
+  `
+  const StyledButtonEnter = styled.TouchableOpacity`
+    flex: 1;
+    align-items: center;
+    justifycontent: center;
+    width: 268px;
+    max-height: 57px;
+    min-height: 57px;
+    background-color: 'rgb(147, 19, 50)';
+    border-radius: 5px;
+    opacity: ${enterButtonOpacity};
+    margin-top: 22;
+  `
+  const StyledResetCode = styled.TouchableOpacity`
+    flex: 1;
+    align-items: center;
+    justifycontent: center;
+    width: 268px;
+    max-height: 57px;
+    min-height: 57px;
+    background-color: 'rgb(147, 19, 50)';
+    border-radius: 5px;
+    position: absolute;
+    top: 234px;
+    opacity: ${resendOpacity()};
   `
 
   return (
@@ -106,31 +132,23 @@ function SignInConfirm({
           maxLength={6}
           keyBoardType='numeric'
         />
-        <TouchableOpacity
+        <StyledButtonEnter
           activeOpacity={0.8}
           onPress={enterCodeHandler}
-          style={[
-            styles.buttonStyle,
-            { opacity: enterButtonOpacity, marginTop: 22 },
-          ]}
           disabled={!isLongEnough}
         >
-          <Text style={styles.buttonText}>Войти</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
+          <StyledEnterTextButton>Войти</StyledEnterTextButton>
+        </StyledButtonEnter>
+        <StyledResetCode
           activeOpacity={0.8}
           onPress={resendCode}
-          style={[
-            styles.buttonStyle,
-            { position: 'absolute', top: 234, opacity: resendOpacity() },
-          ]}
           disabled={isPenalty}
         >
-          <Text style={styles.buttonText}>Отправить код повторно</Text>
-        </TouchableOpacity>
-
-        <Countdown
+          <StyledResetCodeTextButton>
+            Отправить код повторно
+          </StyledResetCodeTextButton>
+        </StyledResetCode>
+        <Countdown // need to fix CountDown component for styling
           isTimerEnabled={isTimerStarted}
           time={timeToResend}
           handleEnd={() => {
@@ -179,13 +197,22 @@ const StyledWrongWord = styled.Text`
   font-weight: bold;
 `
 const StyledCodeText = styled.Text`
-  font-size: 20;
+  font-size: 20px;
   font-family: 'PTSans_700Bold';
   color: 'rgb(255, 255, 255)';
 `
 const StyledLabelCode = styled(LabeledInput)`
   margin-top: 37px;
 `
-// const StyledButtonEnter = styled.TouchableOpacity``
+const StyledEnterTextButton = styled.Text`
+  font-size: 16px;
+  color: 'rgb(255, 255, 255)';
+  font-family: 'PTSans_700Bold';
+`
+const StyledResetCodeTextButton = styled.Text`
+  font-size: 16px;
+  color: 'rgb(255, 255, 255)';
+  font-family: 'PTSans_700Bold';
+`
 
 export default SignInConfirm

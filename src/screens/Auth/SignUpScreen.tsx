@@ -1,12 +1,11 @@
 import React, { useState, ReactElement, useEffect, useContext } from 'react'
-import { Text, View, TouchableOpacity } from 'react-native'
+import styled from 'styled-components/native'
 import { isName, City } from '../../helpers'
 import LabeledInput from '../../molecules/Auth/LabeledInput'
 import LabeledDatePicker from '../../molecules/Auth/LabeledDatePicker'
 import LabeledDropdown from '../../molecules/Auth/LabeledDropdown'
 import ConsentCheckBox from '../../molecules/Auth/ConsentCheckBox'
 import { AuthContext } from './AuthContext'
-import styles from './styles'
 
 function SignUpScreen(): ReactElement {
   const [userName, setUserName] = useState('')
@@ -49,10 +48,24 @@ function SignUpScreen(): ReactElement {
     isAuth.setIsAuth(true)
     // fetch ? response.ok : response.error, return
   }
+  // we need to fix this logic in styles for removing this constants into the bottom
+
+  const StyledEnterButton = styled.TouchableOpacity`
+    flex: 1;
+    align-items: center;
+    justifycontent: center;
+    width: 268px;
+    max-height: 57px;
+    min-height: 57px;
+    background-color: 'rgb(147, 19, 50)';
+    border-radius: 5px;
+    opacity: ${buttonOpacity};
+    margin-top: 35px;
+  `
 
   return (
-    <View style={[styles.container, { marginTop: 106 }]}>
-      <Text style={styles.header}>Введите данные</Text>
+    <StyledContainer>
+      <StyledTextInsertData>Введите данные</StyledTextInsertData>
       <LabeledInput
         value={userName}
         label='Введите ваше имя'
@@ -76,15 +89,28 @@ function SignUpScreen(): ReactElement {
         onFill={setIsCityFilled}
       />
       <ConsentCheckBox onPress={setIsConsentGiven} hasFilled={isСonsentGiven} />
-      <TouchableOpacity
-        onPress={onSubmit}
-        style={[styles.buttonStyle, { opacity: buttonOpacity, marginTop: 35 }]}
-        disabled={!isSignUpEnabled}
-      >
-        <Text style={styles.buttonText}>Войти</Text>
-      </TouchableOpacity>
-    </View>
+      <StyledEnterButton onPress={onSubmit} disabled={!isSignUpEnabled}>
+        <StyledEnterTextButton>Войти</StyledEnterTextButton>
+      </StyledEnterButton>
+    </StyledContainer>
   )
 }
+
+const StyledContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justifycontent: center;
+  margin-top: 106px;
+`
+const StyledTextInsertData = styled.Text`
+  font-size: 20px;
+  font-family: 'PTSans_700Bold';
+  color: 'rgb(255, 255, 255)';
+`
+const StyledEnterTextButton = styled.Text`
+  font-size: 16px;
+  color: 'rgb(255, 255, 255)';
+  font-family: 'PTSans_700Bold';
+`
 
 export default SignUpScreen
