@@ -24,6 +24,7 @@ const AuthWrapper: React.FC = () => (
         animationEnabled: false,
       }}
     >
+
       <Stack.Screen name={ROUTES.CONFIRM_AGE} component={AgeConfirm} />
       <Stack.Screen name={ROUTES.AGE_DENIED} component={AgeDenied} />
       <Stack.Screen name={ROUTES.SIGN_IN} component={SignInScreen} />

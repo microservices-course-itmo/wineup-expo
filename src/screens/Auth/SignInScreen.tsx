@@ -9,6 +9,11 @@ export type TProps = StackScreenProps<any, typeof ROUTES.SIGN_IN>
 const SignInScreen: React.FC<TProps> = ({ navigation }) => {
   const [userPhone, setUserPhone] = useState('')
 
+  const navigateToSignInConfirm = (): void => {
+    navigation.navigate(ROUTES.SIGN_IN_CONFIRM)
+    console.log(userPhone)
+  }
+
   return (
     <StyledContainer>
       <StyledEnterNumberText>

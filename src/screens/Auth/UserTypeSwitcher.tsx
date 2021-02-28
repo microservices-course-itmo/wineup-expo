@@ -31,3 +31,4 @@ const StyledSwitcher = styled.View`
 `
 
 export default UserTypeSwitcher
+

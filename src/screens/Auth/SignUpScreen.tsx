@@ -7,27 +7,26 @@ import LabeledDropdown from '../../molecules/Auth/LabeledDropdown'
 import ConsentCheckBox from '../../molecules/Auth/ConsentCheckBox'
 import { AuthContext } from './AuthContext'
 
+const MAXIMUM_DATE = new Date()
+
+MAXIMUM_DATE.setFullYear(MAXIMUM_DATE.getFullYear() - 18)
+
+const NAME_ERROR_MESSAGE = '*Формат от 2 до 15 букв, не содержащих символов'
+
 function SignUpScreen(): ReactElement {
-  const [userName, setUserName] = useState('')
-
-  const maximumDate = new Date()
-
-  maximumDate.setFullYear(maximumDate.getFullYear() - 18)
-  const [userDate, setUserDate] = useState(maximumDate)
-
+  const [userName, setUserName] = useState<string>('')
+  const [userDate, setUserDate] = useState<Date>(MAXIMUM_DATE)
   const [userCity, setUserCity] = useState<City>('Москва')
 
-  const [isSignUpEnabled, setIsSignUpEnabled] = useState<boolean | undefined>(
-    false
-  )
+  const [isSignUpEnabled, setIsSignUpEnabled] = useState<boolean>(false)
   const buttonOpacity = isSignUpEnabled ? 1 : 0.5
-  const isAuth = useContext(AuthContext)
 
   const isValidName = isName(userName)
-  const [isDateFilled, setIsDateFilled] = useState(false)
-  const [isCityFilled, setIsCityFilled] = useState(false)
-  const [isСonsentGiven, setIsConsentGiven] = useState(false)
-  const errorMessageName = '*Формат от 2 до 15 букв, не содержащих символов'
+  const [isDateFilled, setIsDateFilled] = useState<boolean>(false)
+  const [isCityFilled, setIsCityFilled] = useState<boolean>(false)
+  const [isСonsentGiven, setIsConsentGiven] = useState<boolean>(false)
+
+  const isAuth = useContext(AuthContext)
 
   useEffect(() => {
     setIsSignUpEnabled(
@@ -43,13 +42,13 @@ function SignUpScreen(): ReactElement {
     isСonsentGiven,
   ])
 
-  const onSubmit = () => {
+  const handleSubmit = () => {
     console.log(userName, userDate, userCity)
     isAuth.setIsAuth(true)
     // fetch ? response.ok : response.error, return
   }
+  
   // we need to fix this logic in styles for removing this constants into the bottom
-
   const StyledEnterButton = styled.TouchableOpacity`
     flex: 1;
     align-items: center;
@@ -71,14 +70,14 @@ function SignUpScreen(): ReactElement {
         label='Введите ваше имя'
         onChangeText={setUserName}
         isValid={isValidName}
-        errorMessage={errorMessageName}
+        errorMessage={NAME_ERROR_MESSAGE}
         maxLength={15}
       />
       <LabeledDatePicker
         value={userDate}
         label='Введите дату рождения'
         onChange={setUserDate}
-        maximumDate={maximumDate}
+        maximumDate={MAXIMUM_DATE}
         hasFilled={isDateFilled}
         onFill={setIsDateFilled}
       />
