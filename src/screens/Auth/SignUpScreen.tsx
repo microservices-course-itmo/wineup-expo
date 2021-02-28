@@ -47,7 +47,7 @@ function SignUpScreen(): ReactElement {
     isAuth.setIsAuth(true)
     // fetch ? response.ok : response.error, return
   }
-  
+
   // we need to fix this logic in styles for removing this constants into the bottom
   const StyledEnterButton = styled.TouchableOpacity`
     flex: 1;
@@ -88,7 +88,7 @@ function SignUpScreen(): ReactElement {
         onFill={setIsCityFilled}
       />
       <ConsentCheckBox onPress={setIsConsentGiven} hasFilled={isСonsentGiven} />
-      <StyledEnterButton onPress={onSubmit} disabled={!isSignUpEnabled}>
+      <StyledEnterButton onPress={handleSubmit} disabled={!isSignUpEnabled}>
         <StyledEnterTextButton>Войти</StyledEnterTextButton>
       </StyledEnterButton>
     </StyledContainer>

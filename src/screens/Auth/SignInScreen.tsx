@@ -32,13 +32,7 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
         />
         <StyledImagePhone source={phoneEnterIcon} />
       </StyledPhoneEnterForm>
-      <StyledEnterButton
-        activeOpacity={0.8}
-        onPress={() => {
-          navigation.navigate(ROUTES.SIGN_IN_CONFIRM)
-          console.log(userPhone)
-        }}
-      >
+      <StyledEnterButton activeOpacity={0.8} onPress={navigateToSignInConfirm}>
         <StyledEnterTextButton>Войти</StyledEnterTextButton>
       </StyledEnterButton>
       <StyledUnregButton>
