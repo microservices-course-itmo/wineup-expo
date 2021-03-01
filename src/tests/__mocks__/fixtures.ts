@@ -34,7 +34,7 @@ export const wineMock = {
 }
 
 export const wine1CatMock = {
-  actualPrice: 700,
+  actualPrice: 600,
   description: 'description1',
   gastronomy: 'gastronomy1',
   image: [],
@@ -58,7 +58,7 @@ export const wine1CatMock = {
 }
 
 export const wine2CatMock = {
-  actualPrice: 950,
+  actualPrice: 1400,
   description: 'description2',
   gastronomy: 'gastronomy2',
   image: 'image2',
@@ -172,7 +172,12 @@ export const fixtures = [
   },
   {
     request: CatalogResource.filteredShape(),
-    params: { from: 0, to: 10 },
+    params: { from: 0, to: 5, searchParameters: '' },
     result: [wine1CatMock, wine2CatMock],
+  },
+  {
+    request: CatalogResource.detailShape(),
+    params: { winePositionId: 'wine_position_1' },
+    result: wine1CatMock,
   },
 ]

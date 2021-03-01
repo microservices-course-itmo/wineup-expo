@@ -18,7 +18,9 @@ function RecommendationBlock({ style }: RecommendationBlockProps) {
   const positions = useCache(CatalogResource.filteredShape(), {
     from: 0,
     to: 5,
+    searchParameters: '',
   })
+
   const carouselRef = useRef<Carousel<any> | null>(null)
   const navigation = useNavigation()
 
