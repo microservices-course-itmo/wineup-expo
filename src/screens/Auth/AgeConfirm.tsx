@@ -10,6 +10,14 @@ import confirmButtonCross from '../../../assets/confirmButtonCross.png'
 export type TProps = StackScreenProps<any, typeof ROUTES.CONFIRM_AGE>
 
 const AgeConfirm: React.FC<TProps> = ({ navigation }) => {
+  const navigateToSignIn = (): void => {
+    navigation.push(ROUTES.SIGN_IN)
+  }
+
+  const navigateToAgeDenied = (): void => {
+    navigation.push(ROUTES.AGE_DENIED)
+  }
+
   return (
     <View style={[styles.container, { marginBottom: 120 }]}>
       <Image source={welcomeHandShake} />
@@ -21,9 +29,7 @@ const AgeConfirm: React.FC<TProps> = ({ navigation }) => {
         <TouchableOpacity
           activeOpacity={0.8}
           style={styles.buttonAgeConfirm}
-          onPress={() => {
-            navigation.push(ROUTES.SIGN_IN)
-          }}
+          onPress={navigateToSignIn}
         >
           <Image source={confirmButtonTick} />
           <Text style={styles.buttonConfirmText}>Да</Text>
@@ -31,9 +37,7 @@ const AgeConfirm: React.FC<TProps> = ({ navigation }) => {
         <TouchableOpacity
           activeOpacity={0.8}
           style={styles.buttonAgeConfirm}
-          onPress={() => {
-            navigation.push(ROUTES.AGE_DENIED)
-          }}
+          onPress={navigateToAgeDenied}
         >
           <Image source={confirmButtonCross} />
           <Text style={styles.buttonDenyText}>Нет</Text>

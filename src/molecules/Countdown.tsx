@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text } from 'react-native'
 
-export default Countdown
-
 function Countdown({ isTimerEnabled, time, handleEnd, style }) {
   const [timer, setTimer] = useState(time)
   const [clockCall, setClockCall] = useState()
@@ -36,3 +34,5 @@ function Countdown({ isTimerEnabled, time, handleEnd, style }) {
     </View>
   )
 }
+
+export default Countdown

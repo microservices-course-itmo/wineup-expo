@@ -137,6 +137,11 @@ function SignInConfirm({
     console.log('code resent')
   }
 
+  const onEnd = (): void => {
+    setIsPenalty(false)
+    console.log('isPenalty', isPenalty)
+  }
+
   useEffect(() => {
     setIsLongEnough(userCode.length === 6)
   }, [userCode])
@@ -198,10 +203,7 @@ function SignInConfirm({
         <Countdown
           isTimerEnabled={isTimerStarted}
           time={timeToResend}
-          handleEnd={() => {
-            setIsPenalty(false)
-            console.log('isPenalty', isPenalty)
-          }}
+          handleEnd={onEnd}
           style={[
             styles.resendCode,
             { opacity: warningOpacity(), position: 'relative', top: 118 },

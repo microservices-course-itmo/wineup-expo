@@ -17,10 +17,10 @@ function containsLatinOnly(string: string): boolean {
  *
  * @param {string} name - name to check
  */
-export function isName(name: string): boolean | undefined {
+export function isName(name: string): boolean {
   const nameRegexp = /^([a-zA-Zа-яА-ЯёЁ]{2,15})$/
 
-  if (name.length === 0) return undefined
+  if (name.length === 0) return false
 
   return name.search(nameRegexp) === 0
 }

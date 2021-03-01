@@ -13,6 +13,9 @@ interface LabeledInputProps {
   placeholder?: string
   keyBoardType?: 'default' | 'numeric'
   containerStyle?: StyleProp<ViewStyle>
+  inputStyle?: StyleProp<ViewStyle>
+  labelStyle?: StyleProp<ViewStyle>
+  editable?: boolean
 }
 
 function LabeledInput({
@@ -26,6 +29,9 @@ function LabeledInput({
   placeholder,
   keyBoardType,
   containerStyle,
+  inputStyle,
+  labelStyle,
+  editable = true,
 }: LabeledInputProps): ReactElement<LabeledInputProps> {
   const [isFocused, setIsFocused] = useState(false)
   const handleFocus = () => {
@@ -37,15 +43,17 @@ function LabeledInput({
 
   return (
     <View style={[styles.container, containerStyle]}>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={[styles.label, labelStyle]}>{label}</Text>
       <TextInput
         selectionColor='#000'
         style={[
           styles.input,
           styles.textAreaStyle,
           isValid ? styles.inputSuccessColor : styles.inputFailedColor,
+          inputStyle,
         ]}
         value={value}
+        editable={editable}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
         onFocus={handleFocus}

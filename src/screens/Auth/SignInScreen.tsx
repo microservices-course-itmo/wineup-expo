@@ -15,6 +15,16 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
   const [userPhone, setUserPhone] = useState('')
   const recaptchaVerifier = useRef(new FirebaseRecaptchaVerifierModal({}))
 
+  function isPhoneValid() {
+    return (
+      userPhone.length === 12 && userPhone[0] === '+' && userPhone[1] === '7'
+    )
+  }
+
+  function handlePress() {
+    verifyPhoneNumber(userPhone)
+  }
+
   async function verifyPhoneNumber(phoneNumber: string) {
     try {
       const phoneProvider = new firebase.auth.PhoneAuthProvider()
@@ -27,16 +37,6 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
     } catch (err) {
       console.log(err)
     }
-  }
-
-  function isPhoneValid() {
-    return (
-      userPhone.length === 12 && userPhone[0] === '+' && userPhone[1] === '7'
-    )
-  }
-
-  function handlePress() {
-    verifyPhoneNumber(userPhone)
   }
 
   return (
