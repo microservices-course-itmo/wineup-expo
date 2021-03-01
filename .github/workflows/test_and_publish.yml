@@ -77,7 +77,7 @@ jobs:
           expo-version: 4.x
           expo-token: ${{ secrets.EXPO_CLI_TOKEN }}
       - run: yarn install
-      - run: expo publish --non-interactive --release-channel pr${{ github.event.number }}-storybook
+      - run: cross-env STORYBOOK=true expo publish --non-interactive --release-channel pr${{ github.event.number }}-storybook
       - name: Add Comment To PR
         uses: mshick/add-pr-comment@v1
         env:
