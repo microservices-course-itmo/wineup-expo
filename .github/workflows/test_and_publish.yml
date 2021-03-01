@@ -59,7 +59,7 @@ jobs:
           EXPO_PROJECT: '@wineup/wineup-expo'
         with:
           message: |
-            ## Published build
+            ## Published app build
             ![Expo QR](https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=exp://exp.host/${{ env.EXPO_PROJECT }}?release-channel=pr${{ github.event.number }})
             Published to https://exp.host/${{ env.EXPO_PROJECT }}?release-channel=pr${{ github.event.number }}
   publishStorybook:
@@ -77,7 +77,7 @@ jobs:
           expo-version: 4.x
           expo-token: ${{ secrets.EXPO_CLI_TOKEN }}
       - run: yarn install
-      - run: cross-env STORYBOOK=true expo publish --non-interactive --release-channel pr${{ github.event.number }}-storybook
+      - run: STORYBOOK=true expo publish --non-interactive --release-channel pr${{ github.event.number }}-storybook
       - name: Add Comment To PR
         uses: mshick/add-pr-comment@v1
         env:
@@ -85,6 +85,6 @@ jobs:
           EXPO_PROJECT: '@wineup/wineup-expo'
         with:
           message: |
-            ## Published build
-            ![Expo QR](https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=exp://exp.host/${{ env.EXPO_PROJECT }}?release-channel=pr${{ github.event.number }})
+            ## Published Storybook build
+            ![Expo QR](https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=exp://exp.host/${{ env.EXPO_PROJECT }}?release-channel=pr${{ github.event.number }})-storybook
             Published to https://exp.host/${{ env.EXPO_PROJECT }}?release-channel=pr${{ github.event.number }}-storybook
