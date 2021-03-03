@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import {
   FontAwesome,
@@ -8,12 +8,16 @@ import {
 import CatalogScreen from './Catalog'
 import FavouritesScreen from './Favourites'
 import AuthorizedProfile from './AuthorizedProfile'
+import UnauthorizedProfile from './UnauthorizedProfile'
+import { AuthContext } from './Auth/AuthContext'
 
 const Tab = createBottomTabNavigator()
 
 const EmptyTab = () => null
 
 function MainScreen() {
+  const { isRegistered } = useContext(AuthContext)
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -61,7 +65,10 @@ function MainScreen() {
       <Tab.Screen name='Главное' component={EmptyTab} />
       <Tab.Screen name='Каталог' component={CatalogScreen} />
       <Tab.Screen name='Избранное' component={FavouritesScreen} />
-      <Tab.Screen name='Профиль' component={AuthorizedProfile} />
+      <Tab.Screen
+        name='Профиль'
+        component={isRegistered ? AuthorizedProfile : UnauthorizedProfile}
+      />
     </Tab.Navigator>
   )
 }

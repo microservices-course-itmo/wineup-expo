@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useContext } from 'react'
 import { Text, View, TouchableOpacity, TextInput, Image } from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack'
 import * as firebase from 'firebase'
@@ -9,12 +9,15 @@ import inputStyle from '../../molecules/Auth/styles'
 import phoneEnterIcon from '../../../assets/phoneEnterIcon.png'
 import firebaseConfig from '../../../firebaseconfig'
 import { isPhoneValid } from '../../helpers'
+import { AuthContext } from './AuthContext'
 
 export type TProps = StackScreenProps<any, typeof ROUTES.SIGN_IN>
 
 const SignInScreen: React.FC<TProps> = ({ navigation }) => {
   const [userPhone, setUserPhone] = useState('')
   const recaptchaVerifier = useRef(new FirebaseRecaptchaVerifierModal({}))
+
+  const { setIsAuth } = useContext(AuthContext)
 
   const handlePress = () => {
     verifyPhoneNumber(userPhone)
@@ -32,6 +35,10 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
     } catch (err) {
       console.log(err)
     }
+  }
+
+  const handleSignIn = () => {
+    setIsAuth(true)
   }
 
   return (
@@ -81,7 +88,7 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
       >
         <Text style={styles.buttonText}>Войти</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.unregUser}>
+      <TouchableOpacity onPress={handleSignIn} style={styles.unregUser}>
         <Text style={styles.resendCode}>Продолжить без авторизации</Text>
       </TouchableOpacity>
     </View>

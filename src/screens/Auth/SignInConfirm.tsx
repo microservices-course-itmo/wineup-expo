@@ -48,7 +48,7 @@ function SignInConfirm({
     return 0
   }
 
-  const { setIsAuth } = useContext(AuthContext)
+  const { setIsAuth, setIsRegistered } = useContext(AuthContext)
   let isUnregistered = false
 
   async function signInWithPhoneNumber() {
@@ -115,6 +115,7 @@ function SignInConfirm({
               SecureStore.setItemAsync('refreshToken', data.refreshToken)
 
               setIsAuth(true)
+              setIsRegistered(true)
             } else if (isUnregistered)
               navigation.navigate(ROUTES.SIGN_UP, { jwtToken })
             else {

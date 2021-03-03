@@ -31,12 +31,14 @@ import firebaseConfig from '../firebaseconfig'
 // import { fixtures } from './tests/__mocks__/fixtures'
 
 const App: React.FC = () => {
-  const [isAuth, setIsAuth] = useState(false)
+  const [isAuth, setIsAuth] = useState<boolean>(false)
+  const [isRegistered, setIsRegistered] = useState<boolean>(false)
 
   if (!isAuth) {
     SecureStore.getItemAsync('accessToken').then((accessToken) => {
       if (accessToken) {
         setIsAuth(true)
+        setIsRegistered(true)
       }
     })
   }
@@ -70,7 +72,7 @@ const App: React.FC = () => {
       <CacheProvider>
         {/* <MockProvider results={fixtures}> */}
         <NavigationContainer>
-          <AuthProvider value={{ setIsAuth }}>
+          <AuthProvider value={{ setIsAuth, setIsRegistered, isRegistered }}>
             {isAuth ? <MainRouter /> : <AuthWrapper />}
           </AuthProvider>
         </NavigationContainer>
