@@ -7,8 +7,8 @@ import {
 } from '@expo/vector-icons'
 import CatalogScreen from './Catalog'
 import FavouritesScreen from './Favourites'
-import AuthorizedProfile from './AuthorizedProfile'
-// import NotificationsTest from './Notifications'
+// import AuthorizedProfile from './AuthorizedProfile'
+import NotificationsTest from './Notifications'
 
 const Tab = createBottomTabNavigator()
 
@@ -62,7 +62,8 @@ function MainScreen() {
       <Tab.Screen name='Главное' component={EmptyTab} />
       <Tab.Screen name='Каталог' component={CatalogScreen} />
       <Tab.Screen name='Избранное' component={FavouritesScreen} />
-      <Tab.Screen name='Профиль' component={AuthorizedProfile} />
+      <Tab.Screen name='Избранное' component={NotificationsTest} />
+      {/* <Tab.Screen name='Профиль' component={AuthorizedProfile} /> */}
     </Tab.Navigator>
   )
 }
