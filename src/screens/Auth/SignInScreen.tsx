@@ -8,6 +8,7 @@ import styles from './styles'
 import inputStyle from '../../molecules/Auth/styles'
 import phoneEnterIcon from '../../../assets/phoneEnterIcon.png'
 import firebaseConfig from '../../../firebaseconfig'
+import { isPhoneValid } from '../../helpers'
 
 export type TProps = StackScreenProps<any, typeof ROUTES.SIGN_IN>
 
@@ -15,17 +16,11 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
   const [userPhone, setUserPhone] = useState('')
   const recaptchaVerifier = useRef(new FirebaseRecaptchaVerifierModal({}))
 
-  function isPhoneValid() {
-    return (
-      userPhone.length === 12 && userPhone[0] === '+' && userPhone[1] === '7'
-    )
-  }
-
-  function handlePress() {
+  const handlePress = () => {
     verifyPhoneNumber(userPhone)
   }
 
-  async function verifyPhoneNumber(phoneNumber: string) {
+  const verifyPhoneNumber = async (phoneNumber: string) => {
     try {
       const phoneProvider = new firebase.auth.PhoneAuthProvider()
       const verificationId = await phoneProvider.verifyPhoneNumber(
@@ -79,9 +74,9 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
         activeOpacity={0.8}
         style={[
           styles.buttonStyle,
-          { marginTop: 23, opacity: isPhoneValid() ? 1 : 0.4 },
+          { marginTop: 23, opacity: isPhoneValid(userPhone) ? 1 : 0.4 },
         ]}
-        disabled={!isPhoneValid()}
+        disabled={!isPhoneValid(userPhone)}
         onPress={handlePress}
       >
         <Text style={styles.buttonText}>Войти</Text>

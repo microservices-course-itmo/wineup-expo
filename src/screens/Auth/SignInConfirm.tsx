@@ -77,7 +77,7 @@ function SignInConfirm({
   async function signInWithJwtToken(jwtToken: string) {
     try {
       const responce = await fetch(
-        'http://77.234.215.138:48080/user-service/login/',
+        'http://77.234.215.138:18080/user-service/login/',
         {
           method: 'POST',
           headers: {

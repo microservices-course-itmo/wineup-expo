@@ -82,3 +82,27 @@ export type User = {
     role: string
   }
 }
+
+/** Phone number validation
+ *
+ * @param userPhone User phone number
+ *
+ * @returns boolean
+ *
+ */
+export function isPhoneValid(userPhone: string) {
+  return userPhone.length === 12 && userPhone[0] === '+' && userPhone[1] === '7'
+}
+
+/** Prettify date to the correct end-point string format
+ *
+ * @param birthday birthday Date
+ *
+ * @returns dd.MM.yyyy string
+ *
+ */
+export function toBirthdayString(birthday: Date): string {
+  return `${`0${birthday.getDate()}`.slice(-2)}.${`0${
+    birthday.getMonth() + 1
+  }`.slice(-2)}.${birthday.getFullYear()}`
+}

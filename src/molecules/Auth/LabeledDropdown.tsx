@@ -3,16 +3,19 @@ import { Text, View, Platform } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
 import styles from './styles'
 
-enum CityPicker {
-  mskLabel = 'Москва',
-  spbLabel = 'Санкт-Петербург',
-  mskValue = 1,
-  spbValue = 2,
+enum CityID {
+  Moscow = 1,
+  SaintP = 2,
+}
+
+const city2Label = {
+  [CityID.Moscow]: 'Москва',
+  [CityID.SaintP]: 'Санкт-Петербург',
 }
 
 interface PickerProps {
   label: string
-  onChange: React.Dispatch<React.SetStateAction<number>>
+  onChange: React.Dispatch<React.SetStateAction<CityID>>
   hasFilled: boolean
   onFill: React.Dispatch<React.SetStateAction<boolean>>
 }
@@ -23,7 +26,7 @@ function LabeledDropdown({
   hasFilled,
   onFill,
 }: PickerProps): ReactElement<PickerProps> {
-  const handleChange = (selectedValue: number) => {
+  const handleChange = (selectedValue: CityID) => {
     onChange(selectedValue)
     onFill(true)
   }
@@ -43,16 +46,16 @@ function LabeledDropdown({
       <DropDownPicker
         items={[
           {
-            label: CityPicker.mskLabel,
-            value: CityPicker.mskValue,
+            label: city2Label[CityID.Moscow],
+            value: CityID.Moscow,
           },
           {
-            label: CityPicker.spbLabel,
-            value: CityPicker.spbValue,
+            label: city2Label[CityID.SaintP],
+            value: CityID.SaintP,
           },
         ]}
         showArrow={false}
-        defaultValue={1}
+        defaultValue={CityID}
         containerStyle={styles.dropdownContainer}
         style={styles.dropdownStyle}
         labelStyle={styles.textAreaStyle}
