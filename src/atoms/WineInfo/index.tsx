@@ -5,7 +5,6 @@ import { AntDesign } from '@expo/vector-icons'
 import CatalogResource from '../../resources/catalog'
 import Text from '../Text'
 import Heading from '../Heading'
-import Rating from '../Rating'
 import WineBottlePrice from '../WineBottlePrice'
 import WineShopName from '../WineShopName'
 import ExtraOptions from '../../organisms/ExtraOptions'
@@ -92,7 +91,7 @@ function WineInfo({
 
   return (
     <>
-      <Rating rating={3} />
+      {/* <Rating rating={3} /> */}
       <Heading>{wine.name}</Heading>
       <Heading>
         {position.grapes && `${position.grapes}, `}
@@ -116,14 +115,14 @@ function WineInfo({
         <WineBottlePrice position={position} />
         <ShopContainer>
           <WineShopName name={shop.site} />
-          {full && (
-            <ToShopButton onPress={goToShop}>
-              <ToShopLabel>В магазин</ToShopLabel>
-              <AntDesign name='shoppingcart' color='#fff' size={16} />
-            </ToShopButton>
-          )}
         </ShopContainer>
       </BottomBar>
+      {full && (
+        <ToShopButton onPress={goToShop}>
+          <ToShopLabel>В магазин</ToShopLabel>
+          <AntDesign name='shoppingcart' color='#fff' size={16} />
+        </ToShopButton>
+      )}
     </>
   )
 }
@@ -144,7 +143,7 @@ const BottomBar = styled.View<{ full?: boolean }>`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: ${({ full }) => (full ? '0' : '0 15px 0 20px')};
+  padding: 0;
   margin-top: ${({ full }) => (full ? 40 : 20)}px;
 `
 
@@ -153,8 +152,8 @@ const ShopContainer = styled.View`
 `
 
 const ToShopButton = styled(PrimaryButton)`
-  padding: 15px 24px;
-  margin-top: 10px;
+  padding: 15px 110px;
+  margin-top: 13px;
 `
 
 const ToShopLabel = styled.Text`
