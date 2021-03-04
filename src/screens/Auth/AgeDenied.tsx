@@ -1,8 +1,7 @@
 import React from 'react'
-import { Text, View, TouchableOpacity } from 'react-native'
 import { StackScreenProps } from '@react-navigation/stack'
+import styled from 'styled-components/native'
 import ROUTES from '../../routes'
-import styles from './styles'
 
 export type TProps = StackScreenProps<any, typeof ROUTES.AGE_DENIED>
 
@@ -12,33 +11,75 @@ const AgeDenied: React.FC<TProps> = ({ navigation }) => {
   }
 
   return (
-    <View style={[styles.container, { marginBottom: 18 }]}>
-      <Text style={[styles.header, { fontSize: 22 }]}>
-        Спасибо за честный ответ!
-      </Text>
-      <Text
-        style={[
-          styles.header,
-          {
-            fontFamily: 'PTSans_400Regular',
-            textAlign: 'center',
-            marginTop: 33,
-          },
-        ]}
-      >
-        К сожалению, наше приложение{'\n'} содержит информацию,{'\n'}{' '}
-        <Text style={{ fontFamily: 'PTSans_700Bold' }}>не предназначенную</Text>
-        {'\n'} для лиц младше 18 лет
-      </Text>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        style={[styles.buttonStyle, { marginTop: 52, width: 217 }]}
-        onPress={goBack}
-      >
-        <Text style={styles.buttonText}>Вернуться назад</Text>
-      </TouchableOpacity>
-    </View>
+    <StyledViewContainer>
+      <StyledHeaderText>Спасибо за честный ответ!</StyledHeaderText>
+      <StyledTextView>
+        <StyledTextBodyHeader>
+          К сожалению, наше приложение
+        </StyledTextBodyHeader>
+        <StyledTextBody>содержит информацию,</StyledTextBody>
+        <StyledDenyTextBody>не предназначенную</StyledDenyTextBody>
+        <StyledTextBody>для лиц младше 18 лет</StyledTextBody>
+      </StyledTextView>
+      <StyledBackButton activeOpacity={0.8} onPress={goBack}>
+        <StyledTextBackButton>Вернуться назад</StyledTextBackButton>
+      </StyledBackButton>
+    </StyledViewContainer>
   )
 }
 
 export default AgeDenied
+
+const StyledViewContainer = styled.View`
+  flex: 1;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 18px;
+`
+const StyledHeaderText = styled.Text`
+  font-size: 22px;
+  font-family: 'PTSans_700Bold';
+  color: 'rgb(255, 255, 255)';
+  margin-top: 36px;
+`
+const StyledTextView = styled.View`
+  display: flex;
+  flex-direction: column;
+`
+const StyledTextBodyHeader = styled.Text`
+  font-size: 20px;
+  font-family: 'PTSans_400Regular';
+  color: 'rgb(255, 255, 255)';
+  margin-top: 33px;
+  text-align: center;
+`
+const StyledTextBody = styled.Text`
+  font-size: 20px;
+  font-family: 'PTSans_400Regular';
+  color: 'rgb(255, 255, 255)';
+  text-align: center;
+`
+const StyledDenyTextBody = styled.Text`
+  font-size: 20px;
+  font-family: 'PTSans_700Bold';
+  color: 'rgb(255, 255, 255)';
+  text-align: center;
+`
+const StyledBackButton = styled.TouchableOpacity`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  width: 217px;
+  margin-top: 52px;
+  max-height: 57px;
+  min-height: 57px;
+  background-color: 'rgb(147, 19, 50)';
+  border-radius: 5px;
+`
+const StyledTextBackButton = styled.Text`
+  font-size: 16px;
+  color: 'rgb(255, 255, 255)';
+  font-family: 'PTSans_700Bold';
+`

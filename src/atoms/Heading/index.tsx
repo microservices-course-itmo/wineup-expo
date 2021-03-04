@@ -17,11 +17,11 @@ function Heading({
   )
 }
 
-export default Heading
-
 const H = styled.Text`
   font-family: PlayfairDisplay_700Bold;
   font-weight: 700;
   font-size: 20px;
   text-align: center;
 `
+
+export default Heading

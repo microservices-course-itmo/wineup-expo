@@ -23,11 +23,11 @@ function Rating({ rating }: RatingProps): JSX.Element {
   )
 }
 
-export default Rating
-
 const Container = styled.View`
   flex-direction: row;
   justify-content: space-between;
   width: 90px;
   margin: 5px 0;
 `
+
+export default Rating
