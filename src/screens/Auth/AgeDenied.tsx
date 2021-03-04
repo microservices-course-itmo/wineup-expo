@@ -5,20 +5,28 @@ import ROUTES from '../../routes'
 
 export type TProps = StackScreenProps<any, typeof ROUTES.AGE_DENIED>
 
-const AgeDenied: React.FC<TProps> = ({ navigation }) => (
-  <StyledViewContainer>
-    <StyledHeaderText>Спасибо за честный ответ!</StyledHeaderText>
-    <StyledTextView>
-      <StyledTextBodyHeader>К сожалению, наше приложение</StyledTextBodyHeader>
-      <StyledTextBody>содержит информацию,</StyledTextBody>
-      <StyledDenyTextBody>не предназначенную</StyledDenyTextBody>
-      <StyledTextBody>для лиц младше 18 лет</StyledTextBody>
-    </StyledTextView>
-    <StyledBackButton activeOpacity={0.8} onPress={() => navigation.goBack()}>
-      <StyledTextBackButton>Вернуться назад</StyledTextBackButton>
-    </StyledBackButton>
-  </StyledViewContainer>
-)
+const AgeDenied: React.FC<TProps> = ({ navigation }) => {
+  const goBack = (): void => {
+    navigation.goBack()
+  }
+
+  return (
+    <StyledViewContainer>
+      <StyledHeaderText>Спасибо за честный ответ!</StyledHeaderText>
+      <StyledTextView>
+        <StyledTextBodyHeader>
+          К сожалению, наше приложение
+        </StyledTextBodyHeader>
+        <StyledTextBody>содержит информацию,</StyledTextBody>
+        <StyledDenyTextBody>не предназначенную</StyledDenyTextBody>
+        <StyledTextBody>для лиц младше 18 лет</StyledTextBody>
+      </StyledTextView>
+      <StyledBackButton activeOpacity={0.8} onPress={goBack}>
+        <StyledTextBackButton>Вернуться назад</StyledTextBackButton>
+      </StyledBackButton>
+    </StyledViewContainer>
+  )
+}
 
 export default AgeDenied
 

@@ -9,33 +9,33 @@ import confirmButtonCross from '../../../assets/confirmButtonCross.png'
 
 export type TProps = StackScreenProps<any, typeof ROUTES.CONFIRM_AGE>
 
-const AgeConfirm: React.FC<TProps> = ({ navigation }) => (
-  <StyledViewContainer>
-    <Image source={welcomeHandShake} />
-    <StyledWelcomeText> Добро пожаловать!</StyledWelcomeText>
-    <StyledHeaderText> Вам уже исполнилось 18 лет?</StyledHeaderText>
-    <StyledViewButton>
-      <StyledButtonConfirm
-        activeOpacity={0.8}
-        onPress={() => {
-          navigation.push(ROUTES.SIGN_IN)
-        }}
-      >
-        <Image source={confirmButtonTick} />
-        <StyledButtonConfirmText>Да</StyledButtonConfirmText>
-      </StyledButtonConfirm>
-      <StyledButtonDeny
-        activeOpacity={0.8}
-        onPress={() => {
-          navigation.push(ROUTES.AGE_DENIED)
-        }}
-      >
-        <Image source={confirmButtonCross} />
-        <StyledButtonDenyText>Нет</StyledButtonDenyText>
-      </StyledButtonDeny>
-    </StyledViewButton>
-  </StyledViewContainer>
-)
+const AgeConfirm: React.FC<TProps> = ({ navigation }) => {
+  const navigateToSignIn = (): void => {
+    navigation.push(ROUTES.SIGN_IN)
+  }
+
+  const navigateToAgeDenied = (): void => {
+    navigation.push(ROUTES.AGE_DENIED)
+  }
+
+  return (
+    <StyledViewContainer>
+      <Image source={welcomeHandShake} />
+      <StyledWelcomeText> Добро пожаловать!</StyledWelcomeText>
+      <StyledHeaderText> Вам уже исполнилось 18 лет?</StyledHeaderText>
+      <StyledViewButton>
+        <StyledButtonConfirm activeOpacity={0.8} onPress={navigateToSignIn}>
+          <Image source={confirmButtonTick} />
+          <StyledButtonConfirmText>Да</StyledButtonConfirmText>
+        </StyledButtonConfirm>
+        <StyledButtonDeny activeOpacity={0.8} onPress={navigateToAgeDenied}>
+          <Image source={confirmButtonCross} />
+          <StyledButtonDenyText>Нет</StyledButtonDenyText>
+        </StyledButtonDeny>
+      </StyledViewButton>
+    </StyledViewContainer>
+  )
+}
 
 export default AgeConfirm
 
