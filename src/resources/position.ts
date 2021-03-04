@@ -1,11 +1,8 @@
-import { Method, Resource } from 'rest-hooks'
-import camelCase from 'lodash/camelCase'
-import snakeCase from 'lodash/snakeCase'
-import { deeplyApplyKeyTransform } from './utils'
+import { WineUpResource } from './base'
 import WineResource from './wine'
 import ShopResource from './shop'
 
-export default class PositionResource extends Resource {
+export default class PositionResource extends WineUpResource {
   readonly winePositionId?: string = undefined
 
   readonly wineId: string = ''
@@ -30,35 +27,7 @@ export default class PositionResource extends Resource {
     return this.winePositionId
   }
 
-  static async fetch(
-    method: Method = 'get',
-    url: string,
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    body?: Readonly<object | string>
-  ) {
-    // we'll need to do the inverse operation when sending data back to the server
-    if (body) {
-      // eslint-disable-next-line no-param-reassign
-      body = deeplyApplyKeyTransform(body, snakeCase)
-    }
-    // perform actual network request getting back json
-    const jsonResponse = await super.fetch(method, url, body)
-
-    // do the conversion!
-    return deeplyApplyKeyTransform(jsonResponse, camelCase)
-  }
-
-  static urlRoot = 'http://77.234.215.138:48080/catalog-service/position/'
-
-  static fetchOptionsPlugin(options: RequestInit) {
-    return {
-      ...options,
-      headers: {
-        ...options.headers,
-        accessToken: '123',
-      },
-    }
-  }
+  static urlRoot = WineUpResource.urlHandler('/position/')
 
   static schema = {
     wineId: WineResource.asSchema(),

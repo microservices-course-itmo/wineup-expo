@@ -3,7 +3,7 @@ import camelCase from 'lodash/camelCase'
 import { ReadShape } from 'rest-hooks/lib/resource/shapes'
 import { SchemaList } from 'rest-hooks/lib/resource/normal'
 import { AbstractInstanceType } from 'rest-hooks/lib/types'
-import { deeplyApplyKeyTransform } from './utils'
+import { deeplyApplyKeyTransform, WineUpResource } from './base'
 
 interface Shop {
   id: string
@@ -44,7 +44,7 @@ interface FilterParams {
   }
 }
 
-export default class CatalogResource extends Resource {
+export default class CatalogResource extends WineUpResource {
   readonly winePositionId: string = ''
 
   readonly actualPrice: number = 0
@@ -110,11 +110,7 @@ export default class CatalogResource extends Resource {
     // }
 
     // perform actual network request getting back json
-    const jsonResponse = await super.fetch(
-      method === 'get' ? 'post' : method,
-      url,
-      body
-    )
+    const jsonResponse = await super.fetch(method, url, body)
 
     // do the conversion!
     return deeplyApplyKeyTransform(jsonResponse, camelCase)
@@ -124,14 +120,11 @@ export default class CatalogResource extends Resource {
     this: T
   ): ReadShape<SchemaList<Readonly<AbstractInstanceType<T>>>> {
     return {
-      ...this.createShape(),
+      ...this.listShape(),
       type: 'read',
       schema: [this.asSchema()],
       getFetchKey: (params: FilterParams): string => {
         return JSON.stringify(params)
-      },
-      fetch: (params: FilterParams) => {
-        return this.fetch('post', this.urlRoot, params)
       },
     }
   }
@@ -168,15 +161,5 @@ export default class CatalogResource extends Resource {
     return uri
   }
 
-  static fetchOptionsPlugin = (options: RequestInit): RequestInit => {
-    return {
-      ...options,
-      headers: {
-        ...options.headers,
-        accessToken: '123',
-      },
-    }
-  }
-
-  static urlRoot = 'http://77.234.215.138:48080/catalog-service/position/true/'
+  static urlRoot = WineUpResource.urlHandler('/position/true/')
 }
