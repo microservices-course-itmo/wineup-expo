@@ -21,14 +21,15 @@ import { PTSans_400Regular, PTSans_700Bold } from '@expo-google-fonts/pt-sans'
 import { AppLoading } from 'expo'
 import { SafeAreaView, StatusBar } from 'react-native'
 import { CacheProvider } from 'rest-hooks'
+
 import * as firebase from 'firebase'
 import * as SecureStore from 'expo-secure-store'
 import AuthWrapper from './screens/Auth/AuthWrapper'
 import { AuthProvider } from './screens/Auth/AuthContext'
 import MainRouter from './screens/Router'
 import firebaseConfig from '../firebaseconfig'
-// import { MockProvider } from '@rest-hooks/test'
-// import { fixtures } from './tests/__mocks__/fixtures'
+import { MockProvider } from '@rest-hooks/test'
+import { fixtures } from './tests/__mocks__/fixtures'
 
 const App: React.FC = () => {
   const [isAuth, setIsAuth] = useState<boolean>(false)
@@ -70,13 +71,13 @@ const App: React.FC = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar hidden />
       <CacheProvider>
-        {/* <MockProvider results={fixtures}> */}
-        <NavigationContainer>
-          <AuthProvider value={{ setIsAuth, setIsRegistered, isRegistered }}>
-            {isAuth ? <MainRouter /> : <AuthWrapper />}
-          </AuthProvider>
-        </NavigationContainer>
-        {/* </MockProvider> */}
+        <MockProvider results={fixtures}>
+          <NavigationContainer>
+            <AuthProvider value={{ setIsAuth, setIsRegistered, isRegistered }}>
+              {isAuth ? <MainRouter /> : <AuthWrapper />}
+            </AuthProvider>
+          </NavigationContainer>
+        </MockProvider>
       </CacheProvider>
     </SafeAreaView>
   )
