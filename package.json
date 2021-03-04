@@ -85,6 +85,7 @@
     "eslint-plugin-react-native": "^3.9.1",
     "husky": "^4.2.5",
     "jest": "^26.4.0",
+    "jest-expo": "^40.0.2",
     "lint-staged": "^10.4.0",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
@@ -106,7 +107,7 @@
     ]
   },
   "jest": {
-    "preset": "react-native",
+    "preset": "jest-expo",
     "setupFiles": [
       "./node_modules/react-native-gesture-handler/jestSetup.js"
     ],
