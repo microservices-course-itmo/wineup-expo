@@ -65,50 +65,15 @@ function SignInConfirm({
     console.log('code resent')
   }
 
+  const onEnd = (): void => {
+    setIsPenalty(false)
+    console.log('isPenalty', isPenalty)
+  }
+
   useEffect(() => {
     setIsLongEnough(userCode.length === 6)
     setIsCorrectCode(isRightCode(userCode))
   }, [userCode])
-
-  // we need to fix this logic in styles for removing this constants into the bottom
-  const StyledViewWarningContainer = styled.View`
-    position: absolute;
-    top: -80px;
-    flex: 1;
-    flex-direction: row;
-    justifycontent: center;
-    align-items: center;
-    width: 220px;
-    height: 45px;
-    background-color: 'rgb(255, 255, 255)';
-    border-radius: 50px;
-    opacity: ${warningOpacity()};
-  `
-  const StyledButtonEnter = styled.TouchableOpacity`
-    flex: 1;
-    align-items: center;
-    justifycontent: center;
-    width: 268px;
-    max-height: 57px;
-    min-height: 57px;
-    background-color: 'rgb(147, 19, 50)';
-    border-radius: 5px;
-    opacity: ${enterButtonOpacity};
-    margin-top: 22;
-  `
-  const StyledResetCode = styled.TouchableOpacity`
-    flex: 1;
-    align-items: center;
-    justifycontent: center;
-    width: 268px;
-    max-height: 57px;
-    min-height: 57px;
-    background-color: 'rgb(147, 19, 50)';
-    border-radius: 5px;
-    position: absolute;
-    top: 234px;
-    opacity: ${resendOpacity()};
-  `
 
   return (
     <StyledViewContainer>
@@ -116,9 +81,8 @@ function SignInConfirm({
         <GoBackArrowIcon />
         <StyledBackButtonText>Вернуться назад</StyledBackButtonText>
       </StyledBackButton>
-
       <StyledViewInfoBlockContainer>
-        <StyledViewWarningContainer>
+        <StyledViewWarningContainer warningOpacity={warningOpacity}>
           <Image source={confirmButtonCross} />
           <StyledWrongCodeText>
             Код введён <StyledWrongWord>неверно</StyledWrongWord>
@@ -136,6 +100,7 @@ function SignInConfirm({
           activeOpacity={0.8}
           onPress={enterCodeHandler}
           disabled={!isLongEnough}
+          enterButtonOpacity={enterButtonOpacity}
         >
           <StyledEnterTextButton>Войти</StyledEnterTextButton>
         </StyledButtonEnter>
@@ -143,6 +108,7 @@ function SignInConfirm({
           activeOpacity={0.8}
           onPress={resendCode}
           disabled={isPenalty}
+          resendOpacity={resendOpacity}
         >
           <StyledResetCodeTextButton>
             Отправить код повторно
@@ -151,10 +117,7 @@ function SignInConfirm({
         <Countdown // need to fix CountDown component for styling
           isTimerEnabled={isTimerStarted}
           time={timeToResend}
-          handleEnd={() => {
-            setIsPenalty(false)
-            console.log('isPenalty', isPenalty)
-          }}
+          handleEnd={onEnd}
           style={[
             styles.resendCode,
             { opacity: warningOpacity(), position: 'relative', top: 118 },
@@ -165,10 +128,12 @@ function SignInConfirm({
   )
 }
 
+export default SignInConfirm
+
 const StyledViewContainer = styled.View`
   flex: 1;
   align-items: center;
-  justifycontent: center;
+  justify-content: center;
   margin-bottom: 10px;
 `
 const StyledBackButton = styled.TouchableOpacity`
@@ -214,5 +179,54 @@ const StyledResetCodeTextButton = styled.Text`
   color: 'rgb(255, 255, 255)';
   font-family: 'PTSans_700Bold';
 `
+/*eslint-disable */
+type StyledViewWarningContainerProps = {
+  warningOpacity: () => number
+}
 
-export default SignInConfirm
+type StyledButtonEnterProps = {
+  enterButtonOpacity: number
+}
+
+type StyledResetCodeProps = {
+  resendOpacity: () => number
+}
+/* eslint-enable */
+const StyledViewWarningContainer = styled.View<StyledViewWarningContainerProps>`
+  position: absolute;
+  top: -80px;
+  flex: 1;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 220px;
+  height: 45px;
+  background-color: 'rgb(255, 255, 255)';
+  border-radius: 50px;
+  opacity: ${({ warningOpacity }) => warningOpacity()};
+`
+const StyledButtonEnter = styled.TouchableOpacity<StyledButtonEnterProps>`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  width: 268px;
+  max-height: 57px;
+  min-height: 57px;
+  background-color: 'rgb(147, 19, 50)';
+  border-radius: 5px;
+  opacity: ${({ enterButtonOpacity }) => enterButtonOpacity};
+  margin-top: 22;
+`
+const StyledResetCode = styled.TouchableOpacity<StyledResetCodeProps>`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  width: 268px;
+  max-height: 57px;
+  min-height: 57px;
+  background-color: 'rgb(147, 19, 50)';
+  border-radius: 5px;
+  position: absolute;
+  top: 234px;
+  opacity: ${({ resendOpacity }) => resendOpacity()};
+`
