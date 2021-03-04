@@ -6,6 +6,7 @@ import BrandResource from '../../resources/brand'
 import WineResource from '../../resources/wine'
 import PositionResource from '../../resources/position'
 import CatalogResource from '../../resources/catalog'
+import bottleImage from './bottle.png'
 
 export const positionMock = {
   winePositionId: 'wine_position1',
@@ -37,7 +38,7 @@ export const wine1CatMock = {
   actualPrice: 700,
   description: 'description1',
   gastronomy: 'gastronomy1',
-  image: [],
+  image: bottleImage,
   linkToWine: 'http://shop1.com/wine1',
   price: 1200,
   shop: { id: '10', site: 'http://shop1.com/' },
@@ -61,7 +62,7 @@ export const wine2CatMock = {
   actualPrice: 950,
   description: 'description2',
   gastronomy: 'gastronomy2',
-  image: 'image2',
+  image: '',
   linkToWine: 'http://shop1.com/wine2',
   price: 1400,
   shop: { id: 10, site: 'http://shop1.com/' },
@@ -172,7 +173,7 @@ export const fixtures = [
   },
   {
     request: CatalogResource.filteredShape(),
-    params: { from: 0, to: 10 },
+    params: { from: 0, to: 5, searchParameters: '' },
     result: [wine1CatMock, wine2CatMock],
   },
 ]

@@ -53,7 +53,7 @@ export default class CatalogResource extends WineUpResource {
 
   readonly gastronomy: string = ''
 
-  readonly image: number[] = []
+  readonly image: string = ''
 
   readonly linkToWine: string = ''
 

@@ -18,6 +18,7 @@ function RecommendationBlock({ style }: RecommendationBlockProps) {
   const positions = useCache(CatalogResource.filteredShape(), {
     from: 0,
     to: 5,
+    searchParameters: '',
   })
   const carouselRef = useRef<Carousel<any> | null>(null)
   const navigation = useNavigation()
@@ -98,5 +99,7 @@ const Title = styled.Text`
   font-weight: 700;
   font-size: 20px;
   text-align: center;
+
+  margin-bottom: 26px;
 `
 const Icon = styled.TouchableOpacity``
