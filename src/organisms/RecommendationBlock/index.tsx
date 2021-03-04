@@ -20,6 +20,7 @@ function RecommendationBlock({ style }: RecommendationBlockProps) {
     to: 5,
     searchParameters: '',
   })
+
   const carouselRef = useRef<Carousel<any> | null>(null)
   const navigation = useNavigation()
 

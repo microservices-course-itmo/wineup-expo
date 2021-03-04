@@ -1,14 +1,24 @@
-import React from 'react'
+import React, { ComponentType } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
+interface MockedNavigatorProps {
+  component: ComponentType
+  name?: string
+  params: any
+}
+
 const Stack = createStackNavigator()
-const MockedNavigator = ({ component, params = {} }) => {
+const MockedNavigator = ({
+  component,
+  params = {},
+  name = 'MockedScreen',
+}: MockedNavigatorProps) => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator headerMode='none'>
         <Stack.Screen
-          name='MockedScreen'
+          name={name}
           component={component}
           initialParams={params}
         />

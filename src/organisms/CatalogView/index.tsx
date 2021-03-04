@@ -10,10 +10,13 @@ import { useFilters } from '../FiltersBar/FiltersContext'
 function CatalogView() {
   const { query } = useFilters()
 
+  console.log(query)
+
+  // const catalog: any[] = []
   const catalog = useResource(CatalogResource.filteredShape(), {
     from: 0,
     to: 5,
-    searchParameters: query,
+    searchParameters: '',
   })
 
   const navigation = useNavigation()
