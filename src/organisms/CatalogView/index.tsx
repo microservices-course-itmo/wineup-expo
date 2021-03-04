@@ -31,11 +31,14 @@ function CatalogView() {
 
   const [state, setState] = useState(defaultState)
   const [page, setPage] = useState(startingPageState)
+  
+  console.log(query)
 
+  // const catalog: any[] = []
   const catalog = useResource(CatalogResource.filteredShape(), {
     from: page.pageStats.firstItem,
     to: page.pageStats.lastItem,
-    searchParameters: query,
+    searchParameters: '',
   })
 
   const getLayoutStats = (event: any) => {
