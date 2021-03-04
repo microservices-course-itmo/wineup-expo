@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { View, Switch, StyleSheet, Text } from 'react-native'
+import { Switch, Text } from 'react-native'
+import styled from 'styled-components/native'
 
 const UserTypeSwitcher: React.FC = () => {
   const [isEnabled, setIsEnabled] = useState(false)
   const toggleSwitch = () => setIsEnabled((prev) => !prev)
 
   return (
-    <View style={styles.container}>
+    <StyledSwitcher>
       <Text>Common User</Text>
       <Switch
         trackColor={{ false: '#767577', true: '#767577' }}
@@ -16,19 +17,17 @@ const UserTypeSwitcher: React.FC = () => {
         value={isEnabled}
       />
       <Text>Business User</Text>
-    </View>
+    </StyledSwitcher>
   )
 }
 
 export default UserTypeSwitcher
 
-const styles = StyleSheet.create({
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    position: 'absolute',
-    top: '15%',
-  },
-})
+const StyledSwitcher = styled.View`
+  display: flex;
+  align-items: center;
+  justifycontent: space-between;
+  flex-direction: row;
+  position: absolute;
+  top: 15%;
+`

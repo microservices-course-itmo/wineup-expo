@@ -22,8 +22,6 @@ const WineBottlePrice = ({
   )
 }
 
-export default WineBottlePrice
-
 const Price = styled(Text)`
   font-size: 23px;
   text-align: center;
@@ -40,3 +38,5 @@ const OldPrice = styled(Text)`
   font-family: Roboto_300Light_Italic;
   text-decoration: line-through;
 `
+
+export default WineBottlePrice

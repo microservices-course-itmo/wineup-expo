@@ -30,8 +30,6 @@ function RoundedButton({
   )
 }
 
-export default RoundedButton
-
 const Container = styled.View<{ selected?: boolean }>`
   justify-content: center;
   align-items: center;
@@ -50,3 +48,5 @@ const Text = styled.Text<{ selected?: boolean }>`
 
   color: ${({ selected }) => (selected ? '#fff' : '#333')};
 `
+
+export default RoundedButton

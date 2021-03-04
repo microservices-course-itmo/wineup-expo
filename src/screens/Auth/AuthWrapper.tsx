@@ -1,7 +1,7 @@
 import React from 'react'
-import { ImageBackground, StyleSheet, Image } from 'react-native'
 import { enableScreens } from 'react-native-screens'
 import { createStackNavigator } from '@react-navigation/stack'
+import styled from 'styled-components/native'
 import SignUpScreen from './SignUpScreen'
 import ROUTES from '../../routes'
 import SignInScreen from './SignInScreen'
@@ -14,42 +14,34 @@ import authBackgroundLogo from '../../../assets/authBackgroundLogo.png'
 enableScreens()
 const Stack = createStackNavigator()
 
-const AuthWrapper: React.FC = () => {
-  return (
-    <ImageBackground
-      source={authBackground}
-      resizeMode='cover'
-      style={styles.container}
+const AuthWrapper: React.FC = () => (
+  <StyledImageBackground source={authBackground} resizeMode='cover'>
+    <StyledLogo source={authBackgroundLogo} />
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        cardStyle: { backgroundColor: 'transparent' },
+        animationEnabled: false,
+      }}
     >
-      <Image style={styles.logo} source={authBackgroundLogo} />
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-          cardStyle: { backgroundColor: 'transparent' },
-          animationEnabled: false,
-        }}
-      >
-        <Stack.Screen name={ROUTES.CONFIRM_AGE} component={AgeConfirm} />
-        <Stack.Screen name={ROUTES.AGE_DENIED} component={AgeDenied} />
-        <Stack.Screen name={ROUTES.SIGN_IN} component={SignInScreen} />
-        <Stack.Screen name={ROUTES.SIGN_IN_CONFIRM} component={SignInConfirm} />
-        <Stack.Screen name={ROUTES.SIGN_UP} component={SignUpScreen} />
-      </Stack.Navigator>
-    </ImageBackground>
-  )
-}
+      <Stack.Screen name={ROUTES.CONFIRM_AGE} component={AgeConfirm} />
+      <Stack.Screen name={ROUTES.AGE_DENIED} component={AgeDenied} />
+      <Stack.Screen name={ROUTES.SIGN_IN} component={SignInScreen} />
+      <Stack.Screen name={ROUTES.SIGN_IN_CONFIRM} component={SignInConfirm} />
+      <Stack.Screen name={ROUTES.SIGN_UP} component={SignUpScreen} />
+    </Stack.Navigator>
+  </StyledImageBackground>
+)
 
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    height: '100%',
-    flex: 1,
-  },
-  logo: {
-    position: 'absolute',
-    top: 0,
-    right: 20,
-  },
-})
+const StyledImageBackground = styled.ImageBackground`
+  flex: 1;
+  width: 100%;
+  height: 100%;
+`
+const StyledLogo = styled.Image`
+  position: absolute;
+  top: 0px;
+  right: 20px;
+`
 
 export default AuthWrapper

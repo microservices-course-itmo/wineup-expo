@@ -1,21 +1,21 @@
 import React from 'react'
 import { storiesOf } from '@storybook/react-native'
 import { useResource } from 'rest-hooks'
-import WineCard from './index'
 import CatalogResource from '../../resources/catalog'
+import WineInfo from './index'
 
-storiesOf('WineCard', module)
+storiesOf('WineInfo', module)
   .add('Default', () => {
     const position = useResource(CatalogResource.detailShape(), {
       winePositionId: 'wine_position_1',
     })
 
-    return <WineCard position={position} />
+    return <WineInfo position={position} />
   })
   .add('Full', () => {
     const position = useResource(CatalogResource.detailShape(), {
       winePositionId: 'wine_position_1',
     })
 
-    return <WineCard position={position} full />
+    return <WineInfo position={position} full />
   })
