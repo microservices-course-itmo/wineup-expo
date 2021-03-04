@@ -21,6 +21,8 @@ const UserTypeSwitcher: React.FC = () => {
   )
 }
 
+export default UserTypeSwitcher
+
 const StyledSwitcher = styled.View`
   display: flex;
   align-items: center;
@@ -29,5 +31,3 @@ const StyledSwitcher = styled.View`
   position: absolute;
   top: 15%;
 `
-
-export default UserTypeSwitcher

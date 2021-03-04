@@ -44,10 +44,12 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
   )
 }
 
+export default SignInScreen
+
 const StyledContainer = styled.View`
   flex: 1;
   align-items: center;
-  justifycontent: center;
+  justify-content: center;
 `
 const StyledEnterNumberText = styled.Text`
   font-size: 20px;
@@ -67,7 +69,7 @@ const StyledInputPhone = styled.TextInput`
   min-height: 57px;
   max-height: 57px;
   min-width: 268px;
-  justifycontent: center;
+  justify-content: center;
   align-items: center;
   border-radius: 5px;
   color: 'rgb(0, 0, 0)';
@@ -85,7 +87,7 @@ const StyledImagePhone = styled.Image`
 const StyledEnterButton = styled.TouchableOpacity`
   flex: 1;
   align-items: center;
-  justifycontent: center;
+  justify-content: center;
   width: 268px;
   max-height: 57px;
   min-height: 57px;
@@ -101,7 +103,7 @@ const StyledEnterTextButton = styled.Text`
 const StyledUnregButton = styled.TouchableOpacity`
   flex: 1;
   align-items: center;
-  justifycontent: center;
+  justify-content: center;
   margin-top: 30px;
   width: 316px;
   max-height: 35px;
@@ -111,5 +113,3 @@ const StyledUnregEnterTextButton = styled.Text`
   font-size: 16px;
   color: 'rgb(255, 255, 255)';
 `
-
-export default SignInScreen

@@ -20,11 +20,13 @@ const AgeDenied: React.FC<TProps> = ({ navigation }) => (
   </StyledViewContainer>
 )
 
+export default AgeDenied
+
 const StyledViewContainer = styled.View`
   flex: 1;
   margin-left: auto;
   margin-right: auto;
-  justifycontent: center;
+  justify-content: center;
   align-items: center;
   margin-bottom: 18px;
 `
@@ -60,7 +62,7 @@ const StyledDenyTextBody = styled.Text`
 const StyledBackButton = styled.TouchableOpacity`
   flex: 1;
   align-items: center;
-  justifycontent: center;
+  justify-content: center;
   width: 217px;
   margin-top: 52px;
   max-height: 57px;
@@ -73,5 +75,3 @@ const StyledTextBackButton = styled.Text`
   color: 'rgb(255, 255, 255)';
   font-family: 'PTSans_700Bold';
 `
-
-export default AgeDenied

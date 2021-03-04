@@ -37,11 +37,13 @@ const AgeConfirm: React.FC<TProps> = ({ navigation }) => (
   </StyledViewContainer>
 )
 
+export default AgeConfirm
+
 const StyledViewContainer = styled.View`
   flex: 1;
   margin-left: auto;
   margin-right: auto;
-  justifycontent: center;
+  justify-content: center;
   align-items: center;
 `
 const StyledWelcomeText = styled.Text`
@@ -59,7 +61,7 @@ const StyledHeaderText = styled.Text`
 const StyledViewButton = styled.View`
   flex-direction: row;
   margin-top: 47px;
-  justifycontent: center;
+  justify-content: center;
   margin-left: auto;
   margin-right: auto;
 `
@@ -70,7 +72,7 @@ const StyledButtonConfirm = styled.TouchableOpacity`
   border-radius: 2px;
   flex-direction: row;
   align-items: center;
-  justifycontent: center;
+  justify-content: center;
 `
 const StyledButtonConfirmText = styled.Text`
   margin-left: 8px;
@@ -84,7 +86,7 @@ const StyledButtonDeny = styled.TouchableOpacity`
   border-radius: 2px;
   flex-direction: row;
   align-items: center;
-  justifycontent: center;
+  justify-content: center;
   margin-left: 42px;
 `
 const StyledButtonDenyText = styled.Text`
@@ -92,5 +94,3 @@ const StyledButtonDenyText = styled.Text`
   font-family: 'PTSans_700Bold';
   color: 'rgb(226, 3, 56)';
 `
-
-export default AgeConfirm
