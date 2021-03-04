@@ -52,7 +52,7 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
       </StyledEnterNumberText>
       <StyledPhoneEnterForm>
         <StyledInputPhone
-          keyboardType='number-pad'
+          keyboardType='phone-pad'
           maxLength={12}
           onChangeText={setUserPhone}
           placeholder='+7 (9XX) XXX XX XX'
