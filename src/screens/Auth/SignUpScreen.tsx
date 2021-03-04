@@ -90,8 +90,8 @@ function SignUpScreen({ route }: SignUpScreenProps): ReactElement {
   }
 
   return (
-    <SingUpWrapper>
-      <SingUpTitle>Введите данные</SingUpTitle>
+    <StyledContainer>
+      <StyledTextInsertData>Введите данные</StyledTextInsertData>
       <LabeledInput
         value={userName}
         label='Введите ваше имя'
@@ -115,46 +115,50 @@ function SignUpScreen({ route }: SignUpScreenProps): ReactElement {
         onFill={setIsCityFilled}
       />
       <ConsentCheckBox onPress={setIsConsentGiven} hasFilled={isСonsentGiven} />
-      <SignUpButton
+      <StyledEnterButton
+        buttonOpacity={buttonOpacity}
         onPress={handleSubmit}
         disabled={!isSignUpEnabled}
-        buttonOpacity={buttonOpacity}
       >
-        <SignUpButtonText>Войти</SignUpButtonText>
-      </SignUpButton>
-    </SingUpWrapper>
+        <StyledEnterTextButton>Войти</StyledEnterTextButton>
+      </StyledEnterButton>
+    </StyledContainer>
   )
 }
 
-const SingUpWrapper = styled.View`
-  margin-top: 106px;
+export default SignUpScreen
+
+const StyledContainer = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
+  margin-top: 106px;
 `
-
-const SingUpTitle = styled.Text`
+const StyledTextInsertData = styled.Text`
   font-size: 20px;
   font-family: 'PTSans_700Bold';
-  color: #fff;
+  color: rgb(255, 255, 255);
 `
+const StyledEnterTextButton = styled.Text`
+  font-size: 16px;
+  color: rgb(255, 255, 255);
+  font-family: 'PTSans_700Bold';
+`
+/*eslint-disable */
+type ButtonEnterProps = {
+  buttonOpacity: number
+}
+/* eslint-enable */
 
-const SignUpButton = styled.TouchableOpacity<{ buttonOpacity: number }>`
-  margin-top: 35px;
+const StyledEnterButton = styled.TouchableOpacity<ButtonEnterProps>`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
   width: 268px;
   max-height: 57px;
   min-height: 57px;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
+  background-color: rgb(147, 19, 50);
   border-radius: 5px;
-  background-color: #931332;
-  opacity: ${(props) => props.buttonOpacity};
+  opacity: ${({ buttonOpacity }) => buttonOpacity};
+  margin-top: 35px;
 `
-const SignUpButtonText = styled.Text`
-  font-size: 16px;
-  font-family: 'PTSans_700Bold';
-  color: #fff;
-`
-
-export default SignUpScreen

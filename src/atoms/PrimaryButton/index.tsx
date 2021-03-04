@@ -19,8 +19,6 @@ function PrimaryButton({
   )
 }
 
-export default PrimaryButton
-
 const Container = styled.View`
   width: 100%;
   height: 50px;
@@ -34,3 +32,5 @@ const Container = styled.View`
 `
 
 const Touchable = styled.TouchableOpacity``
+
+export default PrimaryButton
