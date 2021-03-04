@@ -41,7 +41,7 @@ export const wine1CatMock = {
   image: bottleImage,
   linkToWine: 'http://shop1.com/wine1',
   price: 1200,
-  shop: { id: '10', site: 'http://shop1.com/' },
+  shop: { id: '10', site: 'http://shop1.com/', name: 'Shop 1' },
   volume: 0.75,
   wine: {
     avg: 14,
