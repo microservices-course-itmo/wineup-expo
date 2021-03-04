@@ -26,12 +26,15 @@
     "@react-navigation/stack": "^5.11.0",
     "@rest-hooks/test": "^1.0.18",
     "@storybook/addon-actions": "^5.3",
+    "@storybook/addon-knobs": "^5.3",
     "@storybook/react-native": "^5.3.25",
     "@types/styled-components": "^5.1.4",
+    "@unimodules/core": "^7.0.0",
     "babel-plugin-module-resolver": "^4.0.0",
     "expo": "~38.0.8",
     "expo-constants": "^10.0.1",
     "expo-font": "~8.2.1",
+    "expo-notifications": "~0.3.3",
     "expo-status-bar": "^1.0.2",
     "lodash": "^4.17.20",
     "react": "~16.11.0",
@@ -55,7 +58,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
-    "@storybook/addon-knobs": "^5.3",
     "@storybook/addon-links": "^5.3",
     "@storybook/addon-ondevice-actions": "^5.3.23",
     "@storybook/addon-ondevice-knobs": "^5.3.25",
@@ -83,6 +85,7 @@
     "eslint-plugin-react-native": "^3.9.1",
     "husky": "^4.2.5",
     "jest": "^26.4.0",
+    "jest-expo": "^40.0.2",
     "lint-staged": "^10.4.0",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
@@ -104,7 +107,7 @@
     ]
   },
   "jest": {
-    "preset": "react-native",
+    "preset": "jest-expo",
     "setupFiles": [
       "./node_modules/react-native-gesture-handler/jestSetup.js"
     ],
