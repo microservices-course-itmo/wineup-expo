@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import {
   useFonts,
@@ -44,6 +44,8 @@ Notifications.setNotificationHandler({
 const App: React.FC = () => {
   const [isAuth, setIsAuth] = useState<boolean>(false)
   const [isRegistered, setIsRegistered] = useState<boolean>(false)
+  const notificationListener = useRef<Subscription>()
+  const responseListener = useRef<Subscription>()
 
   if (!isAuth) {
     SecureStore.getItemAsync('accessToken').then((accessToken) => {
