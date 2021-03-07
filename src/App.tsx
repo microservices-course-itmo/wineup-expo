@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import {
   useFonts,
@@ -21,12 +21,15 @@ import { PTSans_400Regular, PTSans_700Bold } from '@expo-google-fonts/pt-sans'
 import { AppLoading } from 'expo'
 import { SafeAreaView, StatusBar } from 'react-native'
 import { CacheProvider } from 'rest-hooks'
+import * as firebase from 'firebase'
+import * as SecureStore from 'expo-secure-store'
 import { MockProvider } from '@rest-hooks/test'
 import * as Notifications from 'expo-notifications'
 import { Subscription } from '@unimodules/core'
 import AuthWrapper from './screens/Auth/AuthWrapper'
 import { AuthProvider } from './screens/Auth/AuthContext'
 import MainRouter from './screens/Router'
+import firebaseConfig from '../firebaseconfig'
 import { fixtures } from './tests/__mocks__/fixtures'
 import { registerForPushNotificationsAsync } from './utils/notifications'
 
@@ -39,9 +42,23 @@ Notifications.setNotificationHandler({
 })
 
 const App: React.FC = () => {
-  const [isAuth, setIsAuth] = useState(true)
+  const [isAuth, setIsAuth] = useState<boolean>(false)
+  const [isRegistered, setIsRegistered] = useState<boolean>(false)
   const notificationListener = useRef<Subscription>()
   const responseListener = useRef<Subscription>()
+
+  if (!isAuth) {
+    SecureStore.getItemAsync('accessToken').then((accessToken) => {
+      if (accessToken) {
+        setIsAuth(true)
+        setIsRegistered(true)
+      }
+    })
+  }
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig)
+  }
 
   useEffect(() => {
     registerForPushNotificationsAsync()
@@ -93,13 +110,9 @@ const App: React.FC = () => {
       <CacheProvider>
         <MockProvider results={fixtures}>
           <NavigationContainer>
-            {isAuth ? (
-              <MainRouter />
-            ) : (
-              <AuthProvider value={{ setIsAuth }}>
-                <AuthWrapper />
-              </AuthProvider>
-            )}
+            <AuthProvider value={{ setIsAuth, setIsRegistered, isRegistered }}>
+              {isAuth ? <MainRouter /> : <AuthWrapper />}
+            </AuthProvider>
           </NavigationContainer>
         </MockProvider>
       </CacheProvider>

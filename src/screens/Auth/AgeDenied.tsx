@@ -41,7 +41,7 @@ const StyledViewContainer = styled.View`
 const StyledHeaderText = styled.Text`
   font-size: 22px;
   font-family: 'PTSans_700Bold';
-  color: 'rgb(255, 255, 255)';
+  color: rgb(255, 255, 255);
   margin-top: 36px;
 `
 const StyledTextView = styled.View`
@@ -51,20 +51,20 @@ const StyledTextView = styled.View`
 const StyledTextBodyHeader = styled.Text`
   font-size: 20px;
   font-family: 'PTSans_400Regular';
-  color: 'rgb(255, 255, 255)';
+  color: rgb(255, 255, 255);
   margin-top: 33px;
   text-align: center;
 `
 const StyledTextBody = styled.Text`
   font-size: 20px;
   font-family: 'PTSans_400Regular';
-  color: 'rgb(255, 255, 255)';
+  color: rgb(255, 255, 255);
   text-align: center;
 `
 const StyledDenyTextBody = styled.Text`
   font-size: 20px;
   font-family: 'PTSans_700Bold';
-  color: 'rgb(255, 255, 255)';
+  color: rgb(255, 255, 255);
   text-align: center;
 `
 const StyledBackButton = styled.TouchableOpacity`
@@ -75,11 +75,11 @@ const StyledBackButton = styled.TouchableOpacity`
   margin-top: 52px;
   max-height: 57px;
   min-height: 57px;
-  background-color: 'rgb(147, 19, 50)';
+  background-color: rgb(147, 19, 50);
   border-radius: 5px;
 `
 const StyledTextBackButton = styled.Text`
   font-size: 16px;
-  color: 'rgb(255, 255, 255)';
+  color: rgb(255, 255, 255);
   font-family: 'PTSans_700Bold';
 `

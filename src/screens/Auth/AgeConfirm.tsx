@@ -50,12 +50,12 @@ const StyledWelcomeText = styled.Text`
   margin-top: 13px;
   font-size: 16px;
   font-family: 'PlayfairDisplay_400Regular_Italic';
-  color: 'rgb(255, 255, 255)';
+  color: rgb(255, 255, 255);
 `
 const StyledHeaderText = styled.Text`
   font-size: 22px;
   font-family: 'PTSans_700Bold';
-  color: 'rgb(255, 255, 255)';
+  color: rgb(255, 255, 255);
   margin-top: 36px;
 `
 const StyledViewButton = styled.View`
@@ -68,7 +68,7 @@ const StyledViewButton = styled.View`
 const StyledButtonConfirm = styled.TouchableOpacity`
   width: 97px;
   height: 46px;
-  background-color: 'rgb(255, 255, 255)';
+  background-color: rgb(255, 255, 255);
   border-radius: 2px;
   flex-direction: row;
   align-items: center;
@@ -77,12 +77,12 @@ const StyledButtonConfirm = styled.TouchableOpacity`
 const StyledButtonConfirmText = styled.Text`
   margin-left: 8px;
   font-family: 'PTSans_700Bold';
-  color: 'rgb(69, 208, 158)';
+  color: rgb(69, 208, 158);
 `
 const StyledButtonDeny = styled.TouchableOpacity`
   width: 97px;
   height: 46px;
-  background-color: 'rgb(255, 255, 255)';
+  background-color: rgb(255, 255, 255);
   border-radius: 2px;
   flex-direction: row;
   align-items: center;
@@ -92,5 +92,5 @@ const StyledButtonDeny = styled.TouchableOpacity`
 const StyledButtonDenyText = styled.Text`
   margin-left: 11px;
   font-family: 'PTSans_700Bold';
-  color: 'rgb(226, 3, 56)';
+  color: rgb(226, 3, 56);
 `
