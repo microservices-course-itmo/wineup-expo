@@ -20,7 +20,23 @@ function loadStories() {
   require('../src/atoms/WineBottlePrice/index.stories')
   require('../src/atoms/WineInfo/index.stories')
   require('../src/atoms/WineShopName/index.stories')
+  require('../src/molecules/Auth/CheckedIcon.stories')
+  require('../src/molecules/Auth/ConsentCheckBox.stories')
+  require('../src/molecules/Auth/GoBackArrowIcon.stories')
+  require('../src/molecules/Auth/LabeledDatePicker.stories')
+  require('../src/molecules/Auth/LabeledDropdown.stories')
+  require('../src/molecules/Auth/LabeledInput.stories')
+  require('../src/molecules/Auth/UncheckedIcon.stories')
+  require('../src/molecules/ConfirmPopUp/index.stories')
   require('../src/molecules/Countdown/index.stories')
+  require('../src/molecules/FavoritesPlaceholder/index.stories')
+  require('../src/molecules/FilterButton/Color.stories')
+  require('../src/molecules/FilterButton/Country.stories')
+  require('../src/molecules/FilterButton/Favorites.stories')
+  require('../src/molecules/FilterButton/Price.stories')
+  require('../src/molecules/FilterButton/Recomemended.stories')
+  require('../src/molecules/FilterButton/Sugar.stories')
+  require('../src/molecules/Header/index.stories')
   require('../src/molecules/LabeledCheckbox/index.stories')
   require('../src/molecules/LabeledInput/index.stories')
   require('../src/molecules/LabeledRadioButton/index.stories')
@@ -56,7 +72,23 @@ const stories = [
   '../src/atoms/WineBottlePrice/index.stories',
   '../src/atoms/WineInfo/index.stories',
   '../src/atoms/WineShopName/index.stories',
+  '../src/molecules/Auth/CheckedIcon.stories',
+  '../src/molecules/Auth/ConsentCheckBox.stories',
+  '../src/molecules/Auth/GoBackArrowIcon.stories',
+  '../src/molecules/Auth/LabeledDatePicker.stories',
+  '../src/molecules/Auth/LabeledDropdown.stories',
+  '../src/molecules/Auth/LabeledInput.stories',
+  '../src/molecules/Auth/UncheckedIcon.stories',
+  '../src/molecules/ConfirmPopUp/index.stories',
   '../src/molecules/Countdown/index.stories',
+  '../src/molecules/FavoritesPlaceholder/index.stories',
+  '../src/molecules/FilterButton/Color.stories',
+  '../src/molecules/FilterButton/Country.stories',
+  '../src/molecules/FilterButton/Favorites.stories',
+  '../src/molecules/FilterButton/Price.stories',
+  '../src/molecules/FilterButton/Recomemended.stories',
+  '../src/molecules/FilterButton/Sugar.stories',
+  '../src/molecules/Header/index.stories',
   '../src/molecules/LabeledCheckbox/index.stories',
   '../src/molecules/LabeledInput/index.stories',
   '../src/molecules/LabeledRadioButton/index.stories',

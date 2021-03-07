@@ -53,7 +53,10 @@ function RecommendationBlock({ style }: RecommendationBlockProps) {
 
   return (
     <Container style={style}>
-      <Title>Мы подобрали для вас{'\n'}схожие вина:</Title>
+      <TitleBock>
+        <Title>Мы подобрали для вас</Title>
+        <Title>схожие вина:</Title>
+      </TitleBock>
       <Carousel
         ref={carouselRef}
         data={positions!}
@@ -97,10 +100,12 @@ const Buttons = styled.View`
 `
 const Title = styled.Text`
   font-family: PlayfairDisplay_700Bold;
-  font-weight: 700;
+  font-weight: 700px;
   font-size: 20px;
   text-align: center;
 
   margin-bottom: 26px;
 `
+const TitleBock = styled.View``
+
 const Icon = styled.TouchableOpacity``
