@@ -21,6 +21,7 @@ interface AuthContextProps {
   authorize: () => Promise<void>
   accessToken: string | null
   signup: (data: Omit<SignUpRequestData, 'fireBaseToken'>) => Promise<void>
+  signout: () => Promise<void>
 }
 
 export const AuthContext = createContext({} as AuthContextProps)
@@ -117,6 +118,15 @@ export function AuthProvider({ children }: PropsWithChildren<any>) {
     setTokens(newTokens)
   }
 
+  const signout = async () => {
+    const newTokens = { accessToken: null, refreshToken: null }
+
+    await store.setTokens(newTokens)
+    setTokens(newTokens)
+
+    await firebase.signout()
+  }
+
   return (
     <>
       <FirebaseRecaptchaVerifierModal
@@ -130,6 +140,7 @@ export function AuthProvider({ children }: PropsWithChildren<any>) {
           authenticate,
           authorize,
           signup,
+          signout,
           accessToken: tokens.accessToken,
         }}
       >
