@@ -1,18 +1,15 @@
-import React, { useState, useEffect, ReactElement, useContext } from 'react'
-import { Image } from 'react-native'
+import React, { useState, useEffect, ReactElement } from 'react'
+import { Image, ActivityIndicator } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RouteProp } from '@react-navigation/native'
-import * as firebase from 'firebase'
-import * as SecureStore from 'expo-secure-store'
 import styled from 'styled-components/native'
 import Countdown from '../../molecules/Countdown'
 import LabeledInput from '../../molecules/Auth/LabeledInput'
 import ROUTES from '../../routes'
-import { AuthContext } from './AuthContext'
 import styles from './styles'
 import GoBackArrowIcon from '../../molecules/Auth/GoBackArrowIcon'
 import confirmButtonCross from '../../../assets/confirmButtonCross.png'
-import { User } from '../../helpers'
+import { SignUpRequestData } from '../../hooks/useAuth'
 
 type SignInConfirmScreenNavigationProps = StackNavigationProp<
   any,
@@ -21,7 +18,20 @@ type SignInConfirmScreenNavigationProps = StackNavigationProp<
 
 interface SignInConfirmProps {
   navigation: SignInConfirmScreenNavigationProps
-  route: RouteProp<{ params: { verificationId: string } }, 'params'>
+  route: RouteProp<
+    {
+      params: {
+        verifyPhone: (
+          code: string
+        ) => Promise<
+          (
+            data: Omit<SignUpRequestData, 'fireBaseToken'>
+          ) => Promise<void> | undefined
+        >
+      }
+    },
+    'params'
+  >
 }
 
 const timeToResend = 4
@@ -32,9 +42,10 @@ function SignInConfirm({
 }: SignInConfirmProps): ReactElement<SignInConfirmProps> {
   const [userCode, setUserCode] = useState('')
   const [isLongEnough, setIsLongEnough] = useState(false)
-  const [isTimerStarted, setIsTimerStarted] = useState(false)
+  const [isTimerStarted] = useState(false)
   const [isPenalty, setIsPenalty] = useState(false)
   const [isCodeEnteredOnce, setIsCodeEnteredOnce] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const enterButtonOpacity = isLongEnough ? 1 : 0.4
   const resendOpacity = () => {
     if (!isCodeEnteredOnce) return 0
@@ -42,96 +53,27 @@ function SignInConfirm({
 
     return 1
   }
-  const [isWarningOn, setIsWarningOn] = useState(false)
+  const [isWarningOn] = useState(false)
+
   const warningOpacity = () => {
     if (isWarningOn) return isCodeEnteredOnce ? 1 : 0
 
     return 0
   }
 
-  const { setIsAuth, setIsRegistered } = useContext(AuthContext)
-  let isUnregistered = false
-
-  async function signInWithPhoneNumber() {
-    try {
-      const credential = firebase.auth.PhoneAuthProvider.credential(
-        route.params.verificationId,
-        userCode
-      )
-
-      const userCredential = await firebase
-        .auth()
-        .signInWithCredential(credential)
-
-      if (userCredential.user) {
-        return userCredential.user.getIdToken()
-      }
-
-      return null
-    } catch (err) {
-      console.log(err)
-
-      return null
-    }
-  }
-
-  async function signInWithJwtToken(jwtToken: string) {
-    try {
-      const response = await fetch(
-        'http://77.234.215.138:18080/user-service/login/',
-        {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            fireBaseToken: jwtToken,
-          }),
-        }
-      )
-
-      if (response.status === 401) {
-        isUnregistered = true
-
-        return null
-      }
-
-      return response.json()
-    } catch (err) {
-      console.log(err.message)
-
-      return null
-    }
-  }
-
-  const enterCodeHandler = () => {
+  const enterCodeHandler = async () => {
     setIsCodeEnteredOnce(true)
-    signInWithPhoneNumber().then((jwtToken) => {
-      if (jwtToken) {
-        signInWithJwtToken(jwtToken)
-          .then((data: User) => {
-            if (data) {
-              SecureStore.setItemAsync('accessToken', data.accessToken)
-              SecureStore.setItemAsync('refreshToken', data.refreshToken)
 
-              setIsAuth(true)
-              setIsRegistered(true)
-            } else if (isUnregistered)
-              navigation.navigate(ROUTES.SIGN_UP, { jwtToken })
-            else {
-              throw new Error('Network response was not ok')
-            }
-          })
-          .catch((err) => {
-            console.log(err.message)
-          })
-      } else {
-        setIsWarningOn(true)
-        setIsPenalty(true)
-        setIsTimerStarted(true)
-      }
-    })
+    setIsLoading(true)
+
+    try {
+      await route.params.verifyPhone(userCode)
+      setIsLoading(false)
+    } catch (_) {
+      console.log('User is not registered')
+
+      navigation.navigate(ROUTES.SIGN_UP)
+    }
   }
 
   // TODO: implement code resend / probably with recaptcha again :(
@@ -175,7 +117,13 @@ function SignInConfirm({
           disabled={!isLongEnough}
           enterButtonOpacity={enterButtonOpacity}
         >
-          <StyledEnterTextButton>Войти</StyledEnterTextButton>
+          <StyledEnterTextButton>
+            {isLoading ? (
+              <ActivityIndicator size='small' color='#fff' />
+            ) : (
+              'Войти'
+            )}
+          </StyledEnterTextButton>
         </StyledButtonEnter>
         <StyledResetCode
           activeOpacity={0.8}

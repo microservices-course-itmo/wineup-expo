@@ -1,6 +1,7 @@
 import camelCase from 'lodash/camelCase'
 import snakeCase from 'lodash/snakeCase'
 import { Method, Resource } from 'rest-hooks'
+import { useAuthContext } from '../screens/Auth/AuthContext'
 
 export abstract class WineUpResource extends Resource {
   static urlRoot = 'http://77.234.215.138:18080/catalog-service'
@@ -28,11 +29,14 @@ export abstract class WineUpResource extends Resource {
   }
 
   static fetchOptionsPlugin(options: RequestInit) {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { accessToken } = useAuthContext()
+
     return {
       ...options,
       headers: {
         ...options.headers,
-        accessToken: '123',
+        accessToken: accessToken ? `Bearer ${accessToken}` : '123',
       },
     }
   }

@@ -3,7 +3,7 @@ import { Text, View, Platform } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
 import styles from './styles'
 
-enum CityID {
+export enum CityID {
   Moscow = 1,
   SaintP = 2,
 }
@@ -55,7 +55,7 @@ function LabeledDropdown({
           },
         ]}
         showArrow={false}
-        defaultValue={CityID}
+        defaultValue={CityID.Moscow}
         containerStyle={styles.dropdownContainer}
         style={styles.dropdownStyle}
         labelStyle={styles.textAreaStyle}

@@ -16,7 +16,7 @@ const Tab = createBottomTabNavigator()
 const EmptyTab = () => null
 
 function MainScreen() {
-  const { isRegistered } = useContext(AuthContext)
+  const { accessToken } = useContext(AuthContext)
 
   return (
     <Tab.Navigator
@@ -67,7 +67,7 @@ function MainScreen() {
       <Tab.Screen name='Избранное' component={FavouritesScreen} />
       <Tab.Screen
         name='Профиль'
-        component={isRegistered ? AuthorizedProfile : UnauthorizedProfile}
+        component={accessToken ? AuthorizedProfile : UnauthorizedProfile}
       />
     </Tab.Navigator>
   )
