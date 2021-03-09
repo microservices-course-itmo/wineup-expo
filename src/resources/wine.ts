@@ -32,9 +32,9 @@ export default class WineResource extends WineUpResource {
   static urlRoot = WineUpResource.urlHandler('/wine/')
 
   static schema = {
-    producerId: ProducerResource.asSchema(),
-    brandId: BrandResource.asSchema(),
-    regionId: RegionResource.asSchema(),
-    grapeId: GrapeResource.asSchema(),
+    producerId: ProducerResource,
+    brandId: BrandResource,
+    regionId: RegionResource,
+    grapeId: GrapeResource,
   }
 }

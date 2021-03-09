@@ -1,9 +1,6 @@
-import { Method, Resource } from 'rest-hooks'
-import camelCase from 'lodash/camelCase'
-import { ReadShape } from 'rest-hooks/lib/resource/shapes'
-import { SchemaList } from 'rest-hooks/lib/resource/normal'
-import { AbstractInstanceType } from 'rest-hooks/lib/types'
-import { deeplyApplyKeyTransform, WineUpResource } from './base'
+import { ReadShape, SchemaList, AbstractInstanceType } from 'rest-hooks'
+import { Resource } from '@rest-hooks/rest'
+import { WineUpResource } from './base'
 
 interface Shop {
   id: string
@@ -97,32 +94,11 @@ export default class CatalogResource extends WineUpResource {
     return this.winePositionId
   }
 
-  static async fetch(
-    method: Method = 'get',
-    url: string,
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    body?: Readonly<object | string>
-  ) {
-    // we'll need to do the inverse operation when sending data back to the server
-    // if (body) {
-    //   // eslint-disable-next-line no-param-reassign
-    //   body = deeplyApplyKeyTransform(body, snakeCase)
-    // }
-
-    // perform actual network request getting back json
-    const jsonResponse = await super.fetch(method, url, body)
-
-    // do the conversion!
-    return deeplyApplyKeyTransform(jsonResponse, camelCase)
-  }
-
-  static filteredShape<T extends typeof Resource>(
+  static filtered<T extends typeof Resource>(
     this: T
   ): ReadShape<SchemaList<Readonly<AbstractInstanceType<T>>>> {
     return {
       ...this.listShape(),
-      type: 'read',
-      schema: [this.asSchema()],
       getFetchKey: (params: FilterParams): string => {
         return JSON.stringify(params)
       },

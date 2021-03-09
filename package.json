@@ -19,6 +19,7 @@
     "@expo-google-fonts/playfair-display": "^0.1.0",
     "@expo-google-fonts/pt-sans": "^0.1.0",
     "@expo-google-fonts/roboto": "^0.1.0",
+    "@expo/metro-config": "^0.1.57",
     "@expo/vector-icons": "^10.2.1",
     "@mapbox/node-pre-gyp": "^1.0.0",
     "@react-native-community/datetimepicker": "2.4.0",
@@ -26,7 +27,8 @@
     "@react-navigation/bottom-tabs": "^5.8.0",
     "@react-navigation/native": "^5.7.3",
     "@react-navigation/stack": "^5.11.0",
-    "@rest-hooks/test": "^1.0.18",
+    "@rest-hooks/rest": "^2.0.0",
+    "@rest-hooks/test": "4",
     "@storybook/addon-actions": "^5.3",
     "@storybook/addon-knobs": "^5.3",
     "@storybook/react-native": "^5.3.25",
@@ -60,7 +62,7 @@
     "react-native-web": "~0.11.7",
     "react-native-webview": "9.4.0",
     "redux": "^4.0.5",
-    "rest-hooks": "^4.5.9",
+    "rest-hooks": "5.0",
     "styled-components": "^5.2.0"
   },
   "devDependencies": {

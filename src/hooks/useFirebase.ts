@@ -19,7 +19,7 @@ export default function useFirebase() {
     return verificationId
   }
 
-  const getIdToken = () => {
+  const getIdToken = async () => {
     const user = firebase.auth().currentUser
 
     return user?.getIdToken()

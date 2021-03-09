@@ -23,5 +23,8 @@ export default {
     extra: {
       STORYBOOK: process.env.STORYBOOK,
     },
+    packagerOpts: {
+      sourceExts: ['cjs'],
+    },
   },
 }

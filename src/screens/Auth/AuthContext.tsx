@@ -18,7 +18,6 @@ interface AuthContextProps {
   authenticate: (
     phoneNumber: string
   ) => Promise<(verificationCode: string) => void>
-  authorize: () => Promise<void>
   accessToken: string | null
   signup: (data: Omit<SignUpRequestData, 'fireBaseToken'>) => Promise<void>
   signout: () => Promise<void>
@@ -36,41 +35,40 @@ export function AuthProvider({ children }: PropsWithChildren<any>) {
   const recaptchaVerifier = useRef(new FirebaseRecaptchaVerifierModal({}))
 
   useEffect(() => {
-    const init = async () => {
-      setTokens(await store.getTokens())
+    const effect = async () => {
+      const storedTokens = await store.getTokens()
 
       try {
-        await authorize()
+        await authorize(storedTokens)
       } catch (_) {
         setTokens({ accessToken: null, refreshToken: null })
       }
     }
 
-    init()
+    effect()
   }, [])
 
-  const authorize = async () => {
-    const { accessToken, refreshToken } = tokens
-
+  const authorize = async ({ accessToken, refreshToken }: Tokens) => {
     if (!accessToken || !refreshToken) {
       const firebaseToken = await firebase.getIdToken()
 
-      if (firebaseToken) {
-        try {
-          const response = await auth.signin(firebaseToken)
-
-          await store.setTokens(response)
-          setTokens(response)
-        } catch (_) {
-          await firebase.signout()
-
-          throw new Error('User is not registered')
-        }
-
-        return
+      if (!firebaseToken) {
+        throw new Error('User is not authenticated')
       }
 
-      throw new Error('User is not authenticated')
+      try {
+        const response = await auth.signin(firebaseToken)
+
+        await store.setTokens(response)
+        setTokens(response)
+      } catch (_) {
+        console.log('here')
+        await firebase.signout()
+
+        throw new Error('User is not registered')
+      }
+
+      return
     }
 
     const { exp } = jwt(accessToken)
@@ -80,7 +78,11 @@ export function AuthProvider({ children }: PropsWithChildren<any>) {
 
       await store.setTokens(response)
       setTokens(response)
+
+      return
     }
+
+    setTokens({ accessToken, refreshToken })
   }
 
   const authenticate = async (phoneNumber: string) => {
@@ -121,10 +123,10 @@ export function AuthProvider({ children }: PropsWithChildren<any>) {
   const signout = async () => {
     const newTokens = { accessToken: null, refreshToken: null }
 
+    await firebase.signout()
+
     await store.setTokens(newTokens)
     setTokens(newTokens)
-
-    await firebase.signout()
   }
 
   return (
@@ -138,7 +140,6 @@ export function AuthProvider({ children }: PropsWithChildren<any>) {
       <AuthContext.Provider
         value={{
           authenticate,
-          authorize,
           signup,
           signout,
           accessToken: tokens.accessToken,

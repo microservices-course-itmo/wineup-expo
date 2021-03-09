@@ -5,7 +5,7 @@ import WineDescription from './index'
 import CatalogResource from '../../resources/catalog'
 
 storiesOf('WineDescription', module).add('Default', () => {
-  const position = useResource(CatalogResource.detailShape(), {
+  const position = useResource(CatalogResource.detail(), {
     winePositionId: 'wine_position_1',
   })
 

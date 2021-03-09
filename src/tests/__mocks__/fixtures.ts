@@ -84,7 +84,7 @@ export const wine2CatMock = {
 
 export const fixtures = [
   {
-    request: RegionResource.detailShape(),
+    request: RegionResource.detail(),
     params: { id: 'region1' },
     result: {
       id: 'region1',
@@ -93,7 +93,7 @@ export const fixtures = [
     },
   },
   {
-    request: ShopResource.detailShape(),
+    request: ShopResource.detail(),
     params: {
       id: 'shop1',
     },
@@ -103,7 +103,7 @@ export const fixtures = [
     },
   },
   {
-    request: GrapeResource.detailShape(),
+    request: GrapeResource.detail(),
     params: {
       id: 'grape1',
     },
@@ -113,7 +113,7 @@ export const fixtures = [
     },
   },
   {
-    request: ProducerResource.detailShape(),
+    request: ProducerResource.detail(),
     params: {
       id: 'producer1',
     },
@@ -123,7 +123,7 @@ export const fixtures = [
     },
   },
   {
-    request: BrandResource.detailShape(),
+    request: BrandResource.detail(),
     params: {
       id: 'brand1',
     },
@@ -133,12 +133,12 @@ export const fixtures = [
     },
   },
   {
-    request: WineResource.detailShape(),
+    request: WineResource.detail(),
     params: { wineId: 'wine1' },
     result: wineMock,
   },
   {
-    request: PositionResource.listShape(),
+    request: PositionResource.list(),
     params: {},
     result: [
       positionMock,
@@ -146,7 +146,7 @@ export const fixtures = [
     ],
   },
   {
-    request: RegionResource.listShape(),
+    request: RegionResource.list(),
     params: {},
     result: [
       {
@@ -172,12 +172,12 @@ export const fixtures = [
     ],
   },
   {
-    request: CatalogResource.filteredShape(),
+    request: CatalogResource.filtered(),
     params: { from: 0, to: 5, searchParameters: '' },
     result: [wine1CatMock, wine2CatMock],
   },
   {
-    request: CatalogResource.detailShape(),
+    request: CatalogResource.detail(),
     params: { winePositionId: 'wine_position_1' },
     result: wine1CatMock,
   },

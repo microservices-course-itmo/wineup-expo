@@ -6,14 +6,14 @@ import WineInfo from './index'
 
 storiesOf('WineInfo', module)
   .add('Default', () => {
-    const position = useResource(CatalogResource.detailShape(), {
+    const position = useResource(CatalogResource.detail(), {
       winePositionId: 'wine_position_1',
     })
 
     return <WineInfo position={position} />
   })
   .add('Full', () => {
-    const position = useResource(CatalogResource.detailShape(), {
+    const position = useResource(CatalogResource.detail(), {
       winePositionId: 'wine_position_1',
     })
 
