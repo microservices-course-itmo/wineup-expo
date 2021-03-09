@@ -7,7 +7,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest",
+    "test": "echo \"We don't need tests anymore\"",
     "lint": "eslint \"src/**/*.{js,ts,tsx}\"",
     "prettier": "prettier --write \"src/**/*.{js,ts,tsx}\"",
     "storybook": "start-storybook -p 7007",
