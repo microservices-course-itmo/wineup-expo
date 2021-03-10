@@ -1,10 +1,16 @@
 import { registerRootComponent } from 'expo'
 import Constants from 'expo-constants'
-import App from './App'
-import StorybookRoot from '../storybook'
 
-if (Constants.manifest.extra.STORYBOOK) {
-  registerRootComponent(StorybookRoot)
-} else {
+async function init() {
+  let App
+
+  if (Constants.manifest.extra.STORYBOOK) {
+    App = (await import('../storybook')).default
+  } else {
+    App = (await import('./App')).default
+  }
+
   registerRootComponent(App)
 }
+
+init()

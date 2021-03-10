@@ -22,7 +22,7 @@ export abstract class WineUpResource extends Resource {
     return deeplyApplyKeyTransform(jsonResponse, camelCase)
   }
 
-  static useFetchInit(options: RequestInit) {
+  static useFetchInit = (options: RequestInit) => {
     let accessToken
 
     if (Constants.manifest.extra.STORYBOOK) {
