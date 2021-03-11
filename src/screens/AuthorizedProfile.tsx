@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import styled from 'styled-components/native'
 import { Image, StyleSheet } from 'react-native'
 
+import { useResource } from 'rest-hooks'
 import PrimaryButton from '../atoms/PrimaryButton'
 import LabeledInput from '../molecules/Auth/LabeledInput'
 import ConfirmPopUp from '../molecules/ConfirmPopUp'
 
 import image from '../../assets/profile-main.png'
 import { useAuthContext } from './Auth/AuthContext'
-import { useResource } from '@rest-hooks/core'
 import UserResource from '../resources/user'
 
 const AuthorizedProfile: React.FC = () => {

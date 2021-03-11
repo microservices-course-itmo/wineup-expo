@@ -1,21 +1,14 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { StyleSheet } from 'react-native'
 import styled from 'styled-components/native'
 import PrimaryButton from '../atoms/PrimaryButton'
-import { AuthContext } from './Auth/AuthContext'
 
 const UnauthorizedProfile = () => {
-  const { setIsAuth } = useContext(AuthContext)
-
-  const handleSignIn = () => {
-    setIsAuth(false)
-  }
-
   return (
     <Container style={styles.modalView}>
       <StyledText>Вы ещё не вошли в аккаунт</StyledText>
       <StyledButton>
-        <ButtonLabel onPress={handleSignIn}>ВОЙТИ В АККАУНТ</ButtonLabel>
+        <ButtonLabel onPress={() => {}}>ВОЙТИ В АККАУНТ</ButtonLabel>
       </StyledButton>
     </Container>
   )
