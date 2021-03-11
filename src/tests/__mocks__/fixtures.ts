@@ -173,7 +173,7 @@ export const fixtures = [
   },
   {
     request: CatalogResource.list(),
-    params: { to: 5, searchParameters: '' },
+    params: { amount: 5, filterBy: '' },
     result: [wine1CatMock, wine2CatMock],
   },
   {
