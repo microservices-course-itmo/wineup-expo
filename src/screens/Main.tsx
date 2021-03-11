@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import {
   FontAwesome,
@@ -9,20 +9,17 @@ import CatalogScreen from './Catalog'
 import FavouritesScreen from './Favourites'
 import AuthorizedProfile from './AuthorizedProfile'
 import UnauthorizedProfile from './UnauthorizedProfile'
-import { AuthContext } from './Auth/AuthContext'
 import useNotifications from '../hooks/useNotifications'
+import { useAuthContext } from './Auth/AuthContext'
 
 const Tab = createBottomTabNavigator()
 
 const EmptyTab = () => null
 
 function MainScreen() {
-  const { accessToken } = useContext(AuthContext)
-  const { registerForPushNotificationsAsync } = useNotifications()
+  const { accessToken } = useAuthContext()
 
-  useEffect(() => {
-    if (accessToken) registerForPushNotificationsAsync()
-  }, [accessToken])
+  useNotifications()
 
   return (
     <Tab.Navigator
