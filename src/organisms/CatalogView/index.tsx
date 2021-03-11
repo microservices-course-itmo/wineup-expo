@@ -12,15 +12,6 @@ const POSITIONS_PER_PAGE = 5
 function CatalogView() {
   const { query } = useFilters()
 
-  const defaultState = {
-    layoutStats: {
-      xPosition: 0,
-      yPosition: 0,
-      layoutWidth: 50,
-      layoutHeight: 100,
-    },
-  }
-
   const startingPageState = {
     pageStats: {
       pageNumber: 1,
@@ -29,9 +20,8 @@ function CatalogView() {
     },
   }
 
-  const [state, setState] = useState(defaultState)
   const [page, setPage] = useState(startingPageState)
-  
+
   console.log(query)
 
   // const catalog: any[] = []
@@ -41,22 +31,11 @@ function CatalogView() {
     searchParameters: '',
   })
 
-  const getLayoutStats = (event: any) => {
-    const { x, y, width, height } = event.nativeEvent.layout
-    const currentLayout = {
-      xPosition: x,
-      yPosition: y,
-      layoutWidth: width,
-      layoutHeight: height,
-    }
-
-    setState({ layoutStats: currentLayout })
-  }
-
   const handleScroll = (event: any) => {
     const yOffset = event.nativeEvent.contentOffset.y
+    const contentSize = event.nativeEvent.contentSize.height
 
-    if (yOffset > 0.6 * state.layoutStats.layoutHeight) {
+    if (yOffset >= 0.7 * contentSize) {
       const currentPage = {
         pageNumber: page.pageStats.pageNumber + 1,
         firstItem: page.pageStats.pageNumber * POSITIONS_PER_PAGE,
@@ -79,7 +58,7 @@ function CatalogView() {
   }
 
   return (
-    <ScrollView onScroll={handleScroll} onLayout={getLayoutStats}>
+    <ScrollView onScroll={handleScroll}>
       {catalog.map((position) => (
         <TouchableOpacity
           key={position.pk()}
