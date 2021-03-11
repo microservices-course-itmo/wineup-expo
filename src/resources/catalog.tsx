@@ -113,5 +113,5 @@ export default class CatalogResource extends PaginatedWineUpResource {
     return this.wine.region.map(({ name }) => name).join(', ')
   }
 
-  static urlRoot = WineUpResource.urlHandler('/position/true/')
+  static urlRoot = WineUpResource.urlHandler('/position/true/trueSettings/')
 }

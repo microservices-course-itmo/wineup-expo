@@ -12,8 +12,8 @@ export default function usePaginator<
   const getNextPage = useFetcher(endpoint, true)
 
   return useCallback(
-    (from: number) => {
-      return getNextPage({ ...params, from }, undefined, [
+    (page: number) => {
+      return getNextPage({ ...params, page }, undefined, [
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         [endpoint, params, PaginatedWineUpResource.appendList],

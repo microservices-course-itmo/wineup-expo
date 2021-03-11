@@ -24,12 +24,12 @@ function CatalogView() {
   const [page, setPage] = useState(startingPageState)
 
   const catalog = useResource(CatalogResource.list(), {
-    to: POSITIONS_PER_PAGE,
-    searchParameters: query,
+    amount: POSITIONS_PER_PAGE,
+    filterBy: query,
   })
   const getNextPage = usePaginator(CatalogResource.list(), {
-    to: POSITIONS_PER_PAGE,
-    searchParameters: query,
+    amount: POSITIONS_PER_PAGE,
+    filterBy: query,
   })
 
   const handleScroll = async (event: any) => {

@@ -16,9 +16,9 @@ interface RecommendationBlockProps {
 
 function RecommendationBlock({ style }: RecommendationBlockProps) {
   const positions = useResource(CatalogResource.list(), {
-    from: 0,
-    to: 5,
-    searchParameters: '',
+    page: 0,
+    amount: 5,
+    filterBy: '',
   })
 
   const carouselRef = useRef<Carousel<any> | null>(null)
