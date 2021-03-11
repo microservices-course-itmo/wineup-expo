@@ -15,7 +15,7 @@ interface RecommendationBlockProps {
 }
 
 function RecommendationBlock({ style }: RecommendationBlockProps) {
-  const positions = useCache(CatalogResource.filteredShape(), {
+  const positions = useCache(CatalogResource.filtered(), {
     from: 0,
     to: 5,
     searchParameters: '',
@@ -100,7 +100,7 @@ const Buttons = styled.View`
 `
 const Title = styled.Text`
   font-family: PlayfairDisplay_700Bold;
-  font-weight: 700px;
+  font-weight: 700;
   font-size: 20px;
   text-align: center;
 

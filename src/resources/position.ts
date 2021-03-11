@@ -30,7 +30,7 @@ export default class PositionResource extends WineUpResource {
   static urlRoot = WineUpResource.urlHandler('/position/')
 
   static schema = {
-    wineId: WineResource.asSchema(),
-    shopId: ShopResource.asSchema(),
+    wineId: WineResource,
+    shopId: ShopResource,
   }
 }

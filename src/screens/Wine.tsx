@@ -13,7 +13,7 @@ function WineScreen() {
     // @ts-ignore
     params: { winePositionId },
   } = useRoute()
-  const position = useCache(CatalogResource.detailShape(), { winePositionId })
+  const position = useCache(CatalogResource.detail(), { winePositionId })
   const { goBack } = useNavigation()
 
   return (

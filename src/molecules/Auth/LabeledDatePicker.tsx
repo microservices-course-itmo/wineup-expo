@@ -58,6 +58,7 @@ function LabeledDatePicker({
       </TouchableOpacity>
       {showPicker && (
         <DateTimePicker
+          style={{ width: '100%' }}
           value={value}
           onChange={handleChange}
           maximumDate={maximumDate}

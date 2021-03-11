@@ -7,10 +7,7 @@ import RegionResource from '../../resources/region'
 
 storiesOf('FilterSheet', module)
   .add('Checkbox', () => {
-    const regions: RegionResource[] = useResource(
-      RegionResource.listShape(),
-      {}
-    )
+    const regions: RegionResource[] = useResource(RegionResource.list(), {})
 
     return (
       <FilterSheet
@@ -24,10 +21,7 @@ storiesOf('FilterSheet', module)
     )
   })
   .add('Checkbox with search', () => {
-    const regions: RegionResource[] = useResource(
-      RegionResource.listShape(),
-      {}
-    )
+    const regions: RegionResource[] = useResource(RegionResource.list(), {})
 
     return (
       <FilterSheet
@@ -42,10 +36,7 @@ storiesOf('FilterSheet', module)
     )
   })
   .add('Radio', () => {
-    const regions: RegionResource[] = useResource(
-      RegionResource.listShape(),
-      {}
-    )
+    const regions: RegionResource[] = useResource(RegionResource.list(), {})
 
     return (
       <FilterSheet

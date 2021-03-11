@@ -1,21 +1,16 @@
-import React, { useState, useRef, useContext } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components/native'
 import { StackScreenProps } from '@react-navigation/stack'
-import * as firebase from 'firebase'
-import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha'
 import ROUTES from '../../routes'
 import phoneEnterIcon from '../../../assets/phoneEnterIcon.png'
-import firebaseConfig from '../../../firebaseconfig'
 import { isPhoneValid } from '../../helpers'
-import { AuthContext } from './AuthContext'
+import { useAuthContext } from './AuthContext'
 
 export type TProps = StackScreenProps<any, typeof ROUTES.SIGN_IN>
 
 const SignInScreen: React.FC<TProps> = ({ navigation }) => {
   const [userPhone, setUserPhone] = useState('')
-  const recaptchaVerifier = useRef(new FirebaseRecaptchaVerifierModal({}))
-
-  const { setIsAuth } = useContext(AuthContext)
+  const { authenticate } = useAuthContext()
 
   const handlePress = () => {
     verifyPhoneNumber(userPhone)
@@ -23,30 +18,16 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
 
   const verifyPhoneNumber = async (phoneNumber: string) => {
     try {
-      const phoneProvider = new firebase.auth.PhoneAuthProvider()
-      const verificationId = await phoneProvider.verifyPhoneNumber(
-        phoneNumber,
-        recaptchaVerifier.current
-      )
+      const verifyPhone = await authenticate(phoneNumber)
 
-      navigation.navigate(ROUTES.SIGN_IN_CONFIRM, { verificationId })
+      navigation.navigate(ROUTES.SIGN_IN_CONFIRM, { verifyPhone })
     } catch (err) {
       console.log(err)
     }
   }
 
-  const handleSignIn = () => {
-    setIsAuth(true)
-  }
-
   return (
     <StyledContainer>
-      <FirebaseRecaptchaVerifierModal
-        cancelLabel='ОТМЕНА'
-        style={{ marginTop: '10%' }}
-        ref={recaptchaVerifier}
-        firebaseConfig={firebaseConfig}
-      />
       <StyledEnterNumberText>
         Введите номер телефона для авторизации
       </StyledEnterNumberText>
@@ -72,7 +53,7 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
         <StyledEnterTextButton>Войти</StyledEnterTextButton>
       </StyledEnterButton>
       <StyledUnregButton>
-        <StyledUnregEnterTextButton onPress={handleSignIn}>
+        <StyledUnregEnterTextButton>
           Продолжить без авторизации
         </StyledUnregEnterTextButton>
       </StyledUnregButton>
