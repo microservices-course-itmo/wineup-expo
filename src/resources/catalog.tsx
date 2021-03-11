@@ -1,6 +1,5 @@
-import { ReadShape, SchemaList, AbstractInstanceType } from 'rest-hooks'
-import { Resource } from '@rest-hooks/rest'
 import { WineUpResource } from './base'
+import PaginatedWineUpResource from './paginated'
 
 interface Shop {
   id: string
@@ -31,17 +30,17 @@ interface Wine {
   year: number
 }
 
-interface FilterParams {
-  from: number
-  to: number
-  searchParameters: number
-  sortBy: {
-    attributeName: string
-    order: 'asc' | 'desc'
-  }
-}
+// interface FilterParams {
+//   from: number
+//   to: number
+//   searchParameters: number
+//   sortBy: {
+//     attributeName: string
+//     order: 'asc' | 'desc'
+//   }
+// }
 
-export default class CatalogResource extends WineUpResource {
+export default class CatalogResource extends PaginatedWineUpResource {
   readonly winePositionId: string = ''
 
   readonly actualPrice: number = 0
@@ -94,17 +93,6 @@ export default class CatalogResource extends WineUpResource {
     return this.winePositionId
   }
 
-  static filtered<T extends typeof Resource>(
-    this: T
-  ): ReadShape<SchemaList<Readonly<AbstractInstanceType<T>>>> {
-    return {
-      ...this.listShape(),
-      getFetchKey: (params: FilterParams): string => {
-        return JSON.stringify(params)
-      },
-    }
-  }
-
   get discount() {
     return 1 - this.actualPrice / this.price
   }
@@ -123,18 +111,6 @@ export default class CatalogResource extends WineUpResource {
     }
 
     return this.wine.region.map(({ name }) => name).join(', ')
-  }
-
-  get imageUri() {
-    let uri = ''
-    const bytes = new Uint8Array(this.image)
-    const len = bytes.byteLength
-
-    for (let i = 0; i < len; i += 1) {
-      uri += String.fromCharCode(bytes[i])
-    }
-
-    return uri
   }
 
   static urlRoot = WineUpResource.urlHandler('/position/true/')

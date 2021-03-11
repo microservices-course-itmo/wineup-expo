@@ -2,7 +2,7 @@ import React, { Suspense, useRef } from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import { StyleProp, TouchableOpacity } from 'react-native'
 import styled from 'styled-components/native'
-import { useCache } from 'rest-hooks'
+import { useResource } from 'rest-hooks'
 import Carousel from 'react-native-snap-carousel'
 import { useNavigation } from '@react-navigation/native'
 import WineCard from '../../molecules/WineCard'
@@ -15,7 +15,7 @@ interface RecommendationBlockProps {
 }
 
 function RecommendationBlock({ style }: RecommendationBlockProps) {
-  const positions = useCache(CatalogResource.filtered(), {
+  const positions = useResource(CatalogResource.list(), {
     from: 0,
     to: 5,
     searchParameters: '',

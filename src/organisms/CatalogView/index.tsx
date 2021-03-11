@@ -6,6 +6,7 @@ import CatalogResource from '../../resources/catalog'
 import WineCard from '../../molecules/WineCard'
 import ROUTES from '../../routes'
 import { useFilters } from '../FiltersBar/FiltersContext'
+import usePaginator from '../../hooks/usePaginator'
 
 const POSITIONS_PER_PAGE = 5
 
@@ -16,22 +17,26 @@ function CatalogView() {
     pageStats: {
       pageNumber: 1,
       firstItem: 0,
-      lastItem: POSITIONS_PER_PAGE - 1,
+      nextPageAvailable: true,
     },
   }
 
   const [page, setPage] = useState(startingPageState)
 
-  console.log(query)
-
-  // const catalog: any[] = []
-  const catalog = useResource(CatalogResource.filtered(), {
-    from: page.pageStats.firstItem,
-    to: page.pageStats.lastItem,
+  const catalog = useResource(CatalogResource.list(), {
+    to: POSITIONS_PER_PAGE,
+    searchParameters: query,
+  })
+  const getNextPage = usePaginator(CatalogResource.list(), {
+    to: POSITIONS_PER_PAGE,
     searchParameters: query,
   })
 
-  const handleScroll = (event: any) => {
+  const handleScroll = async (event: any) => {
+    if (!page.pageStats.nextPageAvailable) {
+      return
+    }
+
     const yOffset = event.nativeEvent.contentOffset.y
     const contentSize = event.nativeEvent.contentSize.height
 
@@ -39,13 +44,16 @@ function CatalogView() {
       const currentPage = {
         pageNumber: page.pageStats.pageNumber + 1,
         firstItem: page.pageStats.pageNumber * POSITIONS_PER_PAGE,
-        lastItem:
-          page.pageStats.pageNumber * POSITIONS_PER_PAGE +
-          POSITIONS_PER_PAGE -
-          1,
       }
 
-      setPage({ pageStats: currentPage })
+      const results = await getNextPage(currentPage.firstItem)
+
+      setPage({
+        pageStats: {
+          ...currentPage,
+          nextPageAvailable: (results as string[]).length === 5,
+        },
+      })
     }
   }
 

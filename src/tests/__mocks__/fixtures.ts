@@ -172,8 +172,8 @@ export const fixtures = [
     ],
   },
   {
-    request: CatalogResource.filtered(),
-    params: { from: 0, to: 5, searchParameters: '' },
+    request: CatalogResource.list(),
+    params: { to: 5, searchParameters: '' },
     result: [wine1CatMock, wine2CatMock],
   },
   {
