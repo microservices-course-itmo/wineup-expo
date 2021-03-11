@@ -15,14 +15,15 @@
     },
     "project": "./tsconfig.json"
   },
-  "plugins": ["react", "react-hooks", "react-native"],
+  "plugins": ["react", "react-hooks", "react-native", "grouped-imports"],
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
     "airbnb-typescript",
     "prettier/@typescript-eslint",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:react-hooks/recommended"
   ],
   "settings": {
     "react": {
@@ -46,6 +47,22 @@
     "react/jsx-props-no-spreading": 0,
     "react/static-property-placement": 0,
     "react/no-array-index-key": 1,
+    "react-native/no-inline-styles": 1,
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "grouped-imports/order": [
+      "error",
+      {
+        "order": ["/^atoms/", "molecules"],
+        "groups": {
+          "molecules": ["/^molecules/", "/^external/molecules/"]
+        },
+        "empty-line-between-groups": true,
+        "ignore-in-group-sort": true,
+        "ignore-alphabetical-sort": true,
+        "ignore-members-sort": true
+      }
+    ],
     "padding-line-between-statements": [
       "error",
       {
