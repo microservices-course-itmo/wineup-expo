@@ -2,6 +2,10 @@ import * as Notifications from 'expo-notifications'
 import Constants from 'expo-constants'
 import { Platform } from 'react-native'
 
+const notificationServiceURL =
+  'http://77.234.215.138:18080/user-service/notification_tokens/'
+const notificationTokenType = 'EXPO_TOKEN'
+
 export const schedulePushNotification = async (
   request: Notifications.NotificationRequestInput
 ): Promise<void> => {
@@ -9,7 +13,7 @@ export const schedulePushNotification = async (
 }
 
 export const registerForPushNotificationsAsync = async (): Promise<string> => {
-  let token
+  let token = ''
 
   if (Constants.isDevice) {
     const { status: existingStatus } = await Notifications.getPermissionsAsync()
@@ -28,18 +32,30 @@ export const registerForPushNotificationsAsync = async (): Promise<string> => {
     }
 
     token = (await Notifications.getExpoPushTokenAsync()).data
-    console.log(token)
   } else {
     alert('Must use physical device for Push Notifications')
   }
 
-  if (Platform.OS === 'android') {
-    Notifications.setNotificationChannelAsync('default', {
+  if (Platform.OS === 'android' && token) {
+    await Notifications.setNotificationChannelAsync('default', {
       name: 'default',
       importance: Notifications.AndroidImportance.MAX,
       vibrationPattern: [0, 250, 250, 250],
       lightColor: '#FF231F7C',
     })
+
+    const { status } = await fetch(
+      `${notificationServiceURL}?token=${token}&tokenType=${notificationTokenType}`,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        method: 'POST',
+      }
+    )
+
+    console.log(status)
   }
 
   return token

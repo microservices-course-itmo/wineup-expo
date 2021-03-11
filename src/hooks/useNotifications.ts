@@ -8,8 +8,6 @@ export default function useNotifications() {
   const responseListener = useRef<Subscription>()
 
   useEffect(() => {
-    registerForPushNotificationsAsync()
-
     notificationListener.current = Notifications.addNotificationReceivedListener(
       (notification) => {
         console.log(notification)
@@ -31,4 +29,6 @@ export default function useNotifications() {
       )
     }
   }, [])
+
+  return { registerForPushNotificationsAsync }
 }
