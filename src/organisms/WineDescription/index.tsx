@@ -20,7 +20,7 @@ function WineDescription({ style, position }: WineDescriptionProps) {
       <Bottle
         resizeMethod='scale'
         resizeMode='contain'
-        source={{ uri: position.imageUri }}
+        source={{ uri: position.image }}
       />
       {position.gastronomy.length > 0 && (
         <RecommendationContainer>
