@@ -13,7 +13,7 @@ export interface WineReviewCardProps {
 
 const CLAMP_LIMIT = 200
 
-function WineReviewCard({ text, username, date }: WineReviewCardProps) {
+function WineReviewCard({ text, username, date, rating }: WineReviewCardProps) {
   const [reviewText, setReviewText] = React.useState('')
   const [isCanShow, setIsCanShow] = React.useState(false)
 
@@ -35,7 +35,7 @@ function WineReviewCard({ text, username, date }: WineReviewCardProps) {
     <Card>
       <CardHead>
         <UserName>{username}</UserName>
-        <Rating rating={3} />
+        <Rating rating={rating} />
       </CardHead>
       <ReviewText>
         “{reviewText}

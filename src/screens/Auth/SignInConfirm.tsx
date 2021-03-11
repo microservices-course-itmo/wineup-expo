@@ -1,14 +1,15 @@
-import React, { useState, useEffect, ReactElement, useContext } from 'react'
-import { Text, View, TouchableOpacity, Image } from 'react-native'
+import React, { useState, ReactElement } from 'react'
+import { Image, ActivityIndicator } from 'react-native'
 import { StackNavigationProp } from '@react-navigation/stack'
+import { RouteProp } from '@react-navigation/native'
+import styled from 'styled-components/native'
 import Countdown from '../../molecules/Countdown'
 import LabeledInput from '../../molecules/Auth/LabeledInput'
-import { isRightCode } from '../../helpers'
 import ROUTES from '../../routes'
-import { AuthContext } from './AuthContext'
-import styles from './styles'
 import GoBackArrowIcon from '../../molecules/Auth/GoBackArrowIcon'
 import confirmButtonCross from '../../../assets/confirmButtonCross.png'
+import { SignUpRequestData } from '../../hooks/useAuth'
+import UnauthenticatedError from '../../errors/Unauthenticated'
 
 type SignInConfirmScreenNavigationProps = StackNavigationProp<
   any,
@@ -17,129 +18,228 @@ type SignInConfirmScreenNavigationProps = StackNavigationProp<
 
 interface SignInConfirmProps {
   navigation: SignInConfirmScreenNavigationProps
+  route: RouteProp<
+    {
+      params: {
+        verifyPhone: (
+          code: string
+        ) => Promise<
+          (
+            data: Omit<SignUpRequestData, 'fireBaseToken'>
+          ) => Promise<void> | undefined
+        >
+      }
+    },
+    'params'
+  >
 }
 
 const timeToResend = 4
 
 function SignInConfirm({
   navigation,
+  route,
 }: SignInConfirmProps): ReactElement<SignInConfirmProps> {
   const [userCode, setUserCode] = useState('')
-  const [isCorrectCode, setIsCorrectCode] = useState(false)
-  const [isLongEnough, setIsLongEnough] = useState(false)
   const [isTimerStarted, setIsTimerStarted] = useState(false)
   const [isPenalty, setIsPenalty] = useState(false)
   const [isCodeEnteredOnce, setIsCodeEnteredOnce] = useState(false)
-  const enterButtonOpacity = isLongEnough ? 1 : 0.4
-  const resendOpacity = () => {
-    if (!isCodeEnteredOnce) return 0
-    if (isPenalty) return 0.4
+  const [isLoading, setIsLoading] = useState(false)
 
-    return 1
+  let resendOpacity = 0
+
+  if (isCodeEnteredOnce) {
+    resendOpacity = isPenalty ? 0.5 : 1
   }
+
   const [isWarningOn, setIsWarningOn] = useState(false)
-  const warningOpacity = () => {
-    if (isWarningOn) return isCodeEnteredOnce ? 1 : 0
 
-    return 0
-  }
+  const enterCodeHandler = async () => {
+    setIsCodeEnteredOnce(true)
 
-  const isAuth = useContext(AuthContext)
-  const isUnregistered = true
+    setIsLoading(true)
 
-  const enterCodeHandler = () => {
-    setIsCorrectCode(isRightCode(userCode))
-    setIsWarningOn(!isWarningOn)
-    if (isLongEnough) {
-      setIsCodeEnteredOnce(true)
-      if (!isCorrectCode) {
-        setIsPenalty(true)
+    try {
+      await route.params.verifyPhone(userCode)
+    } catch (error) {
+      if (error instanceof UnauthenticatedError) {
+        console.log('User is not registered')
+
+        navigation.navigate(ROUTES.SIGN_UP)
+      } else {
+        setIsWarningOn(true)
         setIsTimerStarted(true)
-      } else if (isUnregistered) navigation.navigate(ROUTES.SIGN_UP)
-      else isAuth.setIsAuth(true)
+        setIsPenalty(true)
+      }
     }
+
+    setIsLoading(false)
   }
 
+  // TODO: implement code resend / probably with recaptcha again :(
   const resendCode = () => {
     console.log('code resent')
   }
 
   const onEnd = (): void => {
+    console.log('onEnd')
     setIsPenalty(false)
-    console.log('isPenalty', isPenalty)
   }
 
-  useEffect(() => {
-    setIsLongEnough(userCode.length === 6)
-    setIsCorrectCode(isRightCode(userCode))
-  }, [userCode])
-
   return (
-    <View style={[styles.container, { marginBottom: 10 }]}>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={navigation.goBack}
-        style={styles.goBackButton}
-      >
+    <StyledViewContainer>
+      <StyledBackButton activeOpacity={0.8} onPress={navigation.goBack}>
         <GoBackArrowIcon />
-        <Text style={styles.goBackButtonText}>Вернуться назад</Text>
-      </TouchableOpacity>
-
-      <View style={{ alignItems: 'center' }}>
-        <View
-          style={[styles.wrongCodeContainer, { opacity: warningOpacity() }]}
-        >
+        <StyledBackButtonText>Вернуться назад</StyledBackButtonText>
+      </StyledBackButton>
+      <StyledViewInfoBlockContainer>
+        <StyledViewWarningContainer hidden={!isWarningOn}>
           <Image source={confirmButtonCross} />
-          <Text style={styles.wrongCode}>
-            Код введён <Text style={{ fontWeight: 'bold' }}>неверно</Text>
-          </Text>
-        </View>
-
-        <Text style={styles.header}>Введите код подтверждения</Text>
-        <LabeledInput
+          <StyledWrongCodeText>
+            Код введён <StyledWrongWord>неверно</StyledWrongWord>
+          </StyledWrongCodeText>
+        </StyledViewWarningContainer>
+        <StyledCodeText>Введите код подтверждения</StyledCodeText>
+        <StyledLabelCode
           value={userCode}
           placeholder='Например, 123456'
           onChangeText={setUserCode}
           maxLength={6}
           keyBoardType='numeric'
-          containerStyle={{ marginTop: 37 }}
         />
-        <TouchableOpacity
+        <StyledButtonEnter
           activeOpacity={0.8}
           onPress={enterCodeHandler}
-          style={[
-            styles.buttonStyle,
-            { opacity: enterButtonOpacity, marginTop: 22 },
-          ]}
-          disabled={!isLongEnough}
+          disabled={userCode.length !== 6}
         >
-          <Text style={styles.buttonText}>Войти</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
+          <StyledEnterTextButton>
+            {isLoading ? (
+              <ActivityIndicator size='small' color='#fff' />
+            ) : (
+              'Войти'
+            )}
+          </StyledEnterTextButton>
+        </StyledButtonEnter>
+        <StyledResetCode
           activeOpacity={0.8}
           onPress={resendCode}
-          style={[
-            styles.buttonStyle,
-            { position: 'absolute', top: 234, opacity: resendOpacity() },
-          ]}
           disabled={isPenalty}
+          resendOpacity={resendOpacity}
         >
-          <Text style={styles.buttonText}>Отправить код повторно</Text>
-        </TouchableOpacity>
-
-        <Countdown
+          <StyledResetCodeTextButton>
+            Отправить код повторно
+          </StyledResetCodeTextButton>
+        </StyledResetCode>
+        <StyledCountdown
           isTimerEnabled={isTimerStarted}
           time={timeToResend}
-          handleEnd={onEnd}
-          style={[
-            styles.resendCode,
-            { opacity: warningOpacity(), position: 'relative', top: 118 },
-          ]}
+          onEnd={onEnd}
+          hidden={!isWarningOn && !isPenalty}
         />
-      </View>
-    </View>
+      </StyledViewInfoBlockContainer>
+    </StyledViewContainer>
   )
 }
 
 export default SignInConfirm
+
+const StyledViewContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+`
+const StyledBackButton = styled.TouchableOpacity`
+  position: absolute;
+  top: 56px;
+  left: 16px;
+  flex-direction: row;
+  align-items: center;
+`
+const StyledBackButtonText = styled.Text`
+  font-size: 14px;
+  color: rgb(255, 255, 255);
+  font-family: 'PTSans_400Regular';
+  margin-left: 6px;
+`
+const StyledViewInfoBlockContainer = styled.View`
+  align-items: center;
+`
+const StyledWrongCodeText = styled.Text`
+  color: rgb(226, 3, 56);
+  font-size: 16px;
+  font-family: 'PTSans_400Regular';
+  margin-left: 9px;
+`
+const StyledWrongWord = styled.Text`
+  font-weight: bold;
+`
+const StyledCodeText = styled.Text`
+  font-size: 20px;
+  font-family: 'PTSans_700Bold';
+  color: rgb(255, 255, 255);
+`
+const StyledLabelCode = styled(LabeledInput)`
+  margin-top: 37px;
+`
+const StyledEnterTextButton = styled.Text`
+  font-size: 16px;
+  color: rgb(255, 255, 255);
+  font-family: 'PTSans_700Bold';
+`
+const StyledResetCodeTextButton = styled.Text`
+  font-size: 16px;
+  color: rgb(255, 255, 255);
+  font-family: 'PTSans_700Bold';
+`
+
+type StyledResetCodeProps = {
+  resendOpacity: () => number
+}
+/* eslint-enable */
+const StyledViewWarningContainer = styled.View<{ hidden: boolean }>`
+  position: absolute;
+  top: -80px;
+  flex: 1;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 220px;
+  height: 45px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 50px;
+  opacity: ${({ hidden }) => (hidden ? 0 : 1)};
+`
+const StyledButtonEnter = styled.TouchableOpacity<{ disabled: boolean }>`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  width: 268px;
+  max-height: 57px;
+  min-height: 57px;
+  background-color: rgb(147, 19, 50);
+  border-radius: 5px;
+  opacity: ${({ disabled }) => (disabled ? 0.4 : 1)};
+  margin-top: 22px;
+`
+const StyledResetCode = styled.TouchableOpacity<StyledResetCodeProps>`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  width: 268px;
+  max-height: 57px;
+  min-height: 57px;
+  background-color: rgb(147, 19, 50);
+  border-radius: 5px;
+  position: absolute;
+  top: 234px;
+  opacity: ${({ resendOpacity }) => resendOpacity};
+`
+
+const StyledCountdown = styled(Countdown)<{ hidden: boolean }>`
+  text-decoration-line: underline;
+  font-size: 16px;
+  color: #fff;
+  opacity: ${({ hidden }) => (hidden ? 0 : 1)};
+  margin-top: 118px;
+`

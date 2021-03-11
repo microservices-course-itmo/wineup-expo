@@ -7,7 +7,7 @@ import RegionResource from '../../resources/region'
 
 function CountryFilterButton() {
   const sheetHeight = 570
-  const regions: RegionResource[] = useResource(RegionResource.listShape(), {})
+  const regions: RegionResource[] = useResource(RegionResource.list(), {})
 
   const renderFilterPage = (onApply: () => void) => {
     return (

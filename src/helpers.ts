@@ -58,8 +58,6 @@ export function isAllowedPassword(password: string): boolean {
   return password.search(passwordRegexp) === 0
 }
 
-export type City = 'Москва' | 'Санкт-Петербург'
-
 /** @function
  * @name isRightCode
  *
@@ -70,4 +68,41 @@ export type City = 'Москва' | 'Санкт-Петербург'
  */
 export function isRightCode(code: string): boolean {
   return code === '123456'
+}
+
+export type User = {
+  accessToken: string
+  refreshToken: string
+  user: {
+    birthdate: string
+    cityId: number
+    id: string
+    name: string
+    phoneNumber: string
+    role: string
+  }
+}
+
+/** Phone number validation
+ *
+ * @param userPhone User phone number
+ *
+ * @returns boolean
+ *
+ */
+export function isPhoneValid(userPhone: string) {
+  return userPhone.length === 12 && userPhone[0] === '+' && userPhone[1] === '7'
+}
+
+/** Prettify date to the correct end-point string format
+ *
+ * @param birthday birthday Date
+ *
+ * @returns dd.MM.yyyy string
+ *
+ */
+export function toBirthdayString(birthday: Date): string {
+  return `${`0${birthday.getDate()}`.slice(-2)}.${`0${
+    birthday.getMonth() + 1
+  }`.slice(-2)}.${birthday.getFullYear()}`
 }

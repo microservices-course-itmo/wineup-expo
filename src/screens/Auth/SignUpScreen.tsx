@@ -1,11 +1,11 @@
-import React, { useState, ReactElement, useEffect, useContext } from 'react'
+import React, { useState, ReactElement, useEffect } from 'react'
 import styled from 'styled-components/native'
-import { AuthContext } from './AuthContext'
+import { isName, toBirthdayString } from '../../helpers'
 import LabeledInput from '../../molecules/Auth/LabeledInput'
 import LabeledDatePicker from '../../molecules/Auth/LabeledDatePicker'
 import LabeledDropdown from '../../molecules/Auth/LabeledDropdown'
 import ConsentCheckBox from '../../molecules/Auth/ConsentCheckBox'
-import { isName, City } from '../../helpers'
+import { useAuthContext } from './AuthContext'
 
 const MAXIMUM_DATE = new Date()
 
@@ -16,7 +16,8 @@ const NAME_ERROR_MESSAGE = '*Формат от 2 до 15 букв, не соде
 function SignUpScreen(): ReactElement {
   const [userName, setUserName] = useState<string>('')
   const [userDate, setUserDate] = useState<Date>(MAXIMUM_DATE)
-  const [userCity, setUserCity] = useState<City>('Москва')
+  const [userCity, setUserCity] = useState<number>(1)
+  const auth = useAuthContext()
 
   const [isSignUpEnabled, setIsSignUpEnabled] = useState<boolean>(false)
   const buttonOpacity = isSignUpEnabled ? 1 : 0.5
@@ -26,31 +27,23 @@ function SignUpScreen(): ReactElement {
   const [isCityFilled, setIsCityFilled] = useState<boolean>(false)
   const [isСonsentGiven, setIsConsentGiven] = useState<boolean>(false)
 
-  const isAuth = useContext(AuthContext)
-
   useEffect(() => {
     setIsSignUpEnabled(
       isValidName && isDateFilled && isCityFilled && isСonsentGiven
     )
-  }, [
-    userName,
-    userDate,
-    userCity,
-    isValidName,
-    isDateFilled,
-    isCityFilled,
-    isСonsentGiven,
-  ])
+  }, [isValidName, isDateFilled, isCityFilled, isСonsentGiven])
 
-  const handleSubmit = () => {
-    console.log(userName, userDate, userCity)
-    isAuth.setIsAuth(true)
-    // fetch ? response.ok : response.error, return
+  const handleSubmit = async () => {
+    await auth.signup({
+      birthday: toBirthdayString(userDate),
+      name: userName,
+      cityId: userCity,
+    })
   }
 
   return (
-    <SingUpWrapper>
-      <SingUpTitle>Введите данные</SingUpTitle>
+    <StyledContainer>
+      <StyledTextInsertData>Введите данные</StyledTextInsertData>
       <LabeledInput
         value={userName}
         label='Введите ваше имя'
@@ -74,46 +67,50 @@ function SignUpScreen(): ReactElement {
         onFill={setIsCityFilled}
       />
       <ConsentCheckBox onPress={setIsConsentGiven} hasFilled={isСonsentGiven} />
-      <SignUpButton
+      <StyledEnterButton
+        buttonOpacity={buttonOpacity}
         onPress={handleSubmit}
         disabled={!isSignUpEnabled}
-        buttonOpacity={buttonOpacity}
       >
-        <SignUpButtonText>Войти</SignUpButtonText>
-      </SignUpButton>
-    </SingUpWrapper>
+        <StyledEnterTextButton>Войти</StyledEnterTextButton>
+      </StyledEnterButton>
+    </StyledContainer>
   )
 }
 
-const SingUpWrapper = styled.View`
-  margin-top: 106px;
+export default SignUpScreen
+
+const StyledContainer = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
+  margin-top: 106px;
 `
-
-const SingUpTitle = styled.Text`
+const StyledTextInsertData = styled.Text`
   font-size: 20px;
   font-family: 'PTSans_700Bold';
-  color: #fff;
+  color: rgb(255, 255, 255);
 `
+const StyledEnterTextButton = styled.Text`
+  font-size: 16px;
+  color: rgb(255, 255, 255);
+  font-family: 'PTSans_700Bold';
+`
+/*eslint-disable */
+type ButtonEnterProps = {
+  buttonOpacity: number
+}
+/* eslint-enable */
 
-const SignUpButton = styled.TouchableOpacity<{ buttonOpacity: number }>`
-  margin-top: 35px;
+const StyledEnterButton = styled.TouchableOpacity<ButtonEnterProps>`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
   width: 268px;
   max-height: 57px;
   min-height: 57px;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
+  background-color: rgb(147, 19, 50);
   border-radius: 5px;
-  background-color: #931332;
-  opacity: ${(props) => props.buttonOpacity};
+  opacity: ${({ buttonOpacity }) => buttonOpacity};
+  margin-top: 35px;
 `
-const SignUpButtonText = styled.Text`
-  font-size: 16px;
-  font-family: 'PTSans_700Bold';
-  color: #fff;
-`
-
-export default SignUpScreen

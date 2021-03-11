@@ -4,24 +4,36 @@ import background from './background.png'
 
 function Ribbon({ children }: PropsWithChildren<any>) {
   return (
-    <Container source={background}>
+    <Container source={background} resizeMode='stretch'>
+      <Border />
       <Text>{children}</Text>
     </Container>
   )
 }
 
-export default Ribbon
-
 const Container = styled.ImageBackground`
   position: absolute;
-  width: 144px;
+  width: 100px;
   height: 45px;
 
   justify-content: center;
   align-items: flex-end;
-  padding-right: 35px;
+  padding-right: 20px;
 
-  transform: translateX(55px);
+  transform: translateX(58px);
+`
+
+const Border = styled.View`
+  position: absolute;
+  left: -22px;
+
+  height: 45px;
+  width: 45px;
+
+  border-bottom-left-radius: 22.5px;
+  border-top-left-radius: 22.5px;
+
+  background-color: #931332;
 `
 
 const Text = styled.Text`
@@ -32,3 +44,5 @@ const Text = styled.Text`
 
   transform: rotate(-3deg);
 `
+
+export default Ribbon

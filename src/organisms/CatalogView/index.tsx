@@ -10,7 +10,7 @@ import { useFilters } from '../FiltersBar/FiltersContext'
 function CatalogView() {
   const { query } = useFilters()
 
-  const catalog = useResource(CatalogResource.filteredShape(), {
+  const catalog = useResource(CatalogResource.filtered(), {
     from: 0,
     to: 5,
     searchParameters: query,

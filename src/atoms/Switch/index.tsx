@@ -60,8 +60,6 @@ class Switch extends Component<SwitchProps> {
   }
 }
 
-export default Switch
-
 const Track = styled.View<{ checked?: boolean }>`
   position: relative;
   width: 34px;
@@ -90,3 +88,5 @@ const Check = styled(Ionicons)`
   margin-left: 3px;
   margin-top: 1px;
 `
+
+export default Switch

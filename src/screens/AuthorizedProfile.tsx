@@ -7,11 +7,13 @@ import LabeledInput from '../molecules/Auth/LabeledInput'
 import ConfirmPopUp from '../molecules/ConfirmPopUp'
 
 import image from '../../assets/profile-main.png'
+import { useAuthContext } from './Auth/AuthContext'
 
 const AuthorizedProfile: React.FC = () => {
   const [phone, setPhone] = React.useState<string>('+79991111111')
   const [city, setCity] = React.useState<string>('Санкт-Петербург')
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false)
+  const auth = useAuthContext()
 
   const onModalOpen = (): void => {
     setModalVisible(true)
@@ -19,6 +21,10 @@ const AuthorizedProfile: React.FC = () => {
 
   const onModalClose = (): void => {
     setModalVisible(false)
+  }
+
+  const handleLogOut = () => {
+    auth.signout()
   }
 
   return (
@@ -71,7 +77,7 @@ const AuthorizedProfile: React.FC = () => {
         <ButtonText>Выйти из аккаунта</ButtonText>
       </PrimaryButton>
       <ConfirmPopUp
-        onConfirm={onModalClose}
+        onConfirm={handleLogOut}
         onDismiss={onModalClose}
         text='Вы уверены, что хотите выйти из аккаунта?'
         visible={isModalVisible}
