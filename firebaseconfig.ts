@@ -1,11 +1,13 @@
+import { REACT_APP_PROJECT_ID, REACT_APP_MESSAGING_SENDER_ID, REACT_APP_ID, REACT_APP_API_KEY} from '@env'
+
 const firebaseConfig = {
-  apiKey: 'AIzaSyCExaLzKWdhhr_1IRPe1NIFdR7Uor12LTI',
+  apiKey: REACT_APP_API_KEY,
   authDomain: 'testfire-1bc2f.firebaseapp.com',
   databaseURL: 'https://testfire-1bc2f.firebaseio.com',
-  projectId: 'testfire-1bc2f',
+  projectId: REACT_APP_PROJECT_ID,
   storageBucket: 'testfire-1bc2f.appspot.com',
-  messagingSenderId: '243423113529',
-  appId: '1:243423113529:web:d363f5aa8bf5ca297bf8e8',
+  messagingSenderId: REACT_APP_MESSAGING_SENDER_ID,
+  appId: REACT_APP_ID,
   trackingId: '',
   measurementId: '',
 }

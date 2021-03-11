@@ -49,6 +49,7 @@
     "react-content-loader": "^5.1.4",
     "react-dom": "~16.11.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
+    "react-native-dotenv": "^2.5.3",
     "react-native-dropdown-picker": "^3.7.0",
     "react-native-elements": "^3.0.0-alpha.1",
     "react-native-gesture-handler": "~1.6.0",
