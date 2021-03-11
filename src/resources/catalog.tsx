@@ -1,9 +1,6 @@
-import { Method, Resource } from 'rest-hooks'
-import camelCase from 'lodash/camelCase'
-import { ReadShape } from 'rest-hooks/lib/resource/shapes'
-import { SchemaList } from 'rest-hooks/lib/resource/normal'
-import { AbstractInstanceType } from 'rest-hooks/lib/types'
-import { deeplyApplyKeyTransform } from './utils'
+import { ReadShape, SchemaList, AbstractInstanceType } from 'rest-hooks'
+import { Resource } from '@rest-hooks/rest'
+import { WineUpResource } from './base'
 
 interface Shop {
   id: string
@@ -44,7 +41,7 @@ interface FilterParams {
   }
 }
 
-export default class CatalogResource extends Resource {
+export default class CatalogResource extends WineUpResource {
   readonly winePositionId: string = ''
 
   readonly actualPrice: number = 0
@@ -53,7 +50,7 @@ export default class CatalogResource extends Resource {
 
   readonly gastronomy: string = ''
 
-  readonly image: number[] = []
+  readonly image: string = ''
 
   readonly linkToWine: string = ''
 
@@ -97,41 +94,13 @@ export default class CatalogResource extends Resource {
     return this.winePositionId
   }
 
-  static async fetch(
-    method: Method = 'get',
-    url: string,
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    body?: Readonly<object | string>
-  ) {
-    // we'll need to do the inverse operation when sending data back to the server
-    // if (body) {
-    //   // eslint-disable-next-line no-param-reassign
-    //   body = deeplyApplyKeyTransform(body, snakeCase)
-    // }
-
-    // perform actual network request getting back json
-    const jsonResponse = await super.fetch(
-      method === 'get' ? 'post' : method,
-      url,
-      body
-    )
-
-    // do the conversion!
-    return deeplyApplyKeyTransform(jsonResponse, camelCase)
-  }
-
-  static filteredShape<T extends typeof Resource>(
+  static filtered<T extends typeof Resource>(
     this: T
   ): ReadShape<SchemaList<Readonly<AbstractInstanceType<T>>>> {
     return {
-      ...this.createShape(),
-      type: 'read',
-      schema: [this.asSchema()],
+      ...this.listShape(),
       getFetchKey: (params: FilterParams): string => {
         return JSON.stringify(params)
-      },
-      fetch: (params: FilterParams) => {
-        return this.fetch('post', this.urlRoot, params)
       },
     }
   }
@@ -168,15 +137,5 @@ export default class CatalogResource extends Resource {
     return uri
   }
 
-  static fetchOptionsPlugin = (options: RequestInit): RequestInit => {
-    return {
-      ...options,
-      headers: {
-        ...options.headers,
-        accessToken: '123',
-      },
-    }
-  }
-
-  static urlRoot = 'http://77.234.215.138:48080/catalog-service/position/true/'
+  static urlRoot = WineUpResource.urlHandler('/position/true/')
 }

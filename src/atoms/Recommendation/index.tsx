@@ -20,8 +20,6 @@ const Recommendation: React.FunctionComponent<{ ratioAdvice: number }> = ({
   )
 }
 
-export default Recommendation
-
 const styles = StyleSheet.create({
   adviceContainer: {
     flex: 1,
@@ -29,3 +27,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 })
+
+export default Recommendation

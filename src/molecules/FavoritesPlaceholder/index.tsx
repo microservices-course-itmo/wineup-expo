@@ -14,9 +14,10 @@ function FavouritesPlaceholder() {
   return (
     <Container>
       <Heading>Тут пока пусто</Heading>
-      <Description>
-        Наш каталог поможет Вам{'\n'} что-нибудь найти..
-      </Description>
+      <DescriptionBlock>
+        <Description>Наш каталог поможет Вам</Description>
+        <Description>что-нибудь найти..</Description>
+      </DescriptionBlock>
       <Arrow source={image} />
       <Button onPress={navigate}>
         <ButtonLabel>Перейти в каталог</ButtonLabel>
@@ -40,13 +41,14 @@ const Heading = styled.Text`
   text-align: center;
   margin-bottom: 20px;
 `
-
+const DescriptionBlock = styled.View`
+  margin-bottom: 50px;
+`
 const Description = styled.Text`
   font-family: Roboto_300Light;
   font-weight: 300;
   font-size: 20px;
   text-align: center;
-  margin-bottom: 50px;
   color: #707070;
 `
 

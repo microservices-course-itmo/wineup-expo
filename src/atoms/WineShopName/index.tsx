@@ -20,8 +20,6 @@ const WineShopName = ({ name }: Shop) => {
   )
 }
 
-export default WineShopName
-
 const Container = styled.View`
   flex-direction: row;
   align-items: center;
@@ -30,3 +28,5 @@ const Container = styled.View`
 const Name = styled(Text)`
   margin-left: 7px;
 `
+
+export default WineShopName

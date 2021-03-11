@@ -9,22 +9,18 @@ interface WineBottlePictureProps {
 }
 
 const WineBottlePicture = ({
-  position: { discount, imageUri },
+  position: { discount, image },
 }: WineBottlePictureProps) => {
+  const source = typeof image === 'number' ? image : { uri: image }
+
   return (
     <Container>
       <Placeholder />
-      {discount > 0 && <Ribbon>-{discount * 100} %</Ribbon>}
-      <Image
-        resizeMethod='scale'
-        resizeMode='contain'
-        source={{ uri: imageUri }}
-      />
+      {discount > 0 && <Ribbon>-{(discount * 100).toFixed(0)} %</Ribbon>}
+      <Image resizeMethod='scale' resizeMode='contain' source={source} />
     </Container>
   )
 }
-
-export default WineBottlePicture
 
 const Container = styled.View`
   width: 256px;
@@ -36,6 +32,8 @@ const Container = styled.View`
 `
 
 const Image = styled.Image`
-  width: 250px;
-  height: 250px;
+  width: 230px;
+  height: 230px;
 `
+
+export default WineBottlePicture

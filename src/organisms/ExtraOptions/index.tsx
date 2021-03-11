@@ -33,18 +33,17 @@ function ExtraOptions({
     <Modal animated animationType='fade' visible={visible} transparent>
       <ModalOverlay onPress={onClose} />
       <Container style={position}>
-        <ModalTitle>Дополнительные параметры:</ModalTitle>
         <ModalCloseIcon>
           <TouchableOpacity onPress={onClose}>
-            <Ionicons name='md-close' size={24} color='rgb(157,74,91)' />
+            <Ionicons name='md-close' size={24} color='#797777' />
           </TouchableOpacity>
         </ModalCloseIcon>
 
         <ModalItemsWrapper>
           {data &&
             data.map((item, index) => (
-              <ModalItem key={index} odd={!!(index % 2)}>
-                <Text>{item.param}:</Text>
+              <ModalItem key={index}>
+                <ParamName>{item.param}:</ParamName>
                 <ModalTextBold>{item.answ}</ModalTextBold>
               </ModalItem>
             ))}
@@ -57,40 +56,41 @@ function ExtraOptions({
 export default ExtraOptions
 
 const Container = styled.View`
-  padding: 30px 20px;
-  background: white;
   width: 90%;
+  padding: 30px 20px;
   left: 5%;
   margin-bottom: -20px;
   box-shadow: 0px 3px 4px rgba(178, 178, 178, 0.5);
   border: 1px solid #b2b2b220;
   border-radius: 12px;
   position: absolute;
+  background: white;
 `
 
-const ModalTitle = styled.Text`
-  text-align: center;
-`
-
-const ModalItem = styled.View<{ odd: boolean }>`
+const ModalItem = styled.View`
   padding: 15px 20px;
   border-radius: 5px;
   width: 100%;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-
-  background-color: ${({ odd }) => (odd ? '#eeeeee' : 'transparent')};
 `
 
 const ModalItemsWrapper = styled.View`
-  margin-top: 20px;
+  margin-top: 13px;
+`
+
+const ParamName = styled.Text`
+  font-size: 17px;
+  color: #757575;
 `
 
 const ModalTextBold = styled.Text`
   font-weight: 700;
   max-width: 50%;
   text-align: right;
+  font-size: 19px;
+  color: #000;
 `
 const ModalCloseIcon = styled.View`
   position: absolute;
@@ -101,4 +101,5 @@ const ModalOverlay = styled.TouchableOpacity`
   flex: 1;
   justify-content: center;
   align-items: center;
+  background-color: rgba(0, 0, 0, 0.15);
 `

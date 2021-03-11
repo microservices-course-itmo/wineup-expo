@@ -1,22 +1,12 @@
 import React from 'react'
 import styled, { css } from 'styled-components/native'
 import CatalogResource from 'src/resources/catalog'
-import { Shop } from '../../atoms/WineShopName'
 import Recommendation from '../../atoms/Recommendation'
 import WineBottlePicture from '../../atoms/WineBottlePicture'
 import Like from '../../atoms/Like'
 import WineInfo from '../../atoms/WineInfo'
 
-export interface Wine {
-  name: string
-  country: string
-  dryness: string
-  color: string
-  volume: number
-  shop: Shop
-}
-
-interface WineCardProps {
+export interface WineCardProps {
   position: CatalogResource
   full?: boolean
 }

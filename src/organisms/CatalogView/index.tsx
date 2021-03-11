@@ -25,10 +25,10 @@ function CatalogView() {
   console.log(query)
 
   // const catalog: any[] = []
-  const catalog = useResource(CatalogResource.filteredShape(), {
+  const catalog = useResource(CatalogResource.filtered(), {
     from: page.pageStats.firstItem,
     to: page.pageStats.lastItem,
-    searchParameters: '',
+    searchParameters: query,
   })
 
   const handleScroll = (event: any) => {

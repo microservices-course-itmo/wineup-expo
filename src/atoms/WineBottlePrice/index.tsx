@@ -15,14 +15,12 @@ const WineBottlePrice = ({
   return (
     <View>
       {discount > 0 && (
-        <OldPrice>{prettifyNumber(actualPrice.toFixed(2))} ₽</OldPrice>
+        <OldPrice>{prettifyNumber(actualPrice.toFixed(0))} ₽</OldPrice>
       )}
-      <Price>{prettifyNumber(price.toFixed(2))} ₽</Price>
+      <Price>{prettifyNumber(price.toFixed(0))} ₽</Price>
     </View>
   )
 }
-
-export default WineBottlePrice
 
 const Price = styled(Text)`
   font-size: 23px;
@@ -30,13 +28,15 @@ const Price = styled(Text)`
   font-style: italic;
   font-weight: 400;
   font-family: Roboto_400Regular_Italic;
+
+  transform: translateX(10px);
 `
 
 const OldPrice = styled(Text)`
   font-size: 14px;
-  font-weight: 200;
+  font-weight: 300;
   font-family: Roboto_300Light_Italic;
   text-decoration: line-through;
-
-  transform: translateX(-20px);
 `
+
+export default WineBottlePrice

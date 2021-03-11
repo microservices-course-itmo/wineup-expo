@@ -6,6 +6,7 @@ import BrandResource from '../../resources/brand'
 import WineResource from '../../resources/wine'
 import PositionResource from '../../resources/position'
 import CatalogResource from '../../resources/catalog'
+import bottleImage from './bottle.png'
 
 export const positionMock = {
   winePositionId: 'wine_position1',
@@ -34,13 +35,13 @@ export const wineMock = {
 }
 
 export const wine1CatMock = {
-  actualPrice: 700,
+  actualPrice: 600,
   description: 'description1',
   gastronomy: 'gastronomy1',
-  image: [],
+  image: bottleImage,
   linkToWine: 'http://shop1.com/wine1',
   price: 1200,
-  shop: { id: '10', site: 'http://shop1.com/' },
+  shop: { id: '10', site: 'http://shop1.com/', name: 'Shop 1' },
   volume: 0.75,
   wine: {
     avg: 14,
@@ -58,10 +59,10 @@ export const wine1CatMock = {
 }
 
 export const wine2CatMock = {
-  actualPrice: 950,
+  actualPrice: 1400,
   description: 'description2',
   gastronomy: 'gastronomy2',
-  image: 'image2',
+  image: '',
   linkToWine: 'http://shop1.com/wine2',
   price: 1400,
   shop: { id: 10, site: 'http://shop1.com/' },
@@ -83,7 +84,7 @@ export const wine2CatMock = {
 
 export const fixtures = [
   {
-    request: RegionResource.detailShape(),
+    request: RegionResource.detail(),
     params: { id: 'region1' },
     result: {
       id: 'region1',
@@ -92,7 +93,7 @@ export const fixtures = [
     },
   },
   {
-    request: ShopResource.detailShape(),
+    request: ShopResource.detail(),
     params: {
       id: 'shop1',
     },
@@ -102,7 +103,7 @@ export const fixtures = [
     },
   },
   {
-    request: GrapeResource.detailShape(),
+    request: GrapeResource.detail(),
     params: {
       id: 'grape1',
     },
@@ -112,7 +113,7 @@ export const fixtures = [
     },
   },
   {
-    request: ProducerResource.detailShape(),
+    request: ProducerResource.detail(),
     params: {
       id: 'producer1',
     },
@@ -122,7 +123,7 @@ export const fixtures = [
     },
   },
   {
-    request: BrandResource.detailShape(),
+    request: BrandResource.detail(),
     params: {
       id: 'brand1',
     },
@@ -132,12 +133,12 @@ export const fixtures = [
     },
   },
   {
-    request: WineResource.detailShape(),
+    request: WineResource.detail(),
     params: { wineId: 'wine1' },
     result: wineMock,
   },
   {
-    request: PositionResource.listShape(),
+    request: PositionResource.list(),
     params: {},
     result: [
       positionMock,
@@ -145,7 +146,7 @@ export const fixtures = [
     ],
   },
   {
-    request: RegionResource.listShape(),
+    request: RegionResource.list(),
     params: {},
     result: [
       {
@@ -171,8 +172,13 @@ export const fixtures = [
     ],
   },
   {
-    request: CatalogResource.filteredShape(),
-    params: { from: 0, to: 10 },
+    request: CatalogResource.filtered(),
+    params: { from: 0, to: 5, searchParameters: '' },
     result: [wine1CatMock, wine2CatMock],
+  },
+  {
+    request: CatalogResource.detail(),
+    params: { winePositionId: 'wine_position_1' },
+    result: wine1CatMock,
   },
 ]

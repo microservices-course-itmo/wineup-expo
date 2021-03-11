@@ -15,10 +15,12 @@ interface RecommendationBlockProps {
 }
 
 function RecommendationBlock({ style }: RecommendationBlockProps) {
-  const positions = useCache(CatalogResource.filteredShape(), {
+  const positions = useCache(CatalogResource.filtered(), {
     from: 0,
     to: 5,
+    searchParameters: '',
   })
+
   const carouselRef = useRef<Carousel<any> | null>(null)
   const navigation = useNavigation()
 
@@ -51,7 +53,10 @@ function RecommendationBlock({ style }: RecommendationBlockProps) {
 
   return (
     <Container style={style}>
-      <Title>Мы подобрали для вас{'\n'}схожие вина:</Title>
+      <TitleBock>
+        <Title>Мы подобрали для вас</Title>
+        <Title>схожие вина:</Title>
+      </TitleBock>
       <Carousel
         ref={carouselRef}
         data={positions!}
@@ -98,5 +103,9 @@ const Title = styled.Text`
   font-weight: 700;
   font-size: 20px;
   text-align: center;
+
+  margin-bottom: 26px;
 `
+const TitleBock = styled.View``
+
 const Icon = styled.TouchableOpacity``
