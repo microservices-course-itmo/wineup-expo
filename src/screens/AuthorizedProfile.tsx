@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components/native'
 import { Image, StyleSheet } from 'react-native'
 
-import { useResource } from 'rest-hooks'
+import { useResource, useResetter } from 'rest-hooks'
 import PrimaryButton from '../atoms/PrimaryButton'
 import LabeledInput from '../molecules/Auth/LabeledInput'
 import ConfirmPopUp from '../molecules/ConfirmPopUp'
@@ -15,9 +15,30 @@ const AuthorizedProfile: React.FC = () => {
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false)
   const user = useResource(UserResource.me(), {})
 
-  const [phone, setPhone] = useState(user.phoneNumber)
-  const [city, setCity] = useState(user.city)
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [city, setCity] = useState('')
+
+  const resetCache = useResetter()
   const auth = useAuthContext()
+
+  useEffect(() => {
+    return resetCache()
+  }, [])
+
+  useEffect(() => {
+    setName(user.name)
+    setPhone(user.phoneNumber)
+    setCity(user.city)
+  }, [user, name, phone, city, setName, setPhone, setCity])
+
+  const changePhone = () => {
+    console.log('change phone')
+  }
+
+  const changeCity = () => {
+    console.log('change city')
+  }
 
   const onModalOpen = (): void => {
     setModalVisible(true)
@@ -29,6 +50,7 @@ const AuthorizedProfile: React.FC = () => {
 
   const handleLogOut = () => {
     auth.signout()
+    resetCache()
   }
 
   return (
@@ -36,9 +58,9 @@ const AuthorizedProfile: React.FC = () => {
       <MainImgBox>
         <Image source={image} />
       </MainImgBox>
-      <Username>{user.name}</Username>
+      <Username>{name}</Username>
       <LabeledInput
-        onChangeText={() => setPhone}
+        onChangeText={changePhone}
         label='Номер телефона:'
         value={phone}
         editable={false}
@@ -54,7 +76,7 @@ const AuthorizedProfile: React.FC = () => {
       />
       <LabeledInput
         value={city}
-        onChangeText={() => setCity}
+        onChangeText={changeCity}
         label='Город:'
         labelStyle={styles.inputLabel}
         editable={false}
