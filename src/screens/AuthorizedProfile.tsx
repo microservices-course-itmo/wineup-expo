@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components/native'
 import { Image, StyleSheet } from 'react-native'
 
-import { useResource, useResetter } from 'rest-hooks'
+import { useResource } from 'rest-hooks'
 import PrimaryButton from '../atoms/PrimaryButton'
 import LabeledInput from '../molecules/Auth/LabeledInput'
 import ConfirmPopUp from '../molecules/ConfirmPopUp'
@@ -15,22 +15,7 @@ const AuthorizedProfile: React.FC = () => {
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false)
   const user = useResource(UserResource.me(), {})
 
-  const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
-  const [city, setCity] = useState('')
-
-  const resetCache = useResetter()
   const auth = useAuthContext()
-
-  useEffect(() => {
-    return resetCache()
-  }, [])
-
-  useEffect(() => {
-    setName(user.name)
-    setPhone(user.phoneNumber)
-    setCity(user.city)
-  }, [user, name, phone, city, setName, setPhone, setCity])
 
   const changePhone = () => {
     console.log('change phone')
@@ -50,7 +35,6 @@ const AuthorizedProfile: React.FC = () => {
 
   const handleLogOut = () => {
     auth.signout()
-    resetCache()
   }
 
   return (
@@ -58,11 +42,11 @@ const AuthorizedProfile: React.FC = () => {
       <MainImgBox>
         <Image source={image} />
       </MainImgBox>
-      <Username>{name}</Username>
+      <Username>{user.name}</Username>
       <LabeledInput
         onChangeText={changePhone}
         label='Номер телефона:'
-        value={phone}
+        value={user.phoneNumber}
         editable={false}
         labelStyle={styles.inputLabel}
         containerStyle={{
@@ -75,7 +59,7 @@ const AuthorizedProfile: React.FC = () => {
         inputStyle={styles.input}
       />
       <LabeledInput
-        value={city}
+        value={user.city}
         onChangeText={changeCity}
         label='Город:'
         labelStyle={styles.inputLabel}

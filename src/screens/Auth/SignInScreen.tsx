@@ -10,7 +10,7 @@ export type TProps = StackScreenProps<any, typeof ROUTES.SIGN_IN>
 
 const SignInScreen: React.FC<TProps> = ({ navigation }) => {
   const [userPhone, setUserPhone] = useState('')
-  const { authenticate } = useAuthContext()
+  const { authenticate, authorizeAsAnonymous } = useAuthContext()
 
   const handlePress = () => {
     verifyPhoneNumber(userPhone)
@@ -24,6 +24,10 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
     } catch (err) {
       console.log(err)
     }
+  }
+
+  const continueWithoutAuthorization = () => {
+    authorizeAsAnonymous()
   }
 
   return (
@@ -52,7 +56,7 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
       >
         <StyledEnterTextButton>Войти</StyledEnterTextButton>
       </StyledEnterButton>
-      <StyledUnregButton>
+      <StyledUnregButton onPress={continueWithoutAuthorization}>
         <StyledUnregEnterTextButton>
           Продолжить без авторизации
         </StyledUnregEnterTextButton>
