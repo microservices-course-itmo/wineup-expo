@@ -1,9 +1,9 @@
 import React, { useState, ReactElement, useEffect } from 'react'
 import styled from 'styled-components/native'
 import { isName, toBirthdayString } from '../../helpers'
-import LabeledInput from '../../molecules/Auth/LabeledInput'
+import LabeledInput from '../../molecules/LabeledInput'
 import LabeledDatePicker from '../../molecules/Auth/LabeledDatePicker'
-import LabeledDropdown from '../../molecules/Auth/LabeledDropdown'
+import CityChooser from '../../molecules/CityChooser'
 import ConsentCheckBox from '../../molecules/Auth/ConsentCheckBox'
 import { useAuthContext } from './AuthContext'
 
@@ -60,7 +60,7 @@ function SignUpScreen(): ReactElement {
         hasFilled={isDateFilled}
         onFill={setIsDateFilled}
       />
-      <LabeledDropdown
+      <CityChooser
         label='Введите ваш город'
         onChange={setUserCity}
         hasFilled={isCityFilled}

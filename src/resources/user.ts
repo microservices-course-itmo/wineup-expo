@@ -1,5 +1,5 @@
 import { WineUpResource } from './base'
-import { CityID } from '../molecules/Auth/LabeledDropdown'
+import { CityID } from '../molecules/CityChooser'
 
 export default class UserResource extends WineUpResource {
   readonly birthdate: string = ''

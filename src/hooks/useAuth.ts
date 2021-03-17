@@ -1,4 +1,4 @@
-import { CityID } from '../molecules/Auth/LabeledDropdown'
+import { CityID } from '../molecules/CityChooser'
 import UnauthenticatedError from '../errors/Unauthenticated'
 
 const API_URL = 'http://77.234.215.138:18080/user-service'
