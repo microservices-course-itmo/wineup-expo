@@ -24,9 +24,8 @@ function loadStories() {
   require('../src/molecules/Auth/ConsentCheckBox.stories')
   require('../src/molecules/Auth/GoBackArrowIcon.stories')
   require('../src/molecules/Auth/LabeledDatePicker.stories')
-  require('../src/molecules/Auth/LabeledDropdown.stories')
-  require('../src/molecules/Auth/LabeledInput.stories')
   require('../src/molecules/Auth/UncheckedIcon.stories')
+  require('../src/molecules/CityChooser/index.stories')
   require('../src/molecules/ConfirmPopUp/index.stories')
   require('../src/molecules/Countdown/index.stories')
   require('../src/molecules/FavoritesPlaceholder/index.stories')
@@ -76,9 +75,8 @@ const stories = [
   '../src/molecules/Auth/ConsentCheckBox.stories',
   '../src/molecules/Auth/GoBackArrowIcon.stories',
   '../src/molecules/Auth/LabeledDatePicker.stories',
-  '../src/molecules/Auth/LabeledDropdown.stories',
-  '../src/molecules/Auth/LabeledInput.stories',
   '../src/molecules/Auth/UncheckedIcon.stories',
+  '../src/molecules/CityChooser/index.stories',
   '../src/molecules/ConfirmPopUp/index.stories',
   '../src/molecules/Countdown/index.stories',
   '../src/molecules/FavoritesPlaceholder/index.stories',

@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react'
 import { Text, View, Platform } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
-import styles from './styles'
+import styles from '../Auth/styles'
 
 export enum CityID {
   Moscow = 1,
@@ -14,13 +14,15 @@ const city2Label = {
 }
 
 interface PickerProps {
+  defaultValue?: CityID
   label: string
   onChange: React.Dispatch<React.SetStateAction<CityID>>
   hasFilled: boolean
   onFill: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function LabeledDropdown({
+function CityChooser({
+  defaultValue = CityID.Moscow,
   label,
   onChange,
   hasFilled,
@@ -55,7 +57,7 @@ function LabeledDropdown({
           },
         ]}
         showArrow={false}
-        defaultValue={CityID.Moscow}
+        defaultValue={defaultValue}
         containerStyle={styles.dropdownContainer}
         style={styles.dropdownStyle}
         labelStyle={styles.textAreaStyle}
@@ -69,4 +71,4 @@ function LabeledDropdown({
   )
 }
 
-export default LabeledDropdown
+export default CityChooser
