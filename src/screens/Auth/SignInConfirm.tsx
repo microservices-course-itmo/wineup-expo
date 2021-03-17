@@ -112,13 +112,11 @@ function SignInConfirm({
           onPress={enterCodeHandler}
           disabled={userCode.length !== 6}
         >
-          <StyledEnterTextButton>
-            {isLoading ? (
-              <ActivityIndicator size='small' color='#fff' />
-            ) : (
-              'Войти'
-            )}
-          </StyledEnterTextButton>
+          {isLoading ? (
+            <ActivityIndicator size='small' color='#fff' />
+          ) : (
+            <StyledEnterTextButton>Войти</StyledEnterTextButton>
+          )}
         </StyledButtonEnter>
         <StyledResetCode
           activeOpacity={0.8}

@@ -9,9 +9,9 @@ import AuthWrapper from './Auth/AuthWrapper'
 const Stack = createStackNavigator()
 
 function MainRouter() {
-  const { accessToken } = useAuthContext()
+  const { accessToken, isAnonymous } = useAuthContext()
 
-  if (accessToken) {
+  if (accessToken || isAnonymous) {
     return (
       <Stack.Navigator headerMode='screen'>
         <Stack.Screen
