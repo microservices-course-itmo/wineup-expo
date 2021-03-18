@@ -1,10 +1,12 @@
 import React from 'react'
 import styled, { css } from 'styled-components/native'
 import CatalogResource from 'src/resources/catalog'
+import { useFetcher } from 'rest-hooks'
 import Recommendation from '../../atoms/Recommendation'
 import WineBottlePicture from '../../atoms/WineBottlePicture'
 import Like from '../../atoms/Like'
 import WineInfo from '../../atoms/WineInfo'
+import FavoritesResource from '../../resources/favorites'
 
 export interface WineCardProps {
   position: CatalogResource
@@ -12,11 +14,22 @@ export interface WineCardProps {
 }
 
 function WineCard({ position, full }: WineCardProps) {
+  const like = useFetcher(FavoritesResource.create())
+  const unlike = useFetcher(FavoritesResource.delete())
+
+  const onLikePress = (value: boolean) => {
+    if (value) {
+      like({ id: position.winePositionId }, undefined)
+    } else {
+      unlike({ id: position.winePositionId })
+    }
+  }
+
   return (
     <Container full={full}>
       <TopBar>
         <Recommendation ratioAdvice={45} />
-        <Like liked />
+        <Like onPress={onLikePress} />
       </TopBar>
       <WineBottlePicture position={position} />
       <WineInfo position={position} full={full} />
