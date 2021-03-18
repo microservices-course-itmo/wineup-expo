@@ -14,7 +14,12 @@ export abstract class WineUpResource extends Resource {
   static async fetch(input: RequestInfo, init: RequestInit) {
     if (init.body) {
       // eslint-disable-next-line no-param-reassign
-      init.body = JSON.stringify(deeplyApplyKeyTransform(init.body, snakeCase))
+      init.body = JSON.stringify(
+        deeplyApplyKeyTransform(
+          typeof init.body === 'string' ? JSON.parse(init.body) : init.body,
+          snakeCase
+        )
+      )
     }
 
     const jsonResponse = await super.fetch(input, init)

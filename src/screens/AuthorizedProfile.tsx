@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import styled from 'styled-components/native'
-import { Image } from 'react-native'
 import { useResource } from 'rest-hooks'
 
 import image from '../../assets/profile-main.png'
@@ -34,18 +33,23 @@ const AuthorizedProfile: React.FC = () => {
   )
 }
 
+const Image = styled.Image`
+  width: 60px;
+  height: 68px;
+`
+
 const MainImgBox = styled.View`
   position: absolute;
   border: 10px solid #f4f4f4;
   left: 50%;
-  top: -105px;
-  transform: translateX(-105px);
+  top: -60px;
+  transform: translateX(-60px);
   border-top-right-radius: 120px;
   border-top-left-radius: 120px;
   border-bottom-right-radius: 120px;
   border-bottom-left-radius: 120px;
   background-color: #fff;
-  padding: 20px;
+  padding: 16px 20px;
 `
 
 const Container = styled.View`
