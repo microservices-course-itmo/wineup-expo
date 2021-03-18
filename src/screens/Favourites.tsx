@@ -3,8 +3,8 @@ import React, { Suspense } from 'react'
 import styled from 'styled-components/native'
 import WineCardLoader from '../molecules/WineCard/Loader'
 import SearchInput from '../molecules/SearchInput'
-import FavouritesPlaceholder from '../molecules/FavoritesPlaceholder'
 import FavoritesToolbar from '../organisms/FavoritesToolbar'
+import FavoritesView from '../organisms/FavoritesView'
 
 export default function FavouritesScreen() {
   const loader = (
@@ -19,7 +19,7 @@ export default function FavouritesScreen() {
     <Suspense fallback={loader}>
       <StyledSearchInput value='' />
       <FavoritesToolbar handleClear={() => {}} />
-      <FavouritesPlaceholder />
+      <FavoritesView />
     </Suspense>
   )
 }
