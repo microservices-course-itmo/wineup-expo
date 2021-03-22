@@ -1,22 +1,22 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Ionicons } from '@expo/vector-icons'
 import { TouchableOpacity, View } from 'react-native'
 
 export interface LikeProps {
-  liked: boolean
+  liked?: boolean
+  onPress: (value: boolean) => void
 }
 
-const Like = ({ liked }: LikeProps) => {
-  const [isLiked, setIsLiked] = useState(liked)
+const Like = ({ liked = false, onPress: onPressProp }: LikeProps) => {
   const onPress = () => {
-    setIsLiked(!isLiked)
+    onPressProp(!liked)
   }
 
   return (
     <View>
       <TouchableOpacity onPress={onPress}>
         <Ionicons
-          name={isLiked ? 'ios-heart' : 'ios-heart-empty'}
+          name={liked ? 'ios-heart' : 'ios-heart-empty'}
           size={20}
           color='#931332'
         />
