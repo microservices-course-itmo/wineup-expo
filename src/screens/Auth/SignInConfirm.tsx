@@ -10,6 +10,7 @@ import GoBackArrowIcon from '../../molecules/Auth/GoBackArrowIcon'
 import confirmButtonCross from '../../../assets/confirmButtonCross.png'
 import { SignUpRequestData } from '../../hooks/useAuth'
 import UnauthenticatedError from '../../errors/Unauthenticated'
+import { useAuthContext } from './AuthContext'
 
 type SignInConfirmScreenNavigationProps = StackNavigationProp<
   any,
@@ -41,24 +42,24 @@ function SignInConfirm({
   route,
 }: SignInConfirmProps): ReactElement<SignInConfirmProps> {
   const [userCode, setUserCode] = useState('')
-  const [isTimerStarted, setIsTimerStarted] = useState(false)
   const [isPenalty, setIsPenalty] = useState(false)
   const [isCodeEnteredOnce, setIsCodeEnteredOnce] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [isWarningOn, setIsWarningOn] = useState(false)
+  const [isResend, setIsResend] = useState(false)
+  const { getNumber, authenticate } = useAuthContext()
 
   let resendOpacity = 0
 
   if (isCodeEnteredOnce) {
     resendOpacity = isPenalty ? 0.5 : 1
   }
+  if (isResend) {
+    resendOpacity = 0.5
+  }
 
-  const [isWarningOn, setIsWarningOn] = useState(false)
-
-  const enterCodeHandler = async () => {
-    setIsCodeEnteredOnce(true)
-
+  const Login = async () => {
     setIsLoading(true)
-
     try {
       await route.params.verifyPhone(userCode)
     } catch (error) {
@@ -68,22 +69,28 @@ function SignInConfirm({
         navigation.navigate(ROUTES.SIGN_UP)
       } else {
         setIsWarningOn(true)
-        setIsTimerStarted(true)
         setIsPenalty(true)
       }
     }
-
     setIsLoading(false)
+    resendOpacity = 1
+  }
+
+  const enterCodeHandler = async () => {
+    setIsCodeEnteredOnce(true)
+    setIsResend(false)
+    Login()
   }
 
   // TODO: implement code resend / probably with recaptcha again :(
-  const resendCode = () => {
-    console.log('code resent')
+  const resendCode = async () => {
+    setIsResend(true)
+    authenticate(getNumber())
   }
 
   const onEnd = (): void => {
-    console.log('onEnd')
     setIsPenalty(false)
+    setIsWarningOn(false)
   }
 
   return (
@@ -92,7 +99,7 @@ function SignInConfirm({
         <GoBackArrowIcon />
         <StyledBackButtonText>Вернуться назад</StyledBackButtonText>
       </StyledBackButton>
-      <StyledViewInfoBlockContainer>
+      <StyledViewInfoBlockContainer marginTop={isPenalty}>
         <StyledViewWarningContainer hidden={!isWarningOn}>
           <Image source={confirmButtonCross} />
           <StyledWrongCodeText>
@@ -111,6 +118,7 @@ function SignInConfirm({
           activeOpacity={0.8}
           onPress={enterCodeHandler}
           disabled={userCode.length !== 6}
+          resendOpacity={resendOpacity}
         >
           {isLoading ? (
             <ActivityIndicator size='small' color='#fff' />
@@ -121,19 +129,14 @@ function SignInConfirm({
         <StyledResetCode
           activeOpacity={0.8}
           onPress={resendCode}
-          disabled={isPenalty}
+          disabled={isPenalty || isResend}
           resendOpacity={resendOpacity}
         >
           <StyledResetCodeTextButton>
             Отправить код повторно
           </StyledResetCodeTextButton>
         </StyledResetCode>
-        <StyledCountdown
-          isTimerEnabled={isTimerStarted}
-          time={timeToResend}
-          onEnd={onEnd}
-          hidden={!isWarningOn && !isPenalty}
-        />
+        {isPenalty && <StyledCountdown time={timeToResend} onEnd={onEnd} />}
       </StyledViewInfoBlockContainer>
     </StyledViewContainer>
   )
@@ -160,7 +163,8 @@ const StyledBackButtonText = styled.Text`
   font-family: 'PTSans_400Regular';
   margin-left: 6px;
 `
-const StyledViewInfoBlockContainer = styled.View`
+const StyledViewInfoBlockContainer = styled.View<{ marginTop: boolean }>`
+  margin-top: ${({ marginTop }) => (marginTop ? 120 : 0)}
   align-items: center;
 `
 const StyledWrongCodeText = styled.Text`
@@ -191,10 +195,11 @@ const StyledResetCodeTextButton = styled.Text`
   font-family: 'PTSans_700Bold';
 `
 
-type StyledResetCodeProps = {
+type StyledButtomProps = {
+  disabled?: boolean
   resendOpacity: () => number
 }
-/* eslint-enable */
+/* eslint-disable */
 const StyledViewWarningContainer = styled.View<{ hidden: boolean }>`
   position: absolute;
   top: -80px;
@@ -208,7 +213,7 @@ const StyledViewWarningContainer = styled.View<{ hidden: boolean }>`
   border-radius: 50px;
   opacity: ${({ hidden }) => (hidden ? 0 : 1)};
 `
-const StyledButtonEnter = styled.TouchableOpacity<{ disabled: boolean }>`
+const StyledButtonEnter = styled.TouchableOpacity<StyledButtomProps>`
   flex: 1;
   align-items: center;
   justify-content: center;
@@ -220,7 +225,7 @@ const StyledButtonEnter = styled.TouchableOpacity<{ disabled: boolean }>`
   opacity: ${({ disabled }) => (disabled ? 0.4 : 1)};
   margin-top: 22px;
 `
-const StyledResetCode = styled.TouchableOpacity<StyledResetCodeProps>`
+const StyledResetCode = styled.TouchableOpacity<StyledButtomProps>`
   flex: 1;
   align-items: center;
   justify-content: center;
@@ -231,6 +236,7 @@ const StyledResetCode = styled.TouchableOpacity<StyledResetCodeProps>`
   border-radius: 5px;
   position: absolute;
   top: 234px;
+  margin-top: 10px;
   opacity: ${({ resendOpacity }) => resendOpacity};
 `
 

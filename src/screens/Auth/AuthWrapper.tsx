@@ -18,7 +18,7 @@ const AuthWrapper: React.FC = () => (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
-        cardStyle: { backgroundColor: 'transparent' },
+        cardStyle: { backgroundColor: 'black' },
         animationEnabled: false,
       }}
     >

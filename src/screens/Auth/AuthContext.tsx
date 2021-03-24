@@ -19,6 +19,7 @@ interface AuthContextProps {
   authenticate: (
     phoneNumber: string
   ) => Promise<(verificationCode: string) => void>
+  getNumber: () => string
   accessToken: string | null
   signup: (data: Omit<SignUpRequestData, 'fireBaseToken'>) => Promise<void>
   signout: () => Promise<void>
@@ -39,6 +40,7 @@ export function AuthProvider({ children }: PropsWithChildren<any>) {
   })
   const [isAnonymous, setIsAnonymous] = useState(false)
   const recaptchaVerifier = useRef(new FirebaseRecaptchaVerifierModal({}))
+  const [phoneNumberForGetter, setPhoneNumberForGetter] = useState('')
 
   useEffect(() => {
     const effect = async () => {
@@ -94,6 +96,7 @@ export function AuthProvider({ children }: PropsWithChildren<any>) {
   }
 
   const authenticate = async (phoneNumber: string) => {
+    setPhoneNumberForGetter(phoneNumber)
     const verificationId = await firebase.getVerificationId(
       phoneNumber,
       recaptchaVerifier.current
@@ -112,6 +115,8 @@ export function AuthProvider({ children }: PropsWithChildren<any>) {
       setIsAnonymous(false)
     }
   }
+
+  const getNumber = () => phoneNumberForGetter
 
   const signup = async (data: Omit<SignUpRequestData, 'fireBaseToken'>) => {
     const fireBaseToken = (await firebase.getIdToken()) as string
@@ -160,6 +165,7 @@ export function AuthProvider({ children }: PropsWithChildren<any>) {
       <AuthContext.Provider
         value={{
           authenticate,
+          getNumber,
           signup,
           signout,
           accessToken: tokens.accessToken,
