@@ -1,5 +1,12 @@
 import React, { ReactElement } from 'react'
-import { Text, View, Platform } from 'react-native'
+import {
+  Text,
+  View,
+  Platform,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+} from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
 import styles from '../Auth/styles'
 
@@ -19,6 +26,9 @@ interface PickerProps {
   onChange: React.Dispatch<React.SetStateAction<CityID>>
   hasFilled: boolean
   onFill: React.Dispatch<React.SetStateAction<boolean>>
+  style?: StyleProp<ViewStyle>
+  labelStyle?: StyleProp<TextStyle>
+  showArrow: boolean
 }
 
 function CityChooser({
@@ -27,6 +37,9 @@ function CityChooser({
   onChange,
   hasFilled,
   onFill,
+  labelStyle = {},
+  style,
+  showArrow,
 }: PickerProps): ReactElement<PickerProps> {
   const handleChange = (selectedValue: CityID) => {
     onChange(selectedValue)
@@ -42,9 +55,10 @@ function CityChooser({
         Platform.OS !== 'android' && {
           zIndex: 10,
         },
+        style,
       ]}
     >
-      <Text style={styles.label}>{label}</Text>
+      <Text style={[styles.label, labelStyle]}>{label}</Text>
       <DropDownPicker
         items={[
           {
@@ -56,7 +70,7 @@ function CityChooser({
             value: CityID.SaintP,
           },
         ]}
-        showArrow={false}
+        showArrow={showArrow}
         defaultValue={defaultValue}
         containerStyle={styles.dropdownContainer}
         style={styles.dropdownStyle}
