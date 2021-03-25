@@ -2,18 +2,28 @@ import React from 'react'
 import styled from 'styled-components/native'
 import { Image, StyleSheet } from 'react-native'
 
+import { useResource } from 'rest-hooks'
 import PrimaryButton from '../atoms/PrimaryButton'
 import LabeledInput from '../molecules/Auth/LabeledInput'
 import ConfirmPopUp from '../molecules/ConfirmPopUp'
 
 import image from '../../assets/profile-main.png'
 import { useAuthContext } from './Auth/AuthContext'
+import UserResource from '../resources/user'
 
 const AuthorizedProfile: React.FC = () => {
-  const [phone, setPhone] = React.useState<string>('+79991111111')
-  const [city, setCity] = React.useState<string>('Санкт-Петербург')
   const [isModalVisible, setModalVisible] = React.useState<boolean>(false)
+  const user = useResource(UserResource.me(), {})
+
   const auth = useAuthContext()
+
+  const changePhone = () => {
+    console.log('change phone')
+  }
+
+  const changeCity = () => {
+    console.log('change city')
+  }
 
   const onModalOpen = (): void => {
     setModalVisible(true)
@@ -32,11 +42,11 @@ const AuthorizedProfile: React.FC = () => {
       <MainImgBox>
         <Image source={image} />
       </MainImgBox>
-      <Username>Иван Иванов</Username>
+      <Username>{user.name}</Username>
       <LabeledInput
-        onChangeText={setPhone}
+        onChangeText={changePhone}
         label='Номер телефона:'
-        value={phone}
+        value={user.phoneNumber}
         editable={false}
         labelStyle={styles.inputLabel}
         containerStyle={{
@@ -49,8 +59,8 @@ const AuthorizedProfile: React.FC = () => {
         inputStyle={styles.input}
       />
       <LabeledInput
-        value={city}
-        onChangeText={setCity}
+        value={user.city}
+        onChangeText={changeCity}
         label='Город:'
         labelStyle={styles.inputLabel}
         editable={false}

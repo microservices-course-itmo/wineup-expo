@@ -7,18 +7,14 @@ import {
 } from '@expo/vector-icons'
 import CatalogScreen from './Catalog'
 import FavouritesScreen from './Favourites'
-import AuthorizedProfile from './AuthorizedProfile'
-import UnauthorizedProfile from './UnauthorizedProfile'
 import useNotifications from '../hooks/useNotifications'
-import { useAuthContext } from './Auth/AuthContext'
+import Profile from './Profile'
 
 const Tab = createBottomTabNavigator()
 
 const EmptyTab = () => null
 
 function MainScreen() {
-  const { accessToken } = useAuthContext()
-
   useNotifications()
 
   return (
@@ -68,10 +64,7 @@ function MainScreen() {
       <Tab.Screen name='Главное' component={EmptyTab} />
       <Tab.Screen name='Каталог' component={CatalogScreen} />
       <Tab.Screen name='Избранное' component={FavouritesScreen} />
-      <Tab.Screen
-        name='Профиль'
-        component={accessToken ? AuthorizedProfile : UnauthorizedProfile}
-      />
+      <Tab.Screen name='Профиль' component={Profile} />
     </Tab.Navigator>
   )
 }

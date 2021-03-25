@@ -8,6 +8,7 @@ import React, {
 } from 'react'
 import jwt from 'jwt-decode'
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha'
+import { useResetter } from 'rest-hooks'
 import useAuth, { SignUpRequestData } from '../../hooks/useAuth'
 import useFirebase from '../../hooks/useFirebase'
 import * as store from '../../utils/store'
@@ -21,22 +22,29 @@ interface AuthContextProps {
   accessToken: string | null
   signup: (data: Omit<SignUpRequestData, 'fireBaseToken'>) => Promise<void>
   signout: () => Promise<void>
+  isAnonymous: boolean
+  authorizeAsAnonymous: () => void
+  closeAnonymousSession: () => void
 }
 
 export const AuthContext = createContext({} as AuthContextProps)
 
 export function AuthProvider({ children }: PropsWithChildren<any>) {
+  const resetCache = useResetter()
   const firebase = useFirebase()
   const auth = useAuth()
   const [tokens, setTokens] = useState<Tokens>({
     accessToken: null,
     refreshToken: null,
   })
+  const [isAnonymous, setIsAnonymous] = useState(false)
   const recaptchaVerifier = useRef(new FirebaseRecaptchaVerifierModal({}))
 
   useEffect(() => {
     const effect = async () => {
       const storedTokens = await store.getTokens()
+
+      console.log(storedTokens)
 
       try {
         await authorize(storedTokens)
@@ -61,8 +69,8 @@ export function AuthProvider({ children }: PropsWithChildren<any>) {
 
         await store.setTokens(response)
         setTokens(response)
+        setIsAnonymous(false)
       } catch (_) {
-        console.log('here')
         await firebase.signout()
 
         throw new Error('User is not registered')
@@ -101,6 +109,7 @@ export function AuthProvider({ children }: PropsWithChildren<any>) {
 
       await store.setTokens(newTokens)
       setTokens(newTokens)
+      setIsAnonymous(false)
     }
   }
 
@@ -118,6 +127,7 @@ export function AuthProvider({ children }: PropsWithChildren<any>) {
 
     await store.setTokens(newTokens)
     setTokens(newTokens)
+    setIsAnonymous(false)
   }
 
   const signout = async () => {
@@ -127,6 +137,16 @@ export function AuthProvider({ children }: PropsWithChildren<any>) {
 
     await store.setTokens(newTokens)
     setTokens(newTokens)
+
+    resetCache()
+  }
+
+  const authorizeAsAnonymous = () => {
+    setIsAnonymous(true)
+  }
+
+  const closeAnonymousSession = () => {
+    setIsAnonymous(false)
   }
 
   return (
@@ -143,6 +163,9 @@ export function AuthProvider({ children }: PropsWithChildren<any>) {
           signup,
           signout,
           accessToken: tokens.accessToken,
+          isAnonymous,
+          authorizeAsAnonymous,
+          closeAnonymousSession,
         }}
       >
         {children}

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { useCache } from 'rest-hooks'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import styled from 'styled-components/native'
@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons'
 import WineCard from '../molecules/WineCard'
 import RecommendationBlock from '../organisms/RecommendationBlock'
 import CatalogResource from '../resources/catalog'
+import WineCardLoader from '../molecules/WineCard/Loader'
 
 function WineScreen() {
   const {
@@ -23,7 +24,9 @@ function WineScreen() {
           <Ionicons name='ios-arrow-back' size={24} color='black' />
         </BackButton>
         <WineCard position={position!} full />
-        <StyledRecommendationBlock />
+        <Suspense fallback={<WineCardLoader />}>
+          <StyledRecommendationBlock />
+        </Suspense>
       </Container>
     </ScrollView>
   )
