@@ -52,6 +52,7 @@ function loadStories() {
   require('../src/organisms/RecommendationBlock/index.stories')
   require('../src/organisms/WineDescription/index.stories')
   require('../src/organisms/WineReviews/index.stories')
+  require('../src/screens/AuthorizedProfile.stories')
 }
 
 const stories = [
@@ -103,6 +104,7 @@ const stories = [
   '../src/organisms/RecommendationBlock/index.stories',
   '../src/organisms/WineDescription/index.stories',
   '../src/organisms/WineReviews/index.stories',
+  '../src/screens/AuthorizedProfile.stories',
 ]
 
 module.exports = {

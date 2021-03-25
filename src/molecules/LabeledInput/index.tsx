@@ -43,7 +43,7 @@ function LabeledInput({
 
   return (
     <Container style={style}>
-      <Label style={labelStyle}>{label}</Label>
+      {label && <Label style={labelStyle}>{label}</Label>}
       <Input
         selectionColor='#4E4E4E'
         style={inputStyle}

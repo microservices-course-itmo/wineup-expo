@@ -10,7 +10,6 @@ import GoBackArrowIcon from '../../molecules/Auth/GoBackArrowIcon'
 import confirmButtonCross from '../../../assets/confirmButtonCross.png'
 import { SignUpRequestData } from '../../hooks/useAuth'
 import UnauthenticatedError from '../../errors/Unauthenticated'
-import { useAuthContext } from './AuthContext'
 
 type SignInConfirmScreenNavigationProps = StackNavigationProp<
   any,
@@ -22,13 +21,14 @@ interface SignInConfirmProps {
   route: RouteProp<
     {
       params: {
-        verifyPhone: (
+        verify: (
           code: string
         ) => Promise<
           (
             data: Omit<SignUpRequestData, 'fireBaseToken'>
           ) => Promise<void> | undefined
         >
+        resend: () => Promise<void>
       }
     },
     'params'
@@ -47,7 +47,6 @@ function SignInConfirm({
   const [isLoading, setIsLoading] = useState(false)
   const [isWarningOn, setIsWarningOn] = useState(false)
   const [isResend, setIsResend] = useState(false)
-  const { getNumber, authenticate } = useAuthContext()
 
   let resendOpacity = 0
 
@@ -58,10 +57,10 @@ function SignInConfirm({
     resendOpacity = 0.5
   }
 
-  const Login = async () => {
+  const login = async () => {
     setIsLoading(true)
     try {
-      await route.params.verifyPhone(userCode)
+      await route.params.verify(userCode)
     } catch (error) {
       if (error instanceof UnauthenticatedError) {
         console.log('User is not registered')
@@ -79,13 +78,13 @@ function SignInConfirm({
   const enterCodeHandler = async () => {
     setIsCodeEnteredOnce(true)
     setIsResend(false)
-    Login()
+    login()
   }
 
   // TODO: implement code resend / probably with recaptcha again :(
   const resendCode = async () => {
     setIsResend(true)
-    authenticate(getNumber())
+    route.params.resend()
   }
 
   const onEnd = (): void => {

@@ -7,6 +7,8 @@ import CityChooser, { CityID } from '../../molecules/CityChooser'
 import UserResource from '../../resources/user'
 import PrimaryButton from '../../atoms/PrimaryButton'
 import Text from '../../atoms/Text'
+import PhoneVerification from '../PhoneVerification'
+import PhoneChangePopup from '../../molecules/PhoneChangePopUp'
 
 interface ProfileEditProps {
   user: UserResource
@@ -19,8 +21,10 @@ function ProfileEdit({ user, onSave: onSaveProp }: ProfileEditProps) {
   const [cityId, setCityId] = useState<CityID>(user.cityId)
   const updateProfile = useFetcher(UserResource.updateMe())
   const invalidateCache = useInvalidator(UserResource.me())
+  const [phoneChanged, setPhoneChanged] = useState(false)
+  const [confirmPopupVisible, setConfirmPopupVisible] = useState(false)
 
-  const onSave = async () => {
+  const save = async () => {
     await updateProfile(
       {},
       {
@@ -31,6 +35,45 @@ function ProfileEdit({ user, onSave: onSaveProp }: ProfileEditProps) {
     await invalidateCache({})
 
     onSaveProp()
+  }
+
+  const onSave = async () => {
+    if (phone !== user.phoneNumber) {
+      setConfirmPopupVisible(true)
+
+      return
+    }
+
+    await save()
+  }
+
+  const onDismiss = () => {
+    setConfirmPopupVisible(false)
+  }
+
+  const onConfirm = () => {
+    setPhoneChanged(true)
+  }
+
+  const onPhoneChanged = () => {
+    setConfirmPopupVisible(false)
+    setPhoneChanged(false)
+    save()
+  }
+
+  const onBack = () => {
+    setPhoneChanged(false)
+    setConfirmPopupVisible(false)
+  }
+
+  if (phoneChanged) {
+    return (
+      <PhoneVerification
+        phone={phone}
+        onBack={onBack}
+        onConfirm={onPhoneChanged}
+      />
+    )
   }
 
   return (
@@ -106,6 +149,11 @@ function ProfileEdit({ user, onSave: onSaveProp }: ProfileEditProps) {
       <SaveButton onPress={onSave}>
         <SaveButtonLabel>СОХРАНИТЬ ИЗМЕНЕНИЯ</SaveButtonLabel>
       </SaveButton>
+      <PhoneChangePopup
+        visible={confirmPopupVisible}
+        onDismiss={onDismiss}
+        onConfirm={onConfirm}
+      />
     </>
   )
 }
