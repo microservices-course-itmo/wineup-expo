@@ -1,4 +1,4 @@
-import { ScrollView, Text } from 'react-native'
+import { ScrollView } from 'react-native'
 import React, { Suspense } from 'react'
 import styled from 'styled-components/native'
 import WineCardLoader from '../molecules/WineCard/Loader'
