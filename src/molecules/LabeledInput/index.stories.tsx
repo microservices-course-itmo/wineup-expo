@@ -7,30 +7,34 @@ import LabeledInput from './index'
 storiesOf('LabeledInput', module)
   .add('Default', () => (
     <LabeledInput
+      value={text('Value', 'Value')}
       label={text('Label', 'Input')}
       onChangeText={action('onChangeText')}
     />
   ))
   .add('Secure text', () => (
     <LabeledInput
+      value={text('Value', 'Value')}
       label={text('Label', 'Input')}
       onChangeText={action('onChangeText')}
-      secureTextEnty
+      secureTextEntry
     />
   ))
   .add('Invalid', () => (
     <LabeledInput
+      value={text('Value', 'Value')}
       label={text('Label', 'Input')}
       onChangeText={action('onChangeText')}
-      secureTextEnty
+      secureTextEntry
       isValid={false}
     />
   ))
   .add('Invalid with message', () => (
     <LabeledInput
+      value={text('Value', 'Value')}
       label={text('Label', 'Input')}
       onChangeText={action('onChangeText')}
-      secureTextEnty
+      secureTextEntry
       isValid={false}
       errorMessage={text('Error message', 'Error')}
     />

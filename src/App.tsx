@@ -4,10 +4,12 @@ import { AppLoading } from 'expo'
 import { SafeAreaView, StatusBar } from 'react-native'
 import { CacheProvider } from 'rest-hooks'
 import * as Notifications from 'expo-notifications'
+import { enableScreens } from 'react-native-screens'
 import { AuthProvider } from './screens/Auth/AuthContext'
 import MainRouter from './screens/Router'
-import useNotifications from './hooks/useNotifications'
 import useFonts from './hooks/useFonts'
+
+enableScreens()
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -18,8 +20,6 @@ Notifications.setNotificationHandler({
 })
 
 const App: React.FC = () => {
-  useNotifications()
-
   const [fontsLoaded] = useFonts()
 
   if (!fontsLoaded) {

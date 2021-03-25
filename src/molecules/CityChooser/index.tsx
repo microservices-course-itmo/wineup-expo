@@ -1,7 +1,14 @@
 import React, { ReactElement } from 'react'
-import { Text, View, Platform } from 'react-native'
+import {
+  Text,
+  View,
+  Platform,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+} from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker'
-import styles from './styles'
+import styles from '../Auth/styles'
 
 export enum CityID {
   Moscow = 1,
@@ -14,17 +21,25 @@ const city2Label = {
 }
 
 interface PickerProps {
+  defaultValue?: CityID
   label: string
   onChange: React.Dispatch<React.SetStateAction<CityID>>
   hasFilled: boolean
   onFill: React.Dispatch<React.SetStateAction<boolean>>
+  style?: StyleProp<ViewStyle>
+  labelStyle?: StyleProp<TextStyle>
+  showArrow: boolean
 }
 
-function LabeledDropdown({
+function CityChooser({
+  defaultValue = CityID.Moscow,
   label,
   onChange,
   hasFilled,
   onFill,
+  labelStyle = {},
+  style,
+  showArrow,
 }: PickerProps): ReactElement<PickerProps> {
   const handleChange = (selectedValue: CityID) => {
     onChange(selectedValue)
@@ -40,9 +55,10 @@ function LabeledDropdown({
         Platform.OS !== 'android' && {
           zIndex: 10,
         },
+        style,
       ]}
     >
-      <Text style={styles.label}>{label}</Text>
+      <Text style={[styles.label, labelStyle]}>{label}</Text>
       <DropDownPicker
         items={[
           {
@@ -54,8 +70,8 @@ function LabeledDropdown({
             value: CityID.SaintP,
           },
         ]}
-        showArrow={false}
-        defaultValue={CityID.Moscow}
+        showArrow={showArrow}
+        defaultValue={defaultValue}
         containerStyle={styles.dropdownContainer}
         style={styles.dropdownStyle}
         labelStyle={styles.textAreaStyle}
@@ -69,4 +85,4 @@ function LabeledDropdown({
   )
 }
 
-export default LabeledDropdown
+export default CityChooser

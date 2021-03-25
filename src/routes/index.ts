@@ -6,6 +6,8 @@ const ROUTES = {
   SIGN_UP: 'SignUp',
   WINE_PAGE: 'WinePage',
   MAIN: 'MAIN',
+  PROFILE: 'PROFILE',
+  PROFILE_EDIT: 'PROFILE_EDIT',
 } as const
 
 export type TRoutes = keyof typeof ROUTES

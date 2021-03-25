@@ -20,7 +20,7 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
     try {
       const verifyPhone = await authenticate(phoneNumber)
 
-      navigation.navigate(ROUTES.SIGN_IN_CONFIRM, { verifyPhone })
+      navigation.navigate(ROUTES.SIGN_IN_CONFIRM, { ...verifyPhone })
     } catch (err) {
       console.log(err)
     }
