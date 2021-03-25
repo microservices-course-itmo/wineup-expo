@@ -7,6 +7,7 @@ import WineResource from '../../resources/wine'
 import PositionResource from '../../resources/position'
 import CatalogResource from '../../resources/catalog'
 import bottleImage from './bottle.png'
+import UserResource from '../../resources/user'
 
 export const positionMock = {
   winePositionId: 'wine_position1',
@@ -180,5 +181,15 @@ export const fixtures = [
     request: CatalogResource.detail(),
     params: { winePositionId: 'wine_position_1' },
     result: wine1CatMock,
+  },
+  {
+    request: UserResource.me(),
+    result: {
+      birthdate: '01.01.1970',
+      id: '1',
+      name: 'John Doe',
+      cityId: 1,
+      phoneNumber: '+71233211212',
+    },
   },
 ]

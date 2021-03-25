@@ -1,5 +1,4 @@
 import React from 'react'
-import { enableScreens } from 'react-native-screens'
 import { createStackNavigator } from '@react-navigation/stack'
 import styled from 'styled-components/native'
 import SignUpScreen from './SignUpScreen'
@@ -11,7 +10,6 @@ import AgeDenied from './AgeDenied'
 import authBackground from '../../../assets/authBackground.png'
 import authBackgroundLogo from '../../../assets/authBackgroundLogo.png'
 
-enableScreens()
 const Stack = createStackNavigator()
 
 const AuthWrapper: React.FC = () => (

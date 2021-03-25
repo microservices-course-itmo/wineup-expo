@@ -18,7 +18,10 @@ import { Tokens } from '../../utils/store'
 interface AuthContextProps {
   authenticate: (
     phoneNumber: string
-  ) => Promise<(verificationCode: string) => void>
+  ) => Promise<{
+    verify(verificationCode: string): Promise<void>
+    resend(): Promise<void>
+  }>
   accessToken: string | null
   signup: (data: Omit<SignUpRequestData, 'fireBaseToken'>) => Promise<void>
   signout: () => Promise<void>
@@ -93,23 +96,35 @@ export function AuthProvider({ children }: PropsWithChildren<any>) {
     setTokens({ accessToken, refreshToken })
   }
 
+  const verifyPhoneNumber = async (phoneNumber: string): Promise<string> => {
+    return firebase.getVerificationId(phoneNumber, recaptchaVerifier.current)
+  }
+
   const authenticate = async (phoneNumber: string) => {
-    const verificationId = await firebase.getVerificationId(
-      phoneNumber,
-      recaptchaVerifier.current
-    )
+    let verificationId = await verifyPhoneNumber(phoneNumber)
 
-    return async (verificationCode: string) => {
-      const firebaseToken = await firebase.signin(
-        verificationId,
-        verificationCode
-      )
+    return {
+      async verify(verificationCode: string, update = false) {
+        if (update) {
+          await firebase.updatePhoneNumber(verificationId, verificationCode)
 
-      const newTokens = await auth.signin(firebaseToken as string)
+          return
+        }
 
-      await store.setTokens(newTokens)
-      setTokens(newTokens)
-      setIsAnonymous(false)
+        const firebaseToken = await firebase.signin(
+          verificationId,
+          verificationCode
+        )
+
+        const newTokens = await auth.signin(firebaseToken as string)
+
+        await store.setTokens(newTokens)
+        setTokens(newTokens)
+        setIsAnonymous(false)
+      },
+      async resend() {
+        verificationId = await verifyPhoneNumber(phoneNumber)
+      },
     }
   }
 

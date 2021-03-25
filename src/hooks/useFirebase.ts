@@ -38,9 +38,21 @@ export default function useFirebase() {
     return userCredential.user?.getIdToken()
   }
 
+  const updatePhoneNumber = async (
+    verificationId: string,
+    verificationCode: string
+  ) => {
+    const credential = firebase.auth.PhoneAuthProvider.credential(
+      verificationId,
+      verificationCode
+    )
+
+    await firebase.auth().currentUser?.updatePhoneNumber(credential)
+  }
+
   const signout = () => {
     return firebase.auth().signOut()
   }
 
-  return { getVerificationId, getIdToken, signin, signout }
+  return { getVerificationId, getIdToken, signin, signout, updatePhoneNumber }
 }

@@ -1,44 +1,31 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, StyleProp } from 'react-native'
 
 interface CountdownProps {
-  isTimerEnabled: boolean
   time: number
   onEnd: () => void
   style: StyleProp<any>
 }
 
-function Countdown({ isTimerEnabled, time, onEnd, style }: CountdownProps) {
+const Countdown = ({ time, onEnd, style }: CountdownProps) => {
   const [timeLeft, setTimeLeft] = useState(time)
-  const timer = useRef<number>()
+  const [showTimer, setShoweTimer] = useState(true)
 
   useEffect(() => {
-    if (isTimerEnabled) startTimer()
-  }, [isTimerEnabled])
-
-  useEffect(() => {
-    if (timeLeft <= 0) {
-      clearInterval(timer.current)
-      timer.current = 0
-
+    if (timeLeft === 0) {
+      setShoweTimer(false)
       onEnd()
+    } else {
+      setTimeout(() => setTimeLeft(timeLeft - 1), 1000)
     }
-  }, [timer])
+  }, [timeLeft])
 
-  const decrementClock = () => {
-    setTimeLeft((prevState) => Math.max(0, prevState - 1))
-  }
-
-  const startTimer = () => {
-    timer.current = setInterval(() => {
-      decrementClock()
-    }, 1000)
-  }
-
-  return (
+  return showTimer ? (
     <View>
       <Text style={style}>Отправить повторно через {timeLeft} с</Text>
     </View>
+  ) : (
+    <View />
   )
 }
 
