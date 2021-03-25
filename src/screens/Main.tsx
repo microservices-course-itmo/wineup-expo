@@ -7,6 +7,7 @@ import {
 } from '@expo/vector-icons'
 import CatalogScreen from './Catalog'
 import FavouritesScreen from './Favourites'
+import useNotifications from '../hooks/useNotifications'
 import Profile from './Profile'
 
 const Tab = createBottomTabNavigator()
@@ -14,6 +15,8 @@ const Tab = createBottomTabNavigator()
 const EmptyTab = () => null
 
 function MainScreen() {
+  useNotifications()
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({

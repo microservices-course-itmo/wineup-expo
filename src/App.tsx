@@ -6,7 +6,6 @@ import { CacheProvider } from 'rest-hooks'
 import * as Notifications from 'expo-notifications'
 import { AuthProvider } from './screens/Auth/AuthContext'
 import MainRouter from './screens/Router'
-import useNotifications from './hooks/useNotifications'
 import useFonts from './hooks/useFonts'
 
 Notifications.setNotificationHandler({
@@ -18,8 +17,6 @@ Notifications.setNotificationHandler({
 })
 
 const App: React.FC = () => {
-  useNotifications()
-
   const [fontsLoaded] = useFonts()
 
   if (!fontsLoaded) {
