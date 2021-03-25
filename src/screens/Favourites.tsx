@@ -23,7 +23,10 @@ export default function FavouritesScreen() {
     <Suspense fallback={loader}>
       <StyledSearchInput value='' />
       {accessToken ? (
-        [<FavoritesToolbar handleClear={() => {}} />, <FavoritesView />]
+        <>
+          <FavoritesToolbar handleClear={() => {}} />
+          <FavoritesView />
+        </>
       ) : (
         <UnauthorizedProfile />
       )}
