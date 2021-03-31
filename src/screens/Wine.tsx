@@ -7,8 +7,10 @@ import WineCard from '../molecules/WineCard'
 import RecommendationBlock from '../organisms/RecommendationBlock'
 import CatalogResource from '../resources/catalog'
 import WineCardLoader from '../molecules/WineCard/Loader'
+import ErrorBoundary from '../ErrorBoundary'
+import Error from './Error'
 
-function WineScreen() {
+function WineScreen(): React.ReactNode {
   const {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -18,17 +20,20 @@ function WineScreen() {
   const { goBack } = useNavigation()
 
   return (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <Container>
-        <BackButton onPress={goBack}>
-          <Ionicons name='ios-arrow-back' size={24} color='black' />
-        </BackButton>
-        <WineCard position={position!} full />
-        <Suspense fallback={<WineCardLoader />}>
-          <StyledRecommendationBlock />
-        </Suspense>
-      </Container>
-    </ScrollView>
+    <ErrorBoundary fallBack={<Error errorCode={400} />}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <Container>
+          <BackButton onPress={goBack}>
+            <Ionicons name='ios-arrow-back' size={24} color='black' />
+          </BackButton>
+          {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
+          <WineCard position={position!} full />
+          <Suspense fallback={<WineCardLoader />}>
+            <StyledRecommendationBlock />
+          </Suspense>
+        </Container>
+      </ScrollView>
+    </ErrorBoundary>
   )
 }
 
