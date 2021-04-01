@@ -59,6 +59,8 @@ export default class CatalogResource extends PaginatedWineUpResource {
 
   readonly volume: number = 0
 
+  readonly liked: boolean = false
+
   readonly wine: Wine = {
     avg: 0,
     brand: {
