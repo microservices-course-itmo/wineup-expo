@@ -39,6 +39,7 @@ function loadStories() {
   require('../src/molecules/LabeledCheckbox/index.stories')
   require('../src/molecules/LabeledInput/index.stories')
   require('../src/molecules/LabeledRadioButton/index.stories')
+  require('../src/molecules/PhoneChangePopUp/index.stories')
   require('../src/molecules/PriceInput/index.stories')
   require('../src/molecules/SearchInput/index.stories')
   require('../src/molecules/WineCard/index.stories')
@@ -91,6 +92,7 @@ const stories = [
   '../src/molecules/LabeledCheckbox/index.stories',
   '../src/molecules/LabeledInput/index.stories',
   '../src/molecules/LabeledRadioButton/index.stories',
+  '../src/molecules/PhoneChangePopUp/index.stories',
   '../src/molecules/PriceInput/index.stories',
   '../src/molecules/SearchInput/index.stories',
   '../src/molecules/WineCard/index.stories',
