@@ -35,5 +35,16 @@ export default class FavoritesResource extends WineUpResource {
     })
   }
 
+  static clear() {
+    const endpoint = super.delete()
+    const { urlRoot } = this
+
+    return endpoint.extend({
+      url() {
+        return `${urlRoot}/clear`
+      },
+    })
+  }
+
   static urlRoot = 'http://77.234.215.138:18080/user-service/favorites/'
 }
