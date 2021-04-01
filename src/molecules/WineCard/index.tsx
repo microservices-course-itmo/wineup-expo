@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled, { css } from 'styled-components/native'
 import CatalogResource from 'src/resources/catalog'
 import { useFetcher, useInvalidator } from 'rest-hooks'
@@ -17,6 +17,7 @@ function WineCard({ position, full }: WineCardProps) {
   const like = useFetcher(FavoritesResource.create())
   const unlike = useFetcher(FavoritesResource.delete())
   const clearCache = useInvalidator(FavoritesResource.list())
+  const [liked, setLiked] = useState(position.liked)
 
   const onLikePress = async (value: boolean) => {
     if (value) {
@@ -25,6 +26,7 @@ function WineCard({ position, full }: WineCardProps) {
       await unlike({ id: position.winePositionId })
     }
 
+    setLiked(value)
     await clearCache({})
   }
 
@@ -32,7 +34,7 @@ function WineCard({ position, full }: WineCardProps) {
     <Container full={full}>
       <TopBar>
         <Recommendation ratioAdvice={45} />
-        <Like onPress={onLikePress} liked={position.liked} />
+        <Like onPress={onLikePress} liked={liked} />
       </TopBar>
       <WineBottlePicture position={position} />
       <WineInfo position={position} full={full} />
