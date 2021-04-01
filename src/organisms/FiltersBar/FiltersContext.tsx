@@ -87,8 +87,8 @@ export function useFilters(): FiltersContextState {
 
 export function composeQuery(filters: FiltersContextState['filters']): string {
   const queries = [
-    filters.sugar.map((value) => `sugar:${value}`).join(';'),
-    filters.color.map((value) => `color:${value}`).join(';'),
+    filters.sugar.map((value) => `sugar:${value};`).join('~'),
+    filters.color.map((value) => `color:${value};`).join('~'),
   ].filter((query) => query.length > 0)
 
   return queries.join('*')
