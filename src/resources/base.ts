@@ -41,7 +41,7 @@ export abstract class WineUpResource extends Resource {
       ...options,
       headers: {
         ...options.headers,
-        Authorization: accessToken ? `Bearer ${accessToken}` : '123',
+        Authorization: accessToken ? `Bearer ${accessToken}` : 'Bearer 123',
       },
     }
   }
