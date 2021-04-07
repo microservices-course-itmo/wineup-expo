@@ -86,7 +86,7 @@ function WineInfo({
   }
 
   const goToShop = () => {
-    Linking.openURL(position.linkToWine).catch(console.log)
+    Linking.openURL(position.linkToWine).catch()
   }
 
   return (

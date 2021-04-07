@@ -18,13 +18,9 @@ function ProfileInfo({ onEdit, user }: ProfileInfoProps) {
 
   const auth = useAuthContext()
 
-  const changePhone = () => {
-    console.log('change phone')
-  }
+  const changePhone = () => {}
 
-  const changeCity = () => {
-    console.log('change city')
-  }
+  const changeCity = () => {}
 
   const onModalOpen = (): void => {
     setModalVisible(true)

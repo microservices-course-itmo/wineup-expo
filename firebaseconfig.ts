@@ -1,4 +1,9 @@
-import { REACT_APP_PROJECT_ID, REACT_APP_MESSAGING_SENDER_ID, REACT_APP_ID, REACT_APP_API_KEY} from '@env'
+import {
+  REACT_APP_PROJECT_ID,
+  REACT_APP_MESSAGING_SENDER_ID,
+  REACT_APP_ID,
+  REACT_APP_API_KEY,
+} from '@env'
 
 const firebaseConfig = {
   apiKey: REACT_APP_API_KEY,

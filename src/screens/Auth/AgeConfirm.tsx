@@ -6,6 +6,8 @@ import ROUTES from '../../routes'
 import confirmButtonTick from '../../../assets/confirmButtonTick.png'
 import welcomeHandShake from '../../../assets/handShake.png'
 import confirmButtonCross from '../../../assets/confirmButtonCross.png'
+import authBackground from '../../../assets/authBackground.png'
+import authBackgroundLogo from '../../../assets/authBackgroundLogo.png'
 
 export type TProps = StackScreenProps<any, typeof ROUTES.CONFIRM_AGE>
 
@@ -19,25 +21,39 @@ const AgeConfirm: React.FC<TProps> = ({ navigation }) => {
   }
 
   return (
-    <StyledViewContainer>
-      <Image source={welcomeHandShake} />
-      <StyledWelcomeText> Добро пожаловать!</StyledWelcomeText>
-      <StyledHeaderText> Вам уже исполнилось 18 лет?</StyledHeaderText>
-      <StyledViewButton>
-        <StyledButtonConfirm activeOpacity={0.8} onPress={navigateToSignIn}>
-          <Image source={confirmButtonTick} />
-          <StyledButtonConfirmText>Да</StyledButtonConfirmText>
-        </StyledButtonConfirm>
-        <StyledButtonDeny activeOpacity={0.8} onPress={navigateToAgeDenied}>
-          <Image source={confirmButtonCross} />
-          <StyledButtonDenyText>Нет</StyledButtonDenyText>
-        </StyledButtonDeny>
-      </StyledViewButton>
-    </StyledViewContainer>
+    <StyledImageBackground source={authBackground} resizeMode='cover'>
+      <StyledLogo source={authBackgroundLogo} />
+      <StyledViewContainer>
+        <Image source={welcomeHandShake} />
+        <StyledWelcomeText> Добро пожаловать!</StyledWelcomeText>
+        <StyledHeaderText> Вам уже исполнилось 18 лет?</StyledHeaderText>
+        <StyledViewButton>
+          <StyledButtonConfirm activeOpacity={0.8} onPress={navigateToSignIn}>
+            <Image source={confirmButtonTick} />
+            <StyledButtonConfirmText>Да</StyledButtonConfirmText>
+          </StyledButtonConfirm>
+          <StyledButtonDeny activeOpacity={0.8} onPress={navigateToAgeDenied}>
+            <Image source={confirmButtonCross} />
+            <StyledButtonDenyText>Нет</StyledButtonDenyText>
+          </StyledButtonDeny>
+        </StyledViewButton>
+      </StyledViewContainer>
+    </StyledImageBackground>
   )
 }
 
 export default AgeConfirm
+
+const StyledImageBackground = styled.ImageBackground`
+  flex: 1;
+  width: 100%;
+  height: 100%;
+`
+const StyledLogo = styled.Image`
+  position: absolute;
+  top: 0px;
+  right: 20px;
+`
 
 const StyledViewContainer = styled.View`
   flex: 1;
