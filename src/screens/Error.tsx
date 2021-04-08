@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 
 import PrimaryButton from '../atoms/PrimaryButton'
 
-import NotFoundImage from '../../assets/404.png'
+// import NotFoundImage from '../../assets/404.png'
 
 interface Props {
   errorCode?: number
@@ -40,7 +40,6 @@ const Container = styled.View`
   flex-direction: column;
   align-items: center;
   padding-top: 15%;
-  background-image: ${`url(${NotFoundImage})`};
 `
 const StyledText = styled.Text`
   font-size: 20px;
@@ -81,7 +80,6 @@ const StyledButton = styled(PrimaryButton)`
   margin-top: 40px;
   background: rgba(0, 0, 0, 0);
   border: 1px solid #931332;
-  box-sizing: border-box;
   padding: 15px 23px;
 `
 

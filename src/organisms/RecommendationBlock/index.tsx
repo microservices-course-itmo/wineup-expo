@@ -9,16 +9,16 @@ import WineCard from '../../molecules/WineCard'
 import WineCardLoader from '../../molecules/WineCard/Loader'
 import ROUTES from '../../routes'
 import CatalogResource from '../../resources/catalog'
+import RecommendedResource from '../../resources/recommended'
 
 interface RecommendationBlockProps {
   style?: StyleProp<any>
+  id: string
 }
 
-function RecommendationBlock({ style }: RecommendationBlockProps) {
-  const positions = useResource(CatalogResource.list(), {
-    page: 0,
-    amount: 5,
-    filterBy: '',
+function RecommendationBlock({ style, id }: RecommendationBlockProps) {
+  const { recommendations } = useResource(RecommendedResource.list(), {
+    id,
   })
 
   const carouselRef = useRef<Carousel<any> | null>(null)
@@ -59,7 +59,7 @@ function RecommendationBlock({ style }: RecommendationBlockProps) {
       </TitleBock>
       <Carousel
         ref={carouselRef}
-        data={positions!}
+        data={recommendations!}
         renderItem={renderItem}
         sliderWidth={350}
         itemWidth={350}
