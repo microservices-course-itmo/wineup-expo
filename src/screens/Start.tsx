@@ -6,20 +6,11 @@ import WineCardLoader from '../molecules/WineCard/Loader'
 import AboutUsInfo from '../organisms/AboutUsInfo'
 
 export default function StartScreen() {
-  const loader = (
-    <ScrollView showsVerticalScrollIndicator={false}>
-      <WineCardLoader />
-      <WineCardLoader />
-      <WineCardLoader />
-    </ScrollView>
-  )
 
   return (
     <ScrollView>
       <StyledSearchInput value='' />
-      <Suspense fallback={loader}>
         <AboutUsInfo />
-      </Suspense>
     </ScrollView>
   )
 }
