@@ -29,7 +29,7 @@ function WineScreen(): React.ReactNode {
           {/* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */}
           <WineCard position={position!} full />
           <Suspense fallback={<WineCardLoader />}>
-            <StyledRecommendationBlock />
+            <StyledRecommendationBlock id={position!.winePositionId} />
           </Suspense>
         </Container>
       </ScrollView>
