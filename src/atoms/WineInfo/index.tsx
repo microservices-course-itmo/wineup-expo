@@ -94,8 +94,8 @@ function WineInfo({
       {/* <Rating rating={3} /> */}
       <Heading>{wine.name}</Heading>
       <Heading>
-        {position.grapes && `${position.grapes}, `}
-        {wine.year} г.
+        {position.grapes && `${position.grapes}`}
+        {wine.year > 0 && ` ,${wine.year} г.`}
       </Heading>
       <Description>{description}</Description>
       {extraOptions && (
