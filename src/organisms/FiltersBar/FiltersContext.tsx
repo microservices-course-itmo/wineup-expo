@@ -89,7 +89,8 @@ export function composeQuery(filters: FiltersContextState['filters']): string {
   const queries = [
     filters.sugar.map((value) => `sugar:${value};`).join('~'),
     filters.color.map((value) => `color:${value};`).join('~'),
+    `price>${filters.price.from - 1};*price<${filters.price.to + 1}`,
   ].filter((query) => query.length > 0)
 
-  return queries.join('*')
+  return queries.join('')
 }
