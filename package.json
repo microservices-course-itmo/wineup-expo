@@ -26,7 +26,7 @@
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/bottom-tabs": "^5.8.0",
     "@react-navigation/native": "^5.7.3",
-    "@react-navigation/stack": "^5.11.0",
+    "@react-navigation/stack": "^5.3.0",
     "@rest-hooks/rest": "^2.0.0",
     "@rest-hooks/test": "4",
     "@storybook/addon-actions": "^5.3",

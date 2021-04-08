@@ -2,6 +2,8 @@ import React from 'react'
 import { StackScreenProps } from '@react-navigation/stack'
 import styled from 'styled-components/native'
 import ROUTES from '../../routes'
+import authBackground from '../../../assets/authBackground.png'
+import authBackgroundLogo from '../../../assets/authBackgroundLogo.png'
 
 export type TProps = StackScreenProps<any, typeof ROUTES.AGE_DENIED>
 
@@ -11,24 +13,38 @@ const AgeDenied: React.FC<TProps> = ({ navigation }) => {
   }
 
   return (
-    <StyledViewContainer>
-      <StyledHeaderText>Спасибо за честный ответ!</StyledHeaderText>
-      <StyledTextView>
-        <StyledTextBodyHeader>
-          К сожалению, наше приложение
-        </StyledTextBodyHeader>
-        <StyledTextBody>содержит информацию,</StyledTextBody>
-        <StyledDenyTextBody>не предназначенную</StyledDenyTextBody>
-        <StyledTextBody>для лиц младше 18 лет</StyledTextBody>
-      </StyledTextView>
-      <StyledBackButton activeOpacity={0.8} onPress={goBack}>
-        <StyledTextBackButton>Вернуться назад</StyledTextBackButton>
-      </StyledBackButton>
-    </StyledViewContainer>
+    <StyledImageBackground source={authBackground} resizeMode='cover'>
+      <StyledLogo source={authBackgroundLogo} />
+      <StyledViewContainer>
+        <StyledHeaderText>Спасибо за честный ответ!</StyledHeaderText>
+        <StyledTextView>
+          <StyledTextBodyHeader>
+            К сожалению, наше приложение
+          </StyledTextBodyHeader>
+          <StyledTextBody>содержит информацию,</StyledTextBody>
+          <StyledDenyTextBody>не предназначенную</StyledDenyTextBody>
+          <StyledTextBody>для лиц младше 18 лет</StyledTextBody>
+        </StyledTextView>
+        <StyledBackButton activeOpacity={0.8} onPress={goBack}>
+          <StyledTextBackButton>Вернуться назад</StyledTextBackButton>
+        </StyledBackButton>
+      </StyledViewContainer>
+    </StyledImageBackground>
   )
 }
 
 export default AgeDenied
+
+const StyledImageBackground = styled.ImageBackground`
+  flex: 1;
+  width: 100%;
+  height: 100%;
+`
+const StyledLogo = styled.Image`
+  position: absolute;
+  top: 0px;
+  right: 20px;
+`
 
 const StyledViewContainer = styled.View`
   flex: 1;

@@ -6,6 +6,8 @@ import LabeledDatePicker from '../../molecules/Auth/LabeledDatePicker'
 import CityChooser from '../../molecules/CityChooser'
 import ConsentCheckBox from '../../molecules/Auth/ConsentCheckBox'
 import { useAuthContext } from './AuthContext'
+import authBackground from '../../../assets/authBackground.png'
+import authBackgroundLogo from '../../../assets/authBackgroundLogo.png'
 
 const MAXIMUM_DATE = new Date()
 
@@ -42,44 +44,61 @@ function SignUpScreen(): ReactElement {
   }
 
   return (
-    <StyledContainer>
-      <StyledTextInsertData>Введите данные</StyledTextInsertData>
-      <LabeledInput
-        value={userName}
-        label='Введите ваше имя'
-        onChangeText={setUserName}
-        isValid={isValidName}
-        errorMessage={NAME_ERROR_MESSAGE}
-        maxLength={15}
-      />
-      <LabeledDatePicker
-        value={userDate}
-        label='Введите дату рождения'
-        onChange={setUserDate}
-        maximumDate={MAXIMUM_DATE}
-        hasFilled={isDateFilled}
-        onFill={setIsDateFilled}
-      />
-      <CityChooser
-        label='Введите ваш город'
-        onChange={setUserCity}
-        hasFilled={isCityFilled}
-        onFill={setIsCityFilled}
-      />
-      <ConsentCheckBox onPress={setIsConsentGiven} hasFilled={isСonsentGiven} />
-      <StyledEnterButton
-        buttonOpacity={buttonOpacity}
-        onPress={handleSubmit}
-        disabled={!isSignUpEnabled}
-      >
-        <StyledEnterTextButton>Войти</StyledEnterTextButton>
-      </StyledEnterButton>
-    </StyledContainer>
+    <StyledImageBackground source={authBackground} resizeMode='cover'>
+      <StyledLogo source={authBackgroundLogo} />
+      <StyledContainer>
+        <StyledTextInsertData>Введите данные</StyledTextInsertData>
+        <LabeledInput
+          value={userName}
+          label='Введите ваше имя'
+          onChangeText={setUserName}
+          isValid={isValidName}
+          errorMessage={NAME_ERROR_MESSAGE}
+          maxLength={15}
+        />
+        <LabeledDatePicker
+          value={userDate}
+          label='Введите дату рождения'
+          onChange={setUserDate}
+          maximumDate={MAXIMUM_DATE}
+          hasFilled={isDateFilled}
+          onFill={setIsDateFilled}
+        />
+        <CityChooser
+          label='Введите ваш город'
+          onChange={setUserCity}
+          hasFilled={isCityFilled}
+          onFill={setIsCityFilled}
+          showArrow
+        />
+        <ConsentCheckBox
+          onPress={setIsConsentGiven}
+          hasFilled={isСonsentGiven}
+        />
+        <StyledEnterButton
+          buttonOpacity={buttonOpacity}
+          onPress={handleSubmit}
+          disabled={!isSignUpEnabled}
+        >
+          <StyledEnterTextButton>Войти</StyledEnterTextButton>
+        </StyledEnterButton>
+      </StyledContainer>
+    </StyledImageBackground>
   )
 }
 
 export default SignUpScreen
 
+const StyledImageBackground = styled.ImageBackground`
+  flex: 1;
+  width: 100%;
+  height: 100%;
+`
+const StyledLogo = styled.Image`
+  position: absolute;
+  top: 0px;
+  right: 20px;
+`
 const StyledContainer = styled.View`
   flex: 1;
   align-items: center;

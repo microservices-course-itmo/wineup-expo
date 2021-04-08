@@ -98,11 +98,11 @@ const Input = styled(TextInput)<{ isValid: boolean }>`
   border-color: ${({ isValid }) => (isValid ? '#bcbcbc' : '#e20338')};
 `
 const ErrorLabel = styled.Text<{ isValid: boolean }>`
-  position: absolute;
+  position: relative;
   text-align: center;
   top: 5px;
   width: 320px;
   font-size: 10px;
-  color: ${({ isValid }) => (isValid ? '#a3a3a3' : '#e203338')};
+  color: ${({ isValid }) => (isValid ? '#a3a3a3' : '#e20338')};
   font-family: 'Merriweather_400Regular';
 `

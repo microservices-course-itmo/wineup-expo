@@ -10,6 +10,8 @@ import GoBackArrowIcon from '../../molecules/Auth/GoBackArrowIcon'
 import confirmButtonCross from '../../../assets/confirmButtonCross.png'
 import { SignUpRequestData } from '../../hooks/useAuth'
 import UnauthenticatedError from '../../errors/Unauthenticated'
+import authBackground from '../../../assets/authBackground.png'
+import authBackgroundLogo from '../../../assets/authBackgroundLogo.png'
 
 type SignInConfirmScreenNavigationProps = StackNavigationProp<
   any,
@@ -63,8 +65,6 @@ function SignInConfirm({
       await route.params.verify(userCode)
     } catch (error) {
       if (error instanceof UnauthenticatedError) {
-        console.log('User is not registered')
-
         navigation.navigate(ROUTES.SIGN_UP)
       } else {
         setIsWarningOn(true)
@@ -93,55 +93,69 @@ function SignInConfirm({
   }
 
   return (
-    <StyledViewContainer>
-      <StyledBackButton activeOpacity={0.8} onPress={navigation.goBack}>
-        <GoBackArrowIcon />
-        <StyledBackButtonText>Вернуться назад</StyledBackButtonText>
-      </StyledBackButton>
-      <StyledViewInfoBlockContainer marginTop={isPenalty}>
-        <StyledViewWarningContainer hidden={!isWarningOn}>
-          <Image source={confirmButtonCross} />
-          <StyledWrongCodeText>
-            Код введён <StyledWrongWord>неверно</StyledWrongWord>
-          </StyledWrongCodeText>
-        </StyledViewWarningContainer>
-        <StyledCodeText>Введите код подтверждения</StyledCodeText>
-        <StyledLabelCode
-          value={userCode}
-          placeholder='Например, 123456'
-          onChangeText={setUserCode}
-          maxLength={6}
-          keyBoardType='numeric'
-        />
-        <StyledButtonEnter
-          activeOpacity={0.8}
-          onPress={enterCodeHandler}
-          disabled={userCode.length !== 6}
-          resendOpacity={resendOpacity}
-        >
-          {isLoading ? (
-            <ActivityIndicator size='small' color='#fff' />
-          ) : (
-            <StyledEnterTextButton>Войти</StyledEnterTextButton>
-          )}
-        </StyledButtonEnter>
-        <StyledResetCode
-          activeOpacity={0.8}
-          onPress={resendCode}
-          disabled={isPenalty || isResend}
-          resendOpacity={resendOpacity}
-        >
-          <StyledResetCodeTextButton>
-            Отправить код повторно
-          </StyledResetCodeTextButton>
-        </StyledResetCode>
-        {isPenalty && <StyledCountdown time={timeToResend} onEnd={onEnd} />}
-      </StyledViewInfoBlockContainer>
-    </StyledViewContainer>
+    <StyledImageBackground source={authBackground} resizeMode='cover'>
+      <StyledLogo source={authBackgroundLogo} />
+      <StyledViewContainer>
+        <StyledBackButton activeOpacity={0.8} onPress={navigation.goBack}>
+          <GoBackArrowIcon />
+          <StyledBackButtonText>Вернуться назад</StyledBackButtonText>
+        </StyledBackButton>
+        <StyledViewInfoBlockContainer marginTop={isPenalty}>
+          <StyledViewWarningContainer hidden={!isWarningOn}>
+            <Image source={confirmButtonCross} />
+            <StyledWrongCodeText>
+              Код введён <StyledWrongWord>неверно</StyledWrongWord>
+            </StyledWrongCodeText>
+          </StyledViewWarningContainer>
+          <StyledCodeText>Введите код подтверждения</StyledCodeText>
+          <StyledLabelCode
+            value={userCode}
+            placeholder='Например, 123456'
+            onChangeText={setUserCode}
+            maxLength={6}
+            keyBoardType='numeric'
+          />
+          <StyledButtonEnter
+            activeOpacity={0.8}
+            onPress={enterCodeHandler}
+            disabled={userCode.length !== 6}
+            resendOpacity={resendOpacity}
+          >
+            {isLoading ? (
+              <ActivityIndicator size='small' color='#fff' />
+            ) : (
+              <StyledEnterTextButton>Войти</StyledEnterTextButton>
+            )}
+          </StyledButtonEnter>
+          <StyledResetCode
+            activeOpacity={0.8}
+            onPress={resendCode}
+            disabled={isPenalty || isResend}
+            resendOpacity={resendOpacity}
+          >
+            <StyledResetCodeTextButton>
+              Отправить код повторно
+            </StyledResetCodeTextButton>
+          </StyledResetCode>
+          {isPenalty && <StyledCountdown time={timeToResend} onEnd={onEnd} />}
+        </StyledViewInfoBlockContainer>
+      </StyledViewContainer>
+    </StyledImageBackground>
   )
 }
 
 export default SignInConfirm
+
+const StyledImageBackground = styled.ImageBackground`
+  flex: 1;
+  width: 100%;
+  height: 100%;
+`
+const StyledLogo = styled.Image`
+  position: absolute;
+  top: 0px;
+  right: 20px;
+`
 
 const StyledViewContainer = styled.View`
   flex: 1;
@@ -181,6 +195,7 @@ const StyledCodeText = styled.Text`
   color: rgb(255, 255, 255);
 `
 const StyledLabelCode = styled(LabeledInput)`
+  text-align: center;
   margin-top: 37px;
 `
 const StyledEnterTextButton = styled.Text`

@@ -5,6 +5,8 @@ import ROUTES from '../../routes'
 import phoneEnterIcon from '../../../assets/phoneEnterIcon.png'
 import { isPhoneValid } from '../../helpers'
 import { useAuthContext } from './AuthContext'
+import authBackground from '../../../assets/authBackground.png'
+import authBackgroundLogo from '../../../assets/authBackgroundLogo.png'
 
 export type TProps = StackScreenProps<any, typeof ROUTES.SIGN_IN>
 
@@ -31,41 +33,55 @@ const SignInScreen: React.FC<TProps> = ({ navigation }) => {
   }
 
   return (
-    <StyledContainer>
-      <StyledEnterNumberText>
-        Введите номер телефона для авторизации
-      </StyledEnterNumberText>
-      <StyledPhoneEnterForm>
-        <StyledInputPhone
-          keyboardType='phone-pad'
-          maxLength={12}
-          onChangeText={setUserPhone}
-          placeholder='+7 (9XX) XXX XX XX'
-          textAlignVertical='center'
-          textContentType='telephoneNumber'
-          editable
-          selectionColor='#000'
-        />
-        <StyledImagePhone source={phoneEnterIcon} />
-      </StyledPhoneEnterForm>
-      <StyledEnterButton
-        activeOpacity={0.8}
-        disabled={!isPhoneValid(userPhone)}
-        opacity={isPhoneValid(userPhone) ? 1 : 0.4}
-        onPress={handlePress}
-      >
-        <StyledEnterTextButton>Войти</StyledEnterTextButton>
-      </StyledEnterButton>
-      <StyledUnregButton onPress={continueWithoutAuthorization}>
-        <StyledUnregEnterTextButton>
-          Продолжить без авторизации
-        </StyledUnregEnterTextButton>
-      </StyledUnregButton>
-    </StyledContainer>
+    <StyledImageBackground source={authBackground} resizeMode='cover'>
+      <StyledLogo source={authBackgroundLogo} />
+      <StyledContainer>
+        <StyledEnterNumberText>
+          Введите номер телефона для авторизации
+        </StyledEnterNumberText>
+        <StyledPhoneEnterForm>
+          <StyledInputPhone
+            keyboardType='phone-pad'
+            maxLength={12}
+            onChangeText={setUserPhone}
+            placeholder='+7 (9XX) XXX XX XX'
+            textAlignVertical='center'
+            textContentType='telephoneNumber'
+            editable
+            selectionColor='#000'
+          />
+          <StyledImagePhone source={phoneEnterIcon} />
+        </StyledPhoneEnterForm>
+        <StyledEnterButton
+          activeOpacity={0.8}
+          disabled={!isPhoneValid(userPhone)}
+          opacity={isPhoneValid(userPhone) ? 1 : 0.4}
+          onPress={handlePress}
+        >
+          <StyledEnterTextButton>Войти</StyledEnterTextButton>
+        </StyledEnterButton>
+        <StyledUnregButton onPress={continueWithoutAuthorization}>
+          <StyledUnregEnterTextButton>
+            Продолжить без авторизации
+          </StyledUnregEnterTextButton>
+        </StyledUnregButton>
+      </StyledContainer>
+    </StyledImageBackground>
   )
 }
 
 export default SignInScreen
+
+const StyledImageBackground = styled.ImageBackground`
+  flex: 1;
+  width: 100%;
+  height: 100%;
+`
+const StyledLogo = styled.Image`
+  position: absolute;
+  top: 0px;
+  right: 20px;
+`
 
 const StyledContainer = styled.View`
   flex: 1;

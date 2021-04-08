@@ -47,8 +47,6 @@ export function AuthProvider({ children }: PropsWithChildren<any>) {
     const effect = async () => {
       const storedTokens = await store.getTokens()
 
-      console.log(storedTokens)
-
       try {
         await authorize(storedTokens)
       } catch (_) {
