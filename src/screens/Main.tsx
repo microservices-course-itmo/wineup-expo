@@ -10,10 +10,9 @@ import FavouritesScreen from './Favourites'
 import useNotifications from '../hooks/useNotifications'
 import Profile from './Profile'
 import ErrorBoundary from '../ErrorBoundary'
+import StartScreen from './Start'
 
 const Tab = createBottomTabNavigator()
-
-const EmptyTab = () => null
 
 function MainScreen(): React.ReactNode {
   useNotifications()
@@ -69,7 +68,7 @@ function MainScreen(): React.ReactNode {
           inactiveTintColor: '#333333',
         }}
       >
-        <Tab.Screen name='Главное' component={EmptyTab} />
+        <Tab.Screen name='Главное' component={StartScreen} />
         <Tab.Screen name='Каталог' component={CatalogScreen} />
         <Tab.Screen name='Избранное' component={FavouritesScreen} />
         <Tab.Screen name='Профиль' component={Profile} />
