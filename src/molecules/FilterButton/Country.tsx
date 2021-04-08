@@ -8,6 +8,23 @@ import RegionResource from '../../resources/region'
 function CountryFilterButton() {
   const sheetHeight = 570
   const regions: RegionResource[] = useResource(RegionResource.list(), {})
+  const countries = (() => {
+    const countriesSet = new Set<string>()
+    const resultArray = new Array<{ label: string; value: string }>()
+
+    regions.forEach((region) => {
+      if (
+        countriesSet.has(region.country) ||
+        region.country === 'COUNTRY_NOT_PRESENTED'
+      ) {
+        return
+      }
+      resultArray.push({ label: region.country, value: region.country })
+      countriesSet.add(region.country)
+    })
+
+    return resultArray
+  })()
 
   const renderFilterPage = (onApply: () => void) => {
     return (
@@ -18,7 +35,7 @@ function CountryFilterButton() {
         height={sheetHeight}
         filter='country'
       >
-        {regions.map((region) => ({ label: region.country, value: region.id }))}
+        {countries}
       </FilterSheet>
     )
   }
