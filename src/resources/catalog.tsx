@@ -104,7 +104,7 @@ export default class CatalogResource extends PaginatedWineUpResource {
       return null
     }
 
-    return this.wine.grape.map(({ name }) => name).join(', ')
+    return `${this.wine.grape.slice(0, 3).map(({ name }) => name).join(', ')}...`
   }
 
   get regions() {
